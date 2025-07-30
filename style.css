@@ -236,3 +236,32 @@ button:active {
   }
 }
 
+#backToTopBtn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 70px;
+  height: 70px;
+  background-color: #0056b3; /* your green theme */
+  color: white;
+  border: none;
+  border-radius: 50%;
+  box-shadow: 2px 6px 10px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+
+#backToTopBtn i {
+  font-size: 30px;  /* BIG ICON HERE */
+}
+
+#backToTopBtn:hover {
+  background-color: #003366;
+  transform: scale(1.1);
+}
+
+
