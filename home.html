@@ -6,20 +6,117 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Fintech Dashboard</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Toggle Switch */
+    .theme-toggle {
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .toggle-switch {
+      position: relative;
+      width: 50px;
+      height: 26px;
+    }
+
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      background-color: #ccc;
+      border-radius: 34px;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      transition: 0.4s;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: 0.4s;
+      border-radius: 50%;
+    }
+
+    input:checked + .slider {
+      background-color: #4a90e2;
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(24px);
+    }
+
+    /* Dark Mode Styles */
+    body.dark-mode {
+      background-color: #121212;
+      color: #f0f0f0;
+    }
+
+    body.dark-mode .card {
+      background-color: #1e1e1e;
+      color: #f0f0f0;
+      box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+    }
+
+    body.dark-mode input,
+    body.dark-mode button {
+      background-color: #333;
+      color: #fff;
+      border: 1px solid #555;
+    }
+
+    body.dark-mode footer {
+      background-color: #181818;
+      color: #ccc;
+    }
+
+    .header-bar {
+      position: relative;
+      padding: 20px;
+      background-color: #007bff;
+      color: white;
+    }
+
+    body.dark-mode .header-bar {
+      background-color: #0d47a1;
+    }
+  </style>
 </head>
 
-<header>
-  <div class="header-bar">
-    <h1>Fintech</h1>
-    
-  </div>
-</header>
-
-
 <body>
+  <header>
+    <div class="header-bar">
+      <h1>Fintech</h1>
+      <div class="theme-toggle">
+        🌙
+        <label class="toggle-switch">
+          <input type="checkbox" id="themeToggle">
+          <span class="slider"></span>
+        </label>
+        ☀️
+      </div>
+    </div>
+  </header>
+
   <div id="toast-container"></div>
 
-  <main>
+ <main>
     <div class="dashboard-grid">
 
       <!-- Stock Prediction -->
@@ -105,6 +202,22 @@
     <p>&copy; 2025 Fintech Dashboard. All rights reserved.</p>
   </footer>
 
+  <script>
+    // Toggle theme
+    const toggle = document.getElementById('themeToggle');
+    const body = document.body;
+
+    // Apply saved theme on load
+    if (localStorage.getItem('theme') === 'dark') {
+      body.classList.add('dark-mode');
+      toggle.checked = true;
+    }
+
+    toggle.addEventListener('change', () => {
+      body.classList.toggle('dark-mode');
+      localStorage.setItem('theme', body.classList.contains('dark-mode') ? 'dark' : 'light');
+    });
+  </script>
   <script src="script.js"></script>
 </body>
 
