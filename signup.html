@@ -103,6 +103,31 @@ a:hover {
   text-decoration: underline;
 }
 
+
+#password-strength-text {
+  width: 100%;
+  text-align: right;        /* align the label to the right */
+  font-size: 0.875rem;      /* a little smaller for subtlety */
+  margin: 4px 0 8px;        /* space above/below the text */
+  color: gray;              /* default “gray” until JS updates it */
+  min-height: 1em;          /* reserve vertical space */
+}
+
+#password-strength-bar {
+  width: 100%;
+  height: 6px;              /* slimmer, more minimalist */
+  display: block;
+  margin-bottom: 16px;      /* separate it from the Sign up button */
+  accent-color: gray;       /* default bar color pre-JS */
+  transition: accent-color .3s ease;
+}
+
+progress {
+  margin-bottom: 1em;
+}
+
+
+
 /* Additional small device responsiveness */
 @media (max-width: 480px) {
   .container {
@@ -114,15 +139,24 @@ a:hover {
   }
 }
 
-  </style>>
+  </style>
 </head>
 <body>
   <div class="container">
     <h2>Signup</h2>
     <form id= "signup-form">
-      <input type="text" placeholder="Full Name" required>
-      <input type="email" placeholder="Email" required>
-      <input type="password" placeholder="Password" required>
+      <input type="text" placeholder="Full Name" required />
+      <input type="email" placeholder="Email" required />
+      <input 
+      type="password" 
+      id="password"
+      name="password"
+      placeholder="Password" 
+      required
+      />
+      <div id="password-strength-text" ></div>
+      <progress id="password-strength-bar" max="100" value="0" ></progress>
+
       <button type="submit">Sign up</button>
     </form>
     <p>Already have an account? <a href="login.html">Login</a></p>
@@ -133,6 +167,47 @@ a:hover {
       alert("Signup successful! Redirecting to login...");
       window.location.href = "login.html"; // redirect to login page
     });
+
+    //password strength checker
+
+  const passwordInput = document.getElementById('password');
+  const strengthText = document.getElementById('password-strength-text');
+  const strengthBar = document.getElementById('password-strength-bar');
+
+  passwordInput.addEventListener('input', function() {
+    const val = passwordInput.value;
+    const result = checkPasswordStrength(val);
+
+    // Show feedback text (fix: always set .textContent)
+    strengthText.textContent = result.message;
+    strengthText.style.color = result.color;
+
+    // Show progress bar (ensure .value is being updated)
+    strengthBar.value = result.percent;
+    strengthBar.style.setProperty('accent-color', result.color); // for modern browsers
+  });
+
+// The actual strength check function
+function checkPasswordStrength(password) {
+  let strength = 0;
+  if (password.length >= 8) strength++;
+  if (/[A-Z]/.test(password)) strength++;
+  if (/[a-z]/.test(password)) strength++;
+  if (/[0-9]/.test(password)) strength++;
+  if (/[^A-Za-z0-9]/.test(password)) strength++;
+
+  if (password.length < 8) {
+    return { message: 'Too short', percent: 0, color: 'gray' };
+  }
+  if (strength <= 2) {
+    return { message: 'Weak', percent: 34, color: 'red' };
+  }
+  if (strength === 3 || strength === 4) {
+    return { message: 'Medium', percent: 67, color: 'orange' };
+  }
+  return { message: 'Strong', percent: 100, color: 'green' };
+}
+
   </script>
 
 </body>
