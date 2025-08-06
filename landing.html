@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FinTech - Your Personal Finance Manager</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+      color: white;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .landing-container {
+      text-align: center;
+      padding: 40px 20px;
+      max-width: 1000px;
+      width: 100%;
+    }
+    
+    .logo {
+      font-size: clamp(3rem, 8vw, 5rem);
+      font-weight: 800;
+      margin-bottom: 24px;
+      letter-spacing: -0.03em;
+      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      background: linear-gradient(135deg, #3b82f6, #06b6d4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .tagline {
+      font-size: clamp(1.4rem, 3vw, 1.8rem);
+      font-weight: 300;
+      margin-bottom: 16px;
+      opacity: 0.95;
+      line-height: 1.4;
+    }
+    
+    .subtitle {
+      font-size: clamp(1rem, 2.5vw, 1.25rem);
+      margin-bottom: 48px;
+      opacity: 0.85;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+    }
+    
+    .cta-section {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      align-items: center;
+    }
+    
+    .cta-buttons {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    
+    .cta-btn {
+      padding: 16px 32px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border: 2px solid rgba(59, 130, 246, 0.5);
+      border-radius: 12px;
+      background: rgba(59, 130, 246, 0.1);
+      color: white;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      min-width: 160px;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+    
+    .cta-btn:hover {
+      background: rgba(59, 130, 246, 0.2);
+      border-color: rgba(59, 130, 246, 0.8);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(59, 130, 246, 0.2);
+    }
+    
+    .cta-btn.primary {
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      color: white;
+      border-color: #3b82f6;
+    }
+    
+    .cta-btn.primary:hover {
+      background: linear-gradient(135deg, #2563eb, #1e40af);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+    }
+    
+    .features-preview {
+      margin-top: 64px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 32px;
+      opacity: 0.9;
+    }
+    
+    .feature-item {
+      padding: 32px 24px;
+      background: rgba(30, 41, 59, 0.6);
+      border-radius: 16px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      transition: all 0.3s ease;
+    }
+    
+    .feature-item:hover {
+      transform: translateY(-5px);
+      border-color: rgba(59, 130, 246, 0.4);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+    
+    .feature-icon {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, #3b82f6, #06b6d4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .feature-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: #e2e8f0;
+    }
+    
+    .feature-desc {
+      font-size: 1rem;
+      opacity: 0.85;
+      line-height: 1.6;
+      color: #cbd5e1;
+    }
+    
+    .floating-elements {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: -1;
+    }
+    
+    .floating-circle {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(59, 130, 246, 0.1);
+      animation: float 8s ease-in-out infinite;
+    }
+    
+    .circle-1 {
+      width: 120px;
+      height: 120px;
+      top: 15%;
+      left: 8%;
+      animation-delay: 0s;
+    }
+    
+    .circle-2 {
+      width: 180px;
+      height: 180px;
+      top: 65%;
+      right: 10%;
+      animation-delay: 3s;
+    }
+    
+    .circle-3 {
+      width: 100px;
+      height: 100px;
+      bottom: 15%;
+      left: 25%;
+      animation-delay: 6s;
+    }
+    
+    .floating-square {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      background: rgba(6, 182, 212, 0.1);
+      transform: rotate(45deg);
+      animation: float 10s ease-in-out infinite reverse;
+    }
+    
+    .square-1 {
+      top: 25%;
+      right: 20%;
+      animation-delay: 1s;
+    }
+    
+    .square-2 {
+      bottom: 30%;
+      right: 35%;
+      animation-delay: 4s;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.6; }
+      50% { transform: translateY(-30px) rotate(180deg); opacity: 1; }
+    }
+    
+    .tech-stack {
+      margin-top: 80px;
+      padding: 40px 20px;
+      background: rgba(15, 23, 42, 0.8);
+      border-radius: 20px;
+      border: 1px solid rgba(59, 130, 246, 0.2);
+    }
+    
+    .tech-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 24px;
+      color: #e2e8f0;
+    }
+    
+    .tech-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: center;
+    }
+    
+    .tech-item {
+      padding: 8px 16px;
+      background: rgba(59, 130, 246, 0.1);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      border-radius: 20px;
+      font-size: 0.9rem;
+      color: #cbd5e1;
+    }
+    
+    /* Mobile Styles */
+    @media (max-width: 768px) {
+      .landing-container {
+        padding: 32px 16px;
+      }
+      
+      .cta-buttons {
+        flex-direction: column;
+        width: 100%;
+        max-width: 300px;
+        margin: 0 auto;
+      }
+      
+      .cta-btn {
+        width: 100%;
+      }
+      
+      .features-preview {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        margin-top: 48px;
+      }
+      
+      .feature-item {
+        padding: 24px 20px;
+      }
+      
+      .tech-stack {
+        margin-top: 60px;
+        padding: 30px 16px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .subtitle {
+        margin-bottom: 40px;
+      }
+      
+      .features-preview {
+        margin-top: 40px;
+      }
+      
+      .tech-list {
+        gap: 12px;
+      }
+      
+      .tech-item {
+        font-size: 0.8rem;
+        padding: 6px 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="floating-elements">
+    <div class="floating-circle circle-1"></div>
+    <div class="floating-circle circle-2"></div>
+    <div class="floating-circle circle-3"></div>
+    <div class="floating-square square-1"></div>
+    <div class="floating-square square-2"></div>
+  </div>
+
+  <div class="landing-container">
+    <h1 class="logo">FinTech</h1>
+    <p class="tagline">Your Complete Personal Finance Manager</p>
+    <p class="subtitle">A simple and secure app to easily track and manage your personal finances.</p>
+    
+    <div class="cta-section">
+      <div class="cta-buttons">
+        <a href="login.html" class="cta-btn primary">Get Started</a>
+        <a href="home.html" class="cta-btn">View Dashboard</a>
+      </div>
+    </div>
+
+    </div>
+  </div>
+</body>
+</html>
