@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Login</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
     /* Reset some default styles */
     * {
@@ -120,7 +121,13 @@
       <h2>Login</h2>
       <form id="login-form">
         <input type="email" id="email" placeholder="Email" required />
-        <input type="password" id="password" placeholder="Password" required />
+        <div class="password-container" style="position: relative;">
+         <input type="password" id="password" placeholder="Password" required />
+         <i class="fa-solid fa-eye toggle-password" id="togglePassword"
+           style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%);
+            cursor: pointer; color: #888;"></i>
+       </div>
+
 
         <button type="submit">Login</button>
       </form>
@@ -162,6 +169,20 @@
               window.location.href = "home.html";
             }, 1000);
           });
+
+        // Password show/hide toggle
+        const togglePassword = document.getElementById("togglePassword");
+        const passwordInput = document.getElementById("password");
+
+        if (togglePassword && passwordInput) {
+          togglePassword.addEventListener("click", () => {
+            const isPassword = passwordInput.type === "password";
+            passwordInput.type = isPassword ? "text" : "password";
+            togglePassword.classList.toggle("fa-eye");
+            togglePassword.classList.toggle("fa-eye-slash");
+          });
+        }
+
       });
     </script>
   </body>

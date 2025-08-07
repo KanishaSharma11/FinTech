@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Signup</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
     /* Reset some default styles */
 * {
@@ -123,7 +125,12 @@ a:hover {
       <form id="signup-form">
         <input type="text" id="fullName" placeholder="Full Name" required />
         <input type="email" id="email" placeholder="Email" required />
-        <input type="password" id="password" placeholder="Password" required />
+        <div class="password-container" style="position: relative;">
+         <input type="password" id="password" placeholder="Password" required />
+         <i class="fa-solid fa-eye toggle-password" id="togglePassword"
+           style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%);
+            cursor: pointer; color: #888;"></i>
+       </div>
         <button type="submit">Sign up</button>
       </form>
 
@@ -154,6 +161,20 @@ a:hover {
           alert("Signup successful! Redirecting to login...");
           window.location.href = "login.html"; // redirect to login page
         });
+
+         // Password show/hide toggle
+        const togglePassword = document.getElementById("togglePassword");
+        const passwordInput = document.getElementById("password");
+
+        if (togglePassword && passwordInput) {
+          togglePassword.addEventListener("click", () => {
+            const isPassword = passwordInput.type === "password";
+            passwordInput.type = isPassword ? "text" : "password";
+            togglePassword.classList.toggle("fa-eye");
+            togglePassword.classList.toggle("fa-eye-slash");
+          });
+        }
+
     </script>
   </body>
 </html>
