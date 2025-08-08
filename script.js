@@ -1,3 +1,7 @@
+function isValidEmail(email) {
+  const pattern = /^(?!.*[.]{2})[a-zA-Z0-9](\.?[a-zA-Z0-9_-])*@[a-zA-Z0-9-]+(\.[a-zA-Z]{2,})+$/;
+  return pattern.test(email);
+}
 // utils
 function showToast(message, type = 'info', duration = 3000) {
   const container = document.getElementById('toast-container');

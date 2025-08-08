@@ -141,6 +141,7 @@
 
             const email = document.getElementById("email").value.trim();
             const password = document.getElementById("password").value;
+            const emailRegex = /^[a-z][a-z0-9._%+-]{2,}@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
             const storedUser = localStorage.getItem("user_" + email);
             if (!storedUser) {
