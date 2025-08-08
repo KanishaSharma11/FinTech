@@ -6,56 +6,188 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Fintech Dashboard</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f6f8;
+    }
+
+    header {
+      background-color: #1f2d3d;
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header-bar h1 {
+      margin: 0;
+    }
+
+    .logout-link {
+      color: #ff6961;
+      margin-left: 10px;
+      text-decoration: none;
+    }
+
+    main {
+      padding: 2rem;
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+
+    .card {
+      background-color: white;
+      padding: 1.5rem;
+      border-radius: 20px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      text-align: center;
+      transition: transform 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-bottom: 1rem;
+    }
+
+    input, button {
+      margin-top: 0.5rem;
+      padding: 0.5rem;
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 0.9rem;
+    }
+
+    button {
+      background-color: #1f2d3d;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #3c4d63;
+    }
+
+    .clear-btn {
+      background-color: #ff4c4c;
+    }
+
+    .error-msg {
+      color: red;
+      margin-top: 0.3rem;
+    }
+
+    footer {
+      background-color: #1f2d3d;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      margin-top: 3rem;
+    }
+
+    /* === NEWS SECTION === */
+    .news-section {
+      background: white;
+      padding: 2rem;
+      margin-top: 3rem;
+      border-top: 1px solid #ddd;
+      border-radius: 16px;
+    }
+
+    .news-section h2 {
+      margin-bottom: 1rem;
+      font-size: 1.6rem;
+      color: #1f2d3d;
+    }
+
+    #news-articles {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    #news-articles article {
+      padding: 1rem;
+      background-color: #f9f9f9;
+      border-left: 4px solid #1f2d3d;
+      border-radius: 8px;
+    }
+
+    #news-articles article h3 {
+      margin: 0;
+      font-size: 1.1rem;
+    }
+
+    #news-articles article p {
+      margin: 0.3rem 0 0;
+      font-size: 0.9rem;
+      color: #333;
+    }
+
+    @media screen and (max-width: 600px) {
+      .card img {
+        width: 90px;
+        height: 90px;
+      }
+    }
+  </style>
 </head>
 
-<header>
-  <div class="header-bar">
+<body>
+  <header>
+    <div class="header-bar">
       <h1>Fintech</h1>
-
-      <div id="user-info">
-        <!-- Welcome message and logout button will be inserted here -->
-      </div>
     </div>
-</header>
+    <div id="user-info"></div>
+  </header>
 
-<script>
+  <script>
     document.addEventListener("DOMContentLoaded", () => {
       const userInfoDiv = document.getElementById("user-info");
       const username = localStorage.getItem("loggedInUser");
 
       if (username) {
         userInfoDiv.innerHTML = `
-  <span class="username" >Welcome, <strong class="user-welcome">${username}</strong> |</span>
-  <a href="#" id="logout" class="logout-link">Logout</a>
-`;
-
+          <span class="username">Welcome, <strong class="user-welcome">${username}</strong> |</span>
+          <a href="#" id="logout" class="logout-link">Logout</a>
+        `;
         document.getElementById("logout").addEventListener("click", (e) => {
           e.preventDefault();
           localStorage.removeItem("loggedInUser");
-          window.location.href = "login.html"; // Redirect to login page after logout
+          window.location.href = "login.html";
         });
       } else {
-        userInfoDiv.innerHTML = `<a href="login.html" style="color: white;">Logout</a>`;
+        userInfoDiv.innerHTML = `<a href="login.html" style="color: white;">Login</a>`;
       }
     });
   </script>
-  
-<body>
-  <div id="toast-container"></div>
 
   <main>
     <div class="dashboard-grid">
-
       <!-- Stock Prediction -->
       <div class="card stock">
         <h2>Stock Prediction</h2>
-        <img src="image/stock.webp" alt="Stock Image"> 
-        <!-- add Link to see stock chart analysis  -->
-         <ul> 
+        <img src="image/stock.webp" alt="Stock Image">
+        <ul>
           <li class="stockbtn"><a href="stock/singleStock.html">Single Stock & Analytics</a></li>
           <li class="stockbtn"><a href="stock/compareStock.html">Stock Comparison & Analytics</a></li>
-         </ul>
-        <div id="stock-data"></div>
+        </ul>
       </div>
 
       <!-- Gold & Silver Prices -->
@@ -64,8 +196,8 @@
         <img src="image/goldsilver.avif" alt="Gold Silver Image">
         <div id="gold-price">Gold price will appear here</div>
         <div id="silver-price">Silver price will appear here</div>
-        <button id="fetch-prices-btn">Predict & Fetch </button>
-        <div id="status-message" style="color: red;"></div>
+        <button id="fetch-prices-btn">Predict & Fetch</button>
+        <div id="status-message" class="error-msg"></div>
       </div>
 
       <!-- SIP Calculator -->
@@ -108,24 +240,19 @@
         <input type="number" id="amount" placeholder="e.g. 25" min="0" step="0.01" />
         <button id="addExpenseBtn">Add Expense</button>
         <div id="expensesList"></div>
-        <div id="totalAmount">Total: $0.00</div>
+        <div id="totalAmount">Total: ₹0.00</div>
         <button class="clear-btn" id="clearExpensesBtn">Clear All Expenses</button>
       </div>
-
-      <!-- Finance News -->
-      <div class="card">
-        <h2>Finance News</h2>
-        <img src="image/news.avif" alt="News Image">
-        <div id="news-articles">Loading news...</div>
-      </div>
-
-      <div id="confirm-box" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:#fff; padding:1rem; box-shadow:0 0 10px rgba(0,0,0,0.2); border-radius:8px; z-index:9999;">
-        <p id="confirm-msg">Are you sure?</p>
-        <button id="confirm-ok">Yes</button>
-        <button id="confirm-cancel">No</button>
-      </div>
-
     </div>
+
+    <!--  Finance News Section Outside Cards -->
+    <section class="news-section">
+      <h2>📈 Latest Finance News</h2>
+    <div id="news-articles">
+  <p>Loading news...</p> 
+</div>
+
+    </section>
   </main>
 
   <footer>
@@ -133,7 +260,61 @@
   </footer>
 
   <script src="script.js"></script>
+  <script>
+  async function fetchFinanceNews() {
+    const apiKey = "YOUR API KEY";   
+    const url = `https://newsapi.org/v2/top-headlines?category=business&language=en&pageSize=5&apiKey=${apiKey}`;
+
+    const newsContainer = document.getElementById("news-articles");
+
+    try {
+      const res = await fetch(url);
+      if (!res.ok) throw new Error("API error: " + res.status);
+      const data = await res.json();
+
+      if (!data.articles || data.articles.length === 0) {
+        throw new Error("No articles found");
+      }
+
+      newsContainer.innerHTML = ""; 
+
+      data.articles.forEach(article => {
+        const el = document.createElement("article");
+        el.innerHTML = `
+          <h3>${article.title}</h3>
+          <p>${article.description || "No description available."}</p>
+          <a href="${article.url}" target="_blank">Read more</a>
+        `;
+        newsContainer.appendChild(el);
+      });
+
+    } catch (error) {
+      console.error("News fetch failed:", error.message);
+      showHardcodedNews();
+    }
+  }
+
+  function showHardcodedNews() {
+    const newsContainer = document.getElementById("news-articles");
+    newsContainer.innerHTML = `
+      <article>
+        <h3>📈 Markets hit record high as inflation slows</h3>
+        <p>Experts say investor confidence is rising after key data shows slowing inflation.</p>
+      </article>
+      <article>
+        <h3>💰 Gold prices remain stable amid global tensions</h3>
+        <p>Analysts suggest a cautious but steady approach for precious metals.</p>
+      </article>
+      <article>
+        <h3>🏦 RBI holds interest rates steady</h3>
+        <p>The Reserve Bank of India keeps rates unchanged, focusing on inflation control.</p>
+      </article>
+    `;
+  }
+
+  document.addEventListener("DOMContentLoaded", fetchFinanceNews);
+</script>
+
 </body>
 
 </html>
-
