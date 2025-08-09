@@ -277,23 +277,45 @@ button:active {
 
 /* ========== Footer ========== */
 .footer {
-  background-color: #1e1e2f;
-  color: #ccc;
-  padding: 1rem 2rem;
-  text-align: center;
-  font-size: 0.95rem;
-  margin-top: 2rem;
-  border-top: 1px solid #333;
-}
-
-.footer-content p {
-  margin: 0;
-}
-
-.footer strong {
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  background: linear-gradient(90deg, #002f4b, #006494);
   color: #ffffff;
+  text-align: center;
+  padding: 25px 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  font-size: 0.95rem;
 }
 
+.footer p {
+  margin: 0 0 8px;
+}
+
+.footer-links {
+  margin-bottom: 10px;
+}
+
+.footer-links a {
+  color: #ffda79;
+  margin: 0 12px;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+}
+
+.social-icons a {
+  color: white;
+  font-size: 1.2rem;
+  margin: 0 8px;
+  transition: color 0.3s ease;
+}
+
+.social-icons a:hover {
+  color: #ffda79;
+}
 
 /* ========== Loader ========== */
 .loader {
