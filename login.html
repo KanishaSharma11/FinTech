@@ -3,10 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Login</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Login - Fintech</title>
   <style>
-    /* Reset some default styles */
     * {
       margin: 0;
       padding: 0;
@@ -26,8 +24,8 @@
     .container {
       background: #fff;
       padding: 40px 30px;
-      border-radius: 12px;
-      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+      border-radius: 15px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
       width: 100%;
       max-width: 400px;
       text-align: center;
@@ -35,48 +33,45 @@
     }
 
     @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    h1, h2 {
-      color: #333;
-      margin-bottom: 20px;
+    h2 {
+      color: #021223;
+      margin-bottom: 10px;
+      font-size: 1.8rem;
+      font-weight: bold;
     }
 
     p {
       color: #555;
-      margin: 15px 0;
       font-size: 0.95rem;
+      margin-bottom: 20px;
     }
 
-    input[type="text"],
     input[type="email"],
     input[type="password"] {
       width: 100%;
       padding: 12px 14px;
-      margin: 12px 0;
+      margin: 10px 0;
       border: 1px solid #ccc;
       border-radius: 8px;
       font-size: 1rem;
-      transition: all 0.3s ease;
+      transition: 0.3s ease;
+      background: #f9f9f9;
     }
 
     input:focus {
       border-color: #007bff;
-      box-shadow: 0 0 5px rgba(0, 123, 255, 0.4);
+      background: #fff;
+      box-shadow: 0 0 6px rgba(0, 123, 255, 0.4);
       outline: none;
     }
 
     button {
       width: 100%;
-      background-color: #007bff;
+      background: linear-gradient(135deg, #077b9b, #005f73);
       color: #fff;
       border: none;
       padding: 12px;
@@ -84,11 +79,15 @@
       border-radius: 8px;
       margin-top: 15px;
       cursor: pointer;
-      transition: background-color 0.3s ease, transform 0.2s ease;
+      transition: all 0.3s ease;
+      font-weight: bold;
+      letter-spacing: 0.5px;
     }
 
     button:hover {
-      background-color: #0056b3;
+      background: linear-gradient(135deg, #005f73, #077b9b);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
     }
 
     button:active {
@@ -98,6 +97,7 @@
     a {
       color: #007bff;
       text-decoration: none;
+      font-weight: 500;
     }
 
     a:hover {
@@ -108,62 +108,52 @@
       .container {
         padding: 30px 20px;
       }
-
-      h1, h2 {
-        font-size: 1.4rem;
+      h2 {
+        font-size: 1.5rem;
       }
     }
   </style>
 </head>
- <body>
-    <div class="container">
-      <h2>Login</h2>
-      <form id="login-form">
-        <input type="email" id="email" placeholder="Email" required />
-        <input type="password" id="password" placeholder="Password" required />
+<body>
+  <div class="container">
+    <h2>Welcome Back</h2>
+    <p>Log in to access your Fintech dashboard</p>
 
-        <button type="submit">Login</button>
-      </form>
-      <p>Don't have an account? <a href="signup.html">Sign up</a></p>
-    </div>
+    <form id="login-form">
+      <input type="email" id="email" placeholder="Email" required />
+      <input type="password" id="password" placeholder="Password" required />
+      <button type="submit">Login</button>
+    </form>
 
-    <script src="script.js"></script>
+    <p style="margin-top: 15px;">Don't have an account? <a href="signup.html">Sign up</a></p>
+  </div>
 
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        // Assuming createToastContainer and showToast are defined elsewhere
-        createToastContainer();
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("login-form").addEventListener("submit", function (e) {
+        e.preventDefault();
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value;
 
-        document
-          .getElementById("login-form")
-          .addEventListener("submit", function (e) {
-            e.preventDefault();
+        const storedUser = localStorage.getItem("user_" + email);
+        if (!storedUser) {
+          alert("User not found! Please sign up first.");
+          return;
+        }
 
-            const email = document.getElementById("email").value.trim();
-            const password = document.getElementById("password").value;
+        const userData = JSON.parse(storedUser);
+        if (userData.password !== password) {
+          alert("Incorrect password!");
+          return;
+        }
 
-            const storedUser = localStorage.getItem("user_" + email);
-            if (!storedUser) {
-              alert("User not found! Please sign up first.");
-              return;
-            }
-
-            const userData = JSON.parse(storedUser);
-
-            if (userData.password !== password) {
-              alert("Incorrect password!");
-              return;
-            }
-
-            localStorage.setItem("loggedInUser", userData.fullName);
-
-            showToast("Login successful!", "success");
-            setTimeout(() => {
-              window.location.href = "home.html";
-            }, 1000);
-          });
+        localStorage.setItem("loggedInUser", userData.fullName);
+        alert("Login successful!");
+        setTimeout(() => {
+          window.location.href = "home.html";
+        }, 1000);
       });
-    </script>
-  </body>
+    });
+  </script>
+</body>
 </html>
-

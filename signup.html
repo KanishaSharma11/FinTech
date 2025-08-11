@@ -1,160 +1,148 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Signup</title>
   <style>
-    /* Reset some default styles */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #021223, #077b9b);
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-}
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #021223, #077b9b);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
 
-.container {
-  background: #fff;
-  padding: 40px 30px;
-  border-radius: 12px;
-  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
-  width: 100%;
-  max-width: 400px;
-  text-align: center;
-  animation: fadeIn 0.6s ease-in-out;
-}
+    .container {
+      background: #fff;
+      padding: 40px 30px;
+      border-radius: 12px;
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+      animation: fadeIn 0.6s ease-in-out;
+    }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
 
-h1, h2 {
-  color: #333;
-  margin-bottom: 20px;
-}
+    h2 {
+      color: #333;
+      margin-bottom: 20px;
+    }
 
-p {
-  color: #555;
-  margin: 15px 0;
-  font-size: 0.95rem;
-}
+    p {
+      color: #555;
+      margin: 15px 0;
+      font-size: 0.95rem;
+    }
 
-input[type="text"],
-input[type="email"],
-input[type="password"] {
-  width: 100%;
-  padding: 12px 14px;
-  margin: 12px 0;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 1rem;
-  transition: all 0.3s ease;
-}
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 12px 14px;
+      margin: 12px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
 
-input:focus {
-  border-color: #007bff;
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.4);
-  outline: none;
-}
+    input:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 5px rgba(0, 123, 255, 0.4);
+      outline: none;
+    }
 
-button {
-  width: 100%;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  padding: 12px;
-  font-size: 1rem;
-  border-radius: 8px;
-  margin-top: 15px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
+    button {
+      width: 100%;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      padding: 12px;
+      font-size: 1rem;
+      border-radius: 8px;
+      margin-top: 15px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
 
-button:hover {
-  background-color: #0056b3;
-}
+    button:hover {
+      background-color: #0056b3;
+    }
 
-button:active {
-  transform: scale(0.98);
-}
+    button:active {
+      transform: scale(0.98);
+    }
 
-a {
-  color: #007bff;
-  text-decoration: none;
-}
+    a {
+      color: #007bff;
+      text-decoration: none;
+    }
 
-a:hover {
-  text-decoration: underline;
-}
+    a:hover {
+      text-decoration: underline;
+    }
 
-/* Additional small device responsiveness */
-@media (max-width: 480px) {
-  .container {
-    padding: 30px 20px;
-  }
-
-  h1, h2 {
-    font-size: 1.4rem;
-  }
-}
-
-  </style>>
+    @media (max-width: 480px) {
+      .container {
+        padding: 30px 20px;
+      }
+      h2 {
+        font-size: 1.4rem;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-      <h2>Signup</h2>
+  <div class="container">
+    <h2>Signup</h2>
+    <form id="signup-form">
+      <input type="text" id="fullName" placeholder="Full Name" required />
+      <input type="email" id="email" placeholder="Email" required />
+      <input type="password" id="password" placeholder="Password" required />
+      <button type="submit">Sign up</button>
+    </form>
+    <p>Already have an account? <a href="login.html">Login</a></p>
+  </div>
 
-      <form id="signup-form">
-        <input type="text" id="fullName" placeholder="Full Name" required />
-        <input type="email" id="email" placeholder="Email" required />
-        <input type="password" id="password" placeholder="Password" required />
-        <button type="submit">Sign up</button>
-      </form>
+  <script>
+    document.getElementById("signup-form").addEventListener("submit", function (e) {
+      e.preventDefault();
 
-      <p>Already have an account? <a href="login.html">Login</a></p>
-    </div>
-    <script>
-      document
-        .getElementById("signup-form")
-        .addEventListener("submit", function (e) {
-          e.preventDefault(); // stop the form from submitting
+      const fullName = document.getElementById("fullName").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
 
-          const fullName = document.getElementById("fullName").value.trim();
-          const email = document.getElementById("email").value.trim();
-          const password = document.getElementById("password").value;
+      if (!fullName || !email || !password) {
+        alert("Please fill all fields");
+        return;
+      }
 
-          if (!fullName || !email || !password) {
-            alert("Please fill all fields");
-            return;
-          }
+      const userData = { fullName, password };
+      localStorage.setItem("user_" + email, JSON.stringify(userData));
 
-          // store fullName and password as JSON string
-          const userData = {
-            fullName,
-            password,
-          };
-          localStorage.setItem("user_" + email, JSON.stringify(userData));
-
-          alert("Signup successful! Redirecting to login...");
-          window.location.href = "login.html"; // redirect to login page
-        });
-    </script>
-  </body>
+      alert("Signup successful! Redirecting to login...");
+      window.location.href = "login.html";
+    });
+  </script>
+</body>
 </html>
-

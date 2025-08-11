@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Welcome</title>
   <style>
-    /* Reset some default styles */
     * {
       margin: 0;
       padding: 0;
@@ -20,17 +19,50 @@
       justify-content: center;
       align-items: center;
       padding: 20px;
+      overflow: hidden;
+    }
+
+    /* Animated background circles */
+    body::before, body::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.05);
+      animation: float 8s infinite ease-in-out alternate;
+    }
+
+    body::before {
+      width: 300px;
+      height: 300px;
+      top: -100px;
+      left: -100px;
+    }
+
+    body::after {
+      width: 400px;
+      height: 400px;
+      bottom: -150px;
+      right: -150px;
+      animation-delay: 2s;
+    }
+
+    @keyframes float {
+      from { transform: translateY(0); }
+      to { transform: translateY(20px); }
     }
 
     .container {
-      background: #fff;
+      background: rgba(255, 255, 255, 0.12);
       padding: 40px 30px;
-      border-radius: 12px;
-      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       width: 100%;
       max-width: 400px;
       text-align: center;
       animation: fadeIn 0.6s ease-in-out;
+      border: 1px solid rgba(255, 255, 255, 0.2);
     }
 
     @keyframes fadeIn {
@@ -44,32 +76,36 @@
       }
     }
 
-    h1, h2 {
-      color: #333;
-      margin-bottom: 20px;
+    h1 {
+      color: #fff;
+      margin-bottom: 10px;
+      font-size: 1.8rem;
     }
 
     p {
-      color: #555;
+      color: #ddd;
       margin: 15px 0;
-      font-size: 0.95rem;
+      font-size: 1rem;
     }
 
     button {
       width: 100%;
-      background-color: #007bff;
+      background: linear-gradient(90deg, #00b4db, #0083b0);
       color: #fff;
       border: none;
       padding: 12px;
       font-size: 1rem;
+      font-weight: bold;
       border-radius: 8px;
       margin-top: 15px;
       cursor: pointer;
-      transition: background-color 0.3s ease, transform 0.2s ease;
+      transition: all 0.3s ease;
     }
 
     button:hover {
-      background-color: #0056b3;
+      background: linear-gradient(90deg, #0083b0, #00b4db);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 180, 219, 0.4);
     }
 
     button:active {
@@ -77,7 +113,7 @@
     }
 
     a {
-      color: #007bff;
+      color: #00b4db;
       text-decoration: none;
     }
 
@@ -90,7 +126,7 @@
         padding: 30px 20px;
       }
 
-      h1, h2 {
+      h1 {
         font-size: 1.4rem;
       }
     }
