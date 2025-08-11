@@ -1,0 +1,26 @@
+{
+  "name": "fintech",
+  "version": "1.0.0",
+  "description": "![FinTech Banner](image/home.png) <!-- Replace with your actual image path -->",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KanishaSharma11/FinTech.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KanishaSharma11/FinTech/issues"
+  },
+  "homepage": "https://github.com/KanishaSharma11/FinTech#readme",
+  "dependencies": {
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "node-fetch": "^2.7.0"
+  }
+}

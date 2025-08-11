@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Login</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
   <style>
-    /* Reset some default styles */
     * {
       margin: 0;
       padding: 0;
@@ -15,22 +14,25 @@
 
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #021223, #077b9b);
-      min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 20px;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #f8fafc, #e3eaf2);
+      padding: 0;
     }
 
     .container {
       background: #fff;
-      padding: 40px 30px;
-      border-radius: 12px;
-      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+      padding: 32px 28px;
+      border-radius: 10px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.07);
       width: 100%;
-      max-width: 400px;
-      text-align: center;
+      max-width: 350px;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       animation: fadeIn 0.6s ease-in-out;
     }
 
@@ -45,59 +47,96 @@
       }
     }
 
-    h1, h2 {
-      color: #333;
-      margin-bottom: 20px;
+    h2 {
+      color: #222;
+      font-size: 1.7rem;
+      font-weight: 600;
+      margin-bottom: 24px;
+      text-align: center;
+      width: 100%;
     }
 
-    p {
-      color: #555;
-      margin: 15px 0;
-      font-size: 0.95rem;
+    .form-group {
+      width: 100%;
+      margin-bottom: 18px;
+      display: flex;
+      flex-direction: column;
     }
 
-    input[type="text"],
+    label {
+      font-size: 1rem;
+      color: #444;
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+
     input[type="email"],
     input[type="password"] {
       width: 100%;
-      padding: 12px 14px;
-      margin: 12px 0;
-      border: 1px solid #ccc;
-      border-radius: 8px;
+      padding: 11px 13px;
+      border: 1px solid #dbe2ea;
+      border-radius: 7px;
       font-size: 1rem;
-      transition: all 0.3s ease;
+      background: #f7f9fb;
+      transition: border-color 0.25s, box-shadow 0.25s;
+      outline: none;
     }
 
     input:focus {
       border-color: #007bff;
-      box-shadow: 0 0 5px rgba(0, 123, 255, 0.4);
-      outline: none;
+      box-shadow: 0 0 0 2px #e3f0ff;
+      background: #fff;
     }
 
-    button {
+    .login-btn {
       width: 100%;
       background-color: #007bff;
       color: #fff;
       border: none;
-      padding: 12px;
-      font-size: 1rem;
-      border-radius: 8px;
-      margin-top: 15px;
+      padding: 13px;
+      font-size: 1.08rem;
+      border-radius: 7px;
+      font-weight: 600;
+      margin-top: 8px;
       cursor: pointer;
-      transition: background-color 0.3s ease, transform 0.2s ease;
+      transition: background 0.2s, box-shadow 0.2s;
+      box-shadow: 0 2px 8px rgba(0,123,255,0.07);
     }
 
-    button:hover {
+    .login-btn:hover {
       background-color: #0056b3;
+      box-shadow: 0 4px 16px rgba(0,123,255,0.10);
     }
 
-    button:active {
-      transform: scale(0.98);
+    .forgot-link {
+      display: block;
+      margin: 16px 0 0 0;
+      text-align: center;
+      color: #007bff;
+      font-size: 0.97rem;
+      text-decoration: none;
+      font-weight: 500;
+      opacity: 0.85;
+      transition: opacity 0.2s;
+    }
+
+    .forgot-link:hover {
+      opacity: 1;
+      text-decoration: underline;
+    }
+
+    p {
+      color: #555;
+      margin: 18px 0 0 0;
+      font-size: 0.97rem;
+      text-align: center;
+      width: 100%;
     }
 
     a {
       color: #007bff;
       text-decoration: none;
+      font-weight: 500;
     }
 
     a:hover {
@@ -106,65 +145,84 @@
 
     @media (max-width: 480px) {
       .container {
-        padding: 30px 20px;
+        padding: 22px 10px;
+        max-width: 98vw;
       }
 
-      h1, h2 {
-        font-size: 1.4rem;
+      h2 {
+        font-size: 1.2rem;
       }
     }
   </style>
 </head>
- <body>
-    <div class="container">
-      <h2>Login</h2>
-      <form id="login-form">
-        <input type="email" id="email" placeholder="Email" required />
-        <input type="password" id="password" placeholder="Password" required />
+<body>
+  <div class="container">
+    <h2>Login</h2>
+    <form id="login-form" autocomplete="on">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="Enter your email" required autofocus />
+      </div>
+      <div class="form-group" style="margin-bottom:8px; position:relative;">
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Enter your password" required />
+        <span id="togglePassword" style="position:absolute; right:13px; top:38px; cursor:pointer; font-size:0.97rem; color:#007bff; user-select:none;">Show</span>
+      </div>
+      <button type="submit" class="login-btn">Login</button>
+      <a href="#" class="forgot-link">Forgot Password?</a>
+    </form>
+    <p>Don't have an account? <a href="signup.html">Sign up</a></p>
+  </div>
 
-        <button type="submit">Login</button>
-      </form>
-      <p>Don't have an account? <a href="signup.html">Sign up</a></p>
-    </div>
+  <script src="script.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      createToastContainer();
 
-    <script src="script.js"></script>
+      document.getElementById("login-form").addEventListener("submit", function (e) {
+        e.preventDefault();
 
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        // Assuming createToastContainer and showToast are defined elsewhere
-        createToastContainer();
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value;
+        const storedUser = localStorage.getItem("user_" + email);
 
-        document
-          .getElementById("login-form")
-          .addEventListener("submit", function (e) {
-            e.preventDefault();
+        if (!storedUser) {
+          showToast("User not found! Please sign up first.", "error");
+          return;
+        }
 
-            const email = document.getElementById("email").value.trim();
-            const password = document.getElementById("password").value;
-            const emailRegex = /^[a-z][a-z0-9._%+-]{2,}@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        const userData = JSON.parse(storedUser);
 
-            const storedUser = localStorage.getItem("user_" + email);
-            if (!storedUser) {
-              alert("User not found! Please sign up first.");
-              return;
-            }
+        if (userData.password !== password) {
+          showToast("Incorrect password!", "error");
+          return;
+        }
 
-            const userData = JSON.parse(storedUser);
-
-            if (userData.password !== password) {
-              alert("Incorrect password!");
-              return;
-            }
-
-            localStorage.setItem("loggedInUser", userData.fullName);
-
-            showToast("Login successful!", "success");
-            setTimeout(() => {
-              window.location.href = "home.html";
-            }, 1000);
-          });
+        localStorage.setItem("loggedInUser", userData.fullName);
+        showToast("Login successful!", "success");
+        setTimeout(() => {
+          window.location.href = "home.html";
+        }, 1000);
       });
-    </script>
-  </body>
-</html>
 
+      document.querySelector(".forgot-link").addEventListener("click", function (e) {
+        e.preventDefault();
+        showToast("Password recovery is not implemented.", "info");
+      });
+
+      const passwordInput = document.getElementById("password");
+      const togglePassword = document.getElementById("togglePassword");
+
+      togglePassword.addEventListener("click", () => {
+        if (passwordInput.type === "password") {
+          passwordInput.type = "text";
+          togglePassword.textContent = "Hide";
+        } else {
+          passwordInput.type = "password";
+          togglePassword.textContent = "Show";
+        }
+      });
+    });
+  </script>
+</body>
+</html>

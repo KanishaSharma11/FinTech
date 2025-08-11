@@ -6,6 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Fintech Dashboard</title>
   <link rel="stylesheet" href="style.css" />
+  <!-- Using Font Awesome icons  -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"> /
 </head>
 
 <body>
@@ -132,14 +134,64 @@
       </div>
 
     </div>
+
+      <!-- Contact Form -->
+    <div class="card">
+        <h2>Contect Us Form</h2>
+           <section class="contact-section">
+    <div class="container">
+      <p class="intro-text">
+        Have questions, feedback, or collaboration ideas? Reach out to us!
+      </p>
+
+      <div class="contact-grid">
+        <form class="contact-form">
+          <label for="name">Name</label>
+          <input type="text" id="name" placeholder="Your Name" required />
+
+          <label for="email">Email</label>
+          <input type="email" id="email" placeholder="you@example.com" required />
+
+          <label for="message">Message</label>
+          <textarea id="message" placeholder="Your message..." rows="5" required></textarea>
+
+          <button type="submit">Send Message</button>
+        </form>
+          <!-- Social & Contact Info -->
+        <div class="contact-info">
+          <h2>Our Team</h2>
+          <p>Email: devteam@example.com</p>
+          <p>Phone: +1 234 567 890</p>
+          <div class="social-links">
+            <a href="https://github.com/yourteam" target="_blank">GitHub</a>
+            <a href="https://linkedin.com/in/yourteam" target="_blank">LinkedIn</a>
+            <a href="https://twitter.com/yourteam" target="_blank">Twitter</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+       
+        <div id="mf-error" class="error-msg"></div>
+        <div id="mf-results"></div>
+      </div>
   </main>
 
   <footer class="footer">
-    <div class="footer-content">
-      <p>&copy; 2025 <strong>Fintech Dashboard</strong>. All rights reserved.</p>
+    <p>© 2025 <strong>Fintech Dashboard</strong>. All rights reserved.</p>
+  
+    <div class="footer-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+      <a href="#">Contact Us</a>
+    </div>
+
+    <div class="social-icons">
+      <a href="#"><i class="fab fa-twitter"></i></a>
+      <a href="#"><i class="fab fa-linkedin"></i></a>
+      <a href="#"><i class="fab fa-github"></i></a>
     </div>
   </footer>
-  
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
