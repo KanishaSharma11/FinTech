@@ -130,31 +130,43 @@ a:hover {
       <p>Already have an account? <a href="login.html">Login</a></p>
     </div>
     <script>
-      document
-        .getElementById("signup-form")
-        .addEventListener("submit", function (e) {
-          e.preventDefault(); // stop the form from submitting
+  function isValidEmail(email) {
+    const pattern = /^[a-z0-9]{2,}([._-]?[a-z0-9]+)*@[a-z0-9-]+(\.(com|net|org|in|co\.in))$/;
 
-          const fullName = document.getElementById("fullName").value.trim();
-          const email = document.getElementById("email").value.trim();
-          const password = document.getElementById("password").value;
 
-          if (!fullName || !email || !password) {
-            alert("Please fill all fields");
-            return;
-          }
+    return pattern.test(email);
+  }
 
-          // store fullName and password as JSON string
-          const userData = {
-            fullName,
-            password,
-          };
-          localStorage.setItem("user_" + email, JSON.stringify(userData));
+  document.getElementById("signup-form").addEventListener("submit", function (e) {
+    e.preventDefault(); // stop the form from submitting
 
-          alert("Signup successful! Redirecting to login...");
-          window.location.href = "login.html"; // redirect to login page
-        });
-    </script>
+    const fullName = document.getElementById("fullName").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+
+    if (!fullName || !email || !password) {
+      alert("Please fill all fields");
+      return;
+    }
+
+    // email validation check
+   if (!isValidEmail(email)) {
+    alert("Please enter a valid email address");
+    return; // <-- stops here, won't save or show success
+    }
+
+    // store fullName and password as JSON string
+    const userData = {
+      fullName,
+      password,
+    };
+    localStorage.setItem("user_" + email, JSON.stringify(userData));
+
+    alert("Signup successful! Redirecting to login...");
+    window.location.href = "login.html"; // redirect to login page
+  });
+</script>
+
   </body>
 </html>
 
