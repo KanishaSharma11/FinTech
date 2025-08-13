@@ -15,22 +15,25 @@
 
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #021223, #077b9b);
-      min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 20px;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #f8fafc, #e3eaf2);
+      padding: 0;
     }
 
     .container {
       background: #fff;
-      padding: 40px 30px;
-      border-radius: 12px;
-      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+      padding: 32px 28px;
+      border-radius: 10px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.07);
       width: 100%;
-      max-width: 400px;
-      text-align: center;
+      max-width: 350px;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       animation: fadeIn 0.6s ease-in-out;
     }
 
@@ -45,17 +48,236 @@
       }
     }
 
+    h2 {
+      color: #222;
+      font-size: 1.7rem;
+      font-weight: 600;
+      margin-bottom: 24px;
+      letter-spacing: 0.5px;
+      text-align: center;
+      width: 100%;
+    }
+
+    .form-group {
+      width: 100%;
+      margin-bottom: 18px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-size: 1rem;
+      color: #444;
+      margin-bottom: 6px;
+      font-weight: 500;
+      letter-spacing: 0.2px;
+    }
+
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 11px 13px;
+      border: 1px solid #dbe2ea;
+      border-radius: 7px;
+      font-size: 1rem;
+      background: #f7f9fb;
+      transition: border-color 0.25s, box-shadow 0.25s;
+      outline: none;
+    }
+
+    input[type="email"]:focus,
+    input[type="password"]:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 0 2px #e3f0ff;
+      background: #fff;
+    }
+
+    .login-btn {
+      width: 100%;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      padding: 13px;
+      font-size: 1.08rem;
+      border-radius: 7px;
+      font-weight: 600;
+      margin-top: 8px;
+      cursor: pointer;
+      transition: background 0.2s, box-shadow 0.2s;
+      box-shadow: 0 2px 8px rgba(0,123,255,0.07);
+    }
+
+    .login-btn:hover {
+      background-color: #0056b3;
+      box-shadow: 0 4px 16px rgba(0,123,255,0.10);
+    }
+
+    .forgot-link {
+      display: block;
+      margin: 16px 0 0 0;
+      text-align: center;
+      color: #007bff;
+      font-size: 0.97rem;
+      text-decoration: none;
+      font-weight: 500;
+      opacity: 0.85;
+      transition: opacity 0.2s;
+    }
+
+    .forgot-link:hover {
+      opacity: 1;
+      text-decoration: underline;
+    }
+
+    p {
+      color: #555;
+      margin: 18px 0 0 0;
+      font-size: 0.97rem;
+      text-align: center;
+      width: 100%;
+    }
+
+    a {
+      color: #007bff;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 22px 10px;
+        max-width: 98vw;
+      }
+
+      h2 {
+        font-size: 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Login</h2>
+    <form id="login-form" autocomplete="on">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="Enter your email" required autofocus />
+      </div>
+      <div class="form-group" style="margin-bottom:8px; position:relative;">
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Enter your password" required />
+        <span id="togglePassword" style="position:absolute; right:13px; top:38px; cursor:pointer; font-size:0.97rem; color:#007bff; user-select:none;">Show</span>
+      </div>
+      <button type="submit" class="login-btn">Login</button>
+      <a href="#" class="forgot-link">Forgot Password?</a>
+    </form>
+    <p>Don't have an account? <a href="signup.html">Sign up</a></p>
+  </div>
+  <script src="script.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      createToastContainer();
+      document.getElementById("login-form").addEventListener("submit", function (e) {
+        e.preventDefault();
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value;
+        const storedUser = localStorage.getItem("user_" + email);
+        if (!storedUser) {
+          showToast("User not found! Please sign up first.", "error");
+          return;
+        }
+        const userData = JSON.parse(storedUser);
+        if (userData.password !== password) {
+          showToast("Incorrect password!", "error");
+          return;
+        }
+        localStorage.setItem("loggedInUser", userData.fullName);
+        showToast("Login successful!", "success");
+        setTimeout(() => {
+          window.location.href = "home.html";
+        }, 1000);
+      });
+      // Forgot Password link (demo only)
+      document.querySelector('.forgot-link').addEventListener('click', function(e) {
+        e.preventDefault();
+        showToast("Password recovery is not implemented.", "info");
+      });
+      // Show/hide password toggle
+      const passwordInput = document.getElementById("password");
+      const togglePassword = document.getElementById("togglePassword");
+      togglePassword.addEventListener("click", () => {
+        if (passwordInput.type === "password") {
+          passwordInput.type = "text";
+          togglePassword.textContent = "Hide";
+        } else {
+          passwordInput.type = "password";
+          togglePassword.textContent = "Show";
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+
+<!-- 
+====== Previous login.html code (classic version) ======
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Login</title>
+  <style>
+    /* Reset some default styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #021223, #077b9b);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    .container {
+      background: #fff;
+      padding: 40px 30px;
+      border-radius: 12px;
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+      animation: fadeIn 0.6s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
     h1, h2 {
       color: #333;
       margin-bottom: 20px;
     }
-
     p {
       color: #555;
       margin: 15px 0;
       font-size: 0.95rem;
     }
-
     input[type="text"],
     input[type="email"],
     input[type="password"] {
@@ -67,13 +289,11 @@
       font-size: 1rem;
       transition: all 0.3s ease;
     }
-
     input:focus {
       border-color: #007bff;
       box-shadow: 0 0 5px rgba(0, 123, 255, 0.4);
       outline: none;
     }
-
     button {
       width: 100%;
       background-color: #007bff;
@@ -86,84 +306,82 @@
       cursor: pointer;
       transition: background-color 0.3s ease, transform 0.2s ease;
     }
-
     button:hover {
       background-color: #0056b3;
     }
-
     button:active {
       transform: scale(0.98);
     }
-
     a {
       color: #007bff;
       text-decoration: none;
     }
-
     a:hover {
       text-decoration: underline;
     }
-
     @media (max-width: 480px) {
       .container {
         padding: 30px 20px;
       }
-
       h1, h2 {
         font-size: 1.4rem;
       }
     }
   </style>
 </head>
- <body>
-    <div class="container">
-      <h2>Login</h2>
-      <form id="login-form">
-        <input type="email" id="email" placeholder="Email" required />
+<body>
+  <div class="container">
+    <h2>Login</h2>
+    <form id="login-form">
+      <input type="email" id="email" placeholder="Email" required autofocus />
+      <div style="position:relative;">
         <input type="password" id="password" placeholder="Password" required />
-
-        <button type="submit">Login</button>
-      </form>
-      <p>Don't have an account? <a href="signup.html">Sign up</a></p>
-    </div>
-
-    <script src="script.js"></script>
-
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        // Assuming createToastContainer and showToast are defined elsewhere
-        createToastContainer();
-
-        document
-          .getElementById("login-form")
-          .addEventListener("submit", function (e) {
-            e.preventDefault();
-
-            const email = document.getElementById("email").value.trim();
-            const password = document.getElementById("password").value;
-
-            const storedUser = localStorage.getItem("user_" + email);
-            if (!storedUser) {
-              alert("User not found! Please sign up first.");
-              return;
-            }
-
-            const userData = JSON.parse(storedUser);
-
-            if (userData.password !== password) {
-              alert("Incorrect password!");
-              return;
-            }
-
-            localStorage.setItem("loggedInUser", userData.fullName);
-
-            showToast("Login successful!", "success");
-            setTimeout(() => {
-              window.location.href = "home.html";
-            }, 1000);
-          });
+        <span id="togglePassword" style="position:absolute; right:12px; top:16px; cursor:pointer; font-size:0.95rem; color:#007bff;">Show</span>
+      </div>
+      <button type="submit">Login</button>
+    </form>
+    <p>Don't have an account? <a href="signup.html">Sign up</a></p>
+  </div>
+  <script src="script.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // Assuming createToastContainer and showToast are defined elsewhere
+      createToastContainer();
+      document.getElementById("login-form").addEventListener("submit", function (e) {
+        e.preventDefault();
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value;
+        const storedUser = localStorage.getItem("user_" + email);
+        if (!storedUser) {
+          alert("User not found! Please sign up first.");
+          return;
+        }
+        const userData = JSON.parse(storedUser);
+        if (userData.password !== password) {
+          alert("Incorrect password!");
+          return;
+        }
+        localStorage.setItem("loggedInUser", userData.fullName);
+        showToast("Login successful!", "success");
+        setTimeout(() => {
+          window.location.href = "home.html";
+        }, 1000);
       });
-    </script>
-  </body>
+      // Show/hide password toggle
+      const passwordInput = document.getElementById("password");
+      const togglePassword = document.getElementById("togglePassword");
+      togglePassword.addEventListener("click", () => {
+        if (passwordInput.type === "password") {
+          passwordInput.type = "text";
+          togglePassword.textContent = "Hide";
+        } else {
+          passwordInput.type = "password";
+          togglePassword.textContent = "Show";
+        }
+      });
+    });
+  </script>
+</body>
 </html>
+-->
 

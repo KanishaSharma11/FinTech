@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Fintech Dashboard</title>
   <link rel="stylesheet" href="style.css" />
+<<<<<<< HEAD
   <style>
     
     body {
@@ -147,12 +148,17 @@
       }
     }
   </style>
+=======
+  <!-- Using Font Awesome icons  -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"> /
+>>>>>>> upstream/main
 </head>
 
 <body>
   <header>
     <div class="header-bar">
       <h1>Fintech</h1>
+<<<<<<< HEAD
     </div>
     <div id="user-info"></div>
   </header>
@@ -177,6 +183,15 @@
       }
     });
   </script>
+=======
+      <div id="user-info">
+        <!-- Welcome message and logout button will be inserted here -->
+      </div>
+    </div>
+  </header>
+
+  <div id="toast-container"></div>
+>>>>>>> upstream/main
 
   <main>
     <div class="dashboard-grid">
@@ -188,6 +203,10 @@
           <li class="stockbtn"><a href="stock/singleStock.html">Single Stock & Analytics</a></li>
           <li class="stockbtn"><a href="stock/compareStock.html">Stock Comparison & Analytics</a></li>
         </ul>
+<<<<<<< HEAD
+=======
+        <div id="stock-data"></div>
+>>>>>>> upstream/main
       </div>
 
       <!-- Gold & Silver Prices -->
@@ -197,7 +216,11 @@
         <div id="gold-price">Gold price will appear here</div>
         <div id="silver-price">Silver price will appear here</div>
         <button id="fetch-prices-btn">Predict & Fetch</button>
+<<<<<<< HEAD
         <div id="status-message" class="error-msg"></div>
+=======
+        <div id="status-message" style="color: red;"></div>
+>>>>>>> upstream/main
       </div>
 
       <!-- SIP Calculator -->
@@ -255,9 +278,47 @@
     </section>
   </main>
 
-  <footer>
-    <p>&copy; 2025 Fintech Dashboard. All rights reserved.</p>
-  </footer>
+  <div class="footer">
+    <p>© 2025 <strong>Fintech Dashboard</strong>. All rights reserved.</p>
+  
+    <div class="footer-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+      <a href="#">Contact Us</a>
+    </div>
+
+    <div class="social-icons">
+      <a href="#"><i class="fab fa-twitter"></i></a>
+      <a href="#"><i class="fab fa-linkedin"></i></a>
+      <a href="#"><i class="fab fa-github"></i></a>
+    </div>
+  </div>
+ </footer>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const userInfoDiv = document.getElementById("user-info");
+      const username = localStorage.getItem("loggedInUser");
+
+      if (username) {
+        userInfoDiv.innerHTML = `
+  <span class="username">Welcome, <strong class="user-welcome">${username}</strong></span>
+  <a href="#" id="logout" class="btn logout-btn">Logout</a>
+`;
+
+        document.getElementById("logout").addEventListener("click", (e) => {
+          e.preventDefault();
+          localStorage.removeItem("loggedInUser");
+          window.location.href = "login.html"; // redirect to login
+        });
+      } else {
+        userInfoDiv.innerHTML = `
+          <a href="login.html" class="btn">Login</a>
+          <a href="signup.html" class="btn">Sign Up</a>
+        `;
+      }
+    });
+  </script>
 
   <script src="script.js"></script>
   <script>
