@@ -192,6 +192,13 @@ function showRandomTip() {
     toast.className = "toast-message";
     toast.textContent = tip;
 
+    // Create close button
+    const closeBtn = document.createElement("button");
+    closeBtn.className = "toast-close-btn";
+    closeBtn.innerHTML = "&times;";
+    closeBtn.addEventListener("click", () => toast.remove());
+
+    toast.appendChild(closeBtn);
     toastContainer.appendChild(toast);
 
     setTimeout(() => {
@@ -204,15 +211,47 @@ showTipBtn.addEventListener("click", showRandomTip);
 // ===== Toast Styling =====
 const style = document.createElement("style");
 style.textContent = `
+#toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    z-index: 9999;
+}
+
 .toast-message {
+    position: relative;
+    max-width: 250px; /* make it smaller */
     background: #333;
     color: white;
-    padding: 12px 16px;
+    padding: 12px 35px 12px 12px;
     margin-top: 10px;
     border-radius: 6px;
     box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     animation: fadeInOut 5s ease forwards;
+    font-size: 0.95rem;
+    word-wrap: break-word;
 }
+
+.toast-close-btn {
+    position: absolute;
+    top: 6px;
+    right: 8px;
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    opacity: 0.7;
+    line-height: 1;
+    width:20px;
+}
+.toast-close-btn:hover {
+    opacity: 1;
+}
+
 @keyframes fadeInOut {
     0% {opacity: 0; transform: translateY(-10px);}
     10% {opacity: 1; transform: translateY(0);}
