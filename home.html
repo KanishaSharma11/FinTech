@@ -6,41 +6,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Fintech Dashboard</title>
   <link rel="stylesheet" href="style.css" />
+  <!-- Using Font Awesome icons  -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"> /
 </head>
 
-<header>
-  <div class="header-bar">
+<body>
+  <header>
+    <div class="header-bar">
       <h1>Fintech</h1>
-
       <div id="user-info">
         <!-- Welcome message and logout button will be inserted here -->
       </div>
     </div>
-</header>
+  </header>
 
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const userInfoDiv = document.getElementById("user-info");
-      const username = localStorage.getItem("loggedInUser");
-
-      if (username) {
-        userInfoDiv.innerHTML = `
-  <span class="username" >Welcome, <strong class="user-welcome">${username}</strong> |</span>
-  <a href="#" id="logout" class="logout-link">Logout</a>
-`;
-
-        document.getElementById("logout").addEventListener("click", (e) => {
-          e.preventDefault();
-          localStorage.removeItem("loggedInUser");
-          window.location.href = "login.html"; // Redirect to login page after logout
-        });
-      } else {
-        userInfoDiv.innerHTML = `<a href="login.html" style="color: white;">Logout</a>`;
-      }
-    });
-  </script>
-  
-<body>
   <div id="toast-container"></div>
 
   <main>
@@ -49,12 +28,11 @@
       <!-- Stock Prediction -->
       <div class="card stock">
         <h2>Stock Prediction</h2>
-        <img src="image/stock.webp" alt="Stock Image"> 
-        <!-- add Link to see stock chart analysis  -->
-         <ul> 
+        <img src="image/stock.webp" alt="Stock Image">
+        <ul>
           <li class="stockbtn"><a href="stock/singleStock.html">Single Stock & Analytics</a></li>
           <li class="stockbtn"><a href="stock/compareStock.html">Stock Comparison & Analytics</a></li>
-         </ul>
+        </ul>
         <div id="stock-data"></div>
       </div>
 
@@ -64,7 +42,7 @@
         <img src="image/goldsilver.avif" alt="Gold Silver Image">
         <div id="gold-price">Gold price will appear here</div>
         <div id="silver-price">Silver price will appear here</div>
-        <button id="fetch-prices-btn">Predict & Fetch </button>
+        <button id="fetch-prices-btn">Predict & Fetch</button>
         <div id="status-message" style="color: red;"></div>
       </div>
 
@@ -112,6 +90,36 @@
         <button class="clear-btn" id="clearExpensesBtn">Clear All Expenses</button>
       </div>
 
+      <!-- Currency Convertor -->
+      <div class="card">
+        <h2>Currency Converter</h2>
+        <img src="image/CurrencyConvertorImage.jpg" alt="Currency Image">
+        
+        <label for="amountToConvert">Amount:</label>
+        <input type="number" id="amountToConvert" placeholder="e.g., 100" />
+
+        <label for="fromCurrency">From:</label>
+        <select id="fromCurrency">
+          <option value="INR">INR</option>
+          <option value="USD">USD</option>
+          <option value="EUR">EUR</option>
+          <option value="GBP">GBP</option>
+          <option value="JPY">JPY</option>
+        </select>
+
+        <label for="toCurrency">To:</label>
+        <select id="toCurrency">
+          <option value="USD">USD</option>
+          <option value="INR">INR</option>
+          <option value="EUR">EUR</option>
+          <option value="GBP">GBP</option>
+          <option value="JPY">JPY</option>
+        </select>
+
+        <button onclick="convertCurrency()">Convert</button>
+        <div id="conversionResult"></div>
+    </div>
+
       <!-- Finance News -->
       <div class="card">
         <h2>Finance News</h2>
@@ -126,14 +134,99 @@
       </div>
 
     </div>
+
+      <!-- Contact Form -->
+    <footer>
+      <div class="image-contact">
+        <img class="image-con" src="./flat-line-design-website-banner-development-process-idea-to-realization-modern-vector-illustration-web-69537597.jpg" alt="Contact Image">
+      </div>
+    <div class="card">
+        <h2>Contect Us Form</h2>
+           <section class="contact-section">
+    <div class="container">
+      <p class="intro-text">
+        Have questions, feedback, or collaboration ideas? Reach out to us!
+      </p>
+
+      <div class="contact-grid">
+        <form class="contact-form">
+          <label for="name">Name</label>
+          <input type="text" id="name" placeholder="Enter your name " required />
+
+          <label for="email">Email</label>
+          <input type="email" id="email" placeholder="Enter your mail" required />
+
+          <label for="message">Message</label>
+          <textarea id="message" placeholder="Enter your message" required></textarea>
+
+          <button type="submit">Send Message</button>
+        </form>
+          <!-- Social & Contact Info -->
+        <div class="contact-info">
+          <h2>Our Team</h2>
+          <p>Email: devteam@example.com</p>
+          <p>Phone: +1 234 567 890</p>
+          <div class="social-links">
+            <a href="https://twitter.com/yourteam"><i class="fab fa-twitter"></i></a>
+            <a href="https://www.linkedin.com/in/kanisha-sharma11/"><i class="fab fa-linkedin"></i></a>
+            <a href="https://github.com/KanishaSharma11"><i class="fab fa-github"></i></a>
+          </div>
+          <p class="social-text">Have questions or ready to explore fintech solutions? We’d love to hear from you! Reach out via email, phone, or the form below—let’s discuss how we can innovate finance together. Your vision starts with a conversation.</p>
+        </div>
+      </div>
+      <p class="ending-text">Connect with us. Innovation starts with a conversation.</p>
+    </div>
+  <!-- https://twitter.com/yourteam -->
+   <!-- "https://github.com/KanishaSharma11" -->
+       
+        <div id="mf-error" class="error-msg"></div>
+        <div id="mf-results"></div>
+      </div>
   </main>
 
-  <footer>
-    <p>&copy; 2025 Fintech Dashboard. All rights reserved.</p>
-  </footer>
+  <div class="footer">
+    <p>© 2025 <strong>Fintech Dashboard</strong>. All rights reserved.</p>
+  
+    <div class="footer-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+      <a href="#">Contact Us</a>
+    </div>
+
+    <div class="social-icons">
+      <a href="#"><i class="fab fa-twitter"></i></a>
+      <a href="#"><i class="fab fa-linkedin"></i></a>
+      <a href="#"><i class="fab fa-github"></i></a>
+    </div>
+  </div>
+ </footer>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const userInfoDiv = document.getElementById("user-info");
+      const username = localStorage.getItem("loggedInUser");
+
+      if (username) {
+        userInfoDiv.innerHTML = `
+  <span class="username">Welcome, <strong class="user-welcome">${username}</strong></span>
+  <a href="#" id="logout" class="btn logout-btn">Logout</a>
+`;
+
+        document.getElementById("logout").addEventListener("click", (e) => {
+          e.preventDefault();
+          localStorage.removeItem("loggedInUser");
+          window.location.href = "login.html"; // redirect to login
+        });
+      } else {
+        userInfoDiv.innerHTML = `
+          <a href="login.html" class="btn">Login</a>
+          <a href="signup.html" class="btn">Sign Up</a>
+        `;
+      }
+    });
+  </script>
 
   <script src="script.js"></script>
 </body>
 
 </html>
-

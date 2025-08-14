@@ -1,3 +1,4 @@
+
 * {
   margin: 0;
   padding: 0;
@@ -23,10 +24,43 @@ header {
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
+.header-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 header h1 {
   margin: 0;
 }
 
+/* ========== Auth Buttons ========== */
+.auth-buttons {
+  display: flex;
+  align-items: center;
+}
+
+.username {
+  margin-right: 1rem;
+  font-weight: 500;
+  font-size: 1.22rem;
+}
+
+.btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  background-color: #1a73e8;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+  margin-left: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.logout-btn:hover {
+  background-color: #c62828;
+}
 
 .logout-link {
   color: white;
@@ -34,15 +68,11 @@ header h1 {
   text-decoration: none;
 }
 
-.username,
-.logout-link {
-  font-size: 1.22rem;
-}
-
 @media (max-width: 570px) {
   #user-info {
     display: flex;
     flex-direction: column;
+    align-items: flex-end;
   }
 
   .logout-link {
@@ -145,7 +175,6 @@ section {
   font-size: 1.1rem;
   color: #086bd4;
   font-weight: bold;
-
 }
 .stockbtn:hover{
   background-color: #007bff; 
@@ -247,9 +276,45 @@ button:active {
 .toast.info    { background-color: #2196f3; }
 
 /* ========== Footer ========== */
-#footer {
-  color: white;
+.footer {
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  background: linear-gradient(90deg, #002f4b, #006494);
+  color: #ffffff;
   text-align: center;
+  padding: 25px 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  font-size: 0.95rem;
+}
+
+.footer p {
+  margin: 0 0 8px;
+}
+
+.footer-links {
+  margin-bottom: 10px;
+}
+
+.footer-links a {
+  color: #ffda79;
+  margin: 0 12px;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+}
+
+.social-icons a {
+  color: white;
+  font-size: 1.2rem;
+  margin: 0 8px;
+  transition: color 0.3s ease;
+}
+
+.social-icons a:hover {
+  color: #ffda79;
 }
 
 /* ========== Loader ========== */
@@ -303,6 +368,88 @@ button:active {
   color: #2c3e50;
 }
 
+/* ========== Currency Converter ========== */
+.currency-converter {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  padding: 20px;
+  margin-top: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.currency-converter:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.currency-converter h3 {
+  margin-bottom: 10px;
+  color: #003366;
+  border-left: 4px solid #0077cc;
+  padding-left: 10px;
+}
+
+.currency-converter input,
+.currency-converter select {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  font-family: inherit;
+  background-color: #fff;
+  appearance: none;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.currency-converter input:focus,
+.currency-converter select:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.currency-converter button {
+  width: 100%;
+  padding: 12px;
+  font-size: 1.1rem;
+  color: white;
+  background-color: #007bff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.currency-converter button:hover {
+  background-color: #0056b3;
+}
+
+.currency-converter button:active {
+  transform: scale(0.98);
+}
+
+#conversionResult {
+  margin-top: 10px;
+  font-size: 1rem;
+}
+
+#fromCurrency {
+  height: 30px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+#toCurrency {
+  height: 30px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
 /* ========== Error Cards & Confirm Box ========== */
 .error-card {
   padding: 10px;
@@ -348,15 +495,3 @@ button:active {
   }
 }
 
-.password-container {
-  position: relative;
-}
-
-.password-container .toggle-password {
-  position: absolute;
-  right: 15px;
-  top: 50%;
-  transform: translateY(-50%);
-  cursor: pointer;
-  color: #888;
-}
