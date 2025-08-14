@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Login</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
     /* Reset some default styles */
     * {
@@ -329,59 +330,56 @@
     }
   </style>
 </head>
-<body>
-  <div class="container">
-    <h2>Login</h2>
-    <form id="login-form">
-      <input type="email" id="email" placeholder="Email" required autofocus />
-      <div style="position:relative;">
+ <body>
+    <div class="container">
+      <h2>Login</h2>
+      <form id="login-form">
+        <input type="email" id="email" placeholder="Email" required />
         <input type="password" id="password" placeholder="Password" required />
-        <span id="togglePassword" style="position:absolute; right:12px; top:16px; cursor:pointer; font-size:0.95rem; color:#007bff;">Show</span>
-      </div>
-      <button type="submit">Login</button>
-    </form>
-    <p>Don't have an account? <a href="signup.html">Sign up</a></p>
-  </div>
-  <script src="script.js"></script>
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      // Assuming createToastContainer and showToast are defined elsewhere
-      createToastContainer();
-      document.getElementById("login-form").addEventListener("submit", function (e) {
-        e.preventDefault();
-        const email = document.getElementById("email").value.trim();
-        const password = document.getElementById("password").value;
-        const storedUser = localStorage.getItem("user_" + email);
-        if (!storedUser) {
-          alert("User not found! Please sign up first.");
-          return;
-        }
-        const userData = JSON.parse(storedUser);
-        if (userData.password !== password) {
-          alert("Incorrect password!");
-          return;
-        }
-        localStorage.setItem("loggedInUser", userData.fullName);
-        showToast("Login successful!", "success");
-        setTimeout(() => {
-          window.location.href = "home.html";
-        }, 1000);
+
+        <button type="submit">Login</button>
+      </form>
+      <p>Don't have an account? <a href="signup.html">Sign up</a></p>
+    </div>
+
+    <script src="script.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // Assuming createToastContainer and showToast are defined elsewhere
+        createToastContainer();
+
+        document
+          .getElementById("login-form")
+          .addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value;
+
+            const storedUser = localStorage.getItem("user_" + email);
+            if (!storedUser) {
+              alert("User not found! Please sign up first.");
+              return;
+            }
+
+            const userData = JSON.parse(storedUser);
+
+            if (userData.password !== password) {
+              alert("Incorrect password!");
+              return;
+            }
+
+            localStorage.setItem("loggedInUser", userData.fullName);
+
+            showToast("Login successful!", "success");
+            setTimeout(() => {
+              window.location.href = "home.html";
+            }, 1000);
+          });
       });
-      // Show/hide password toggle
-      const passwordInput = document.getElementById("password");
-      const togglePassword = document.getElementById("togglePassword");
-      togglePassword.addEventListener("click", () => {
-        if (passwordInput.type === "password") {
-          passwordInput.type = "text";
-          togglePassword.textContent = "Hide";
-        } else {
-          passwordInput.type = "password";
-          togglePassword.textContent = "Show";
-        }
-      });
-    });
-  </script>
-</body>
+    </script>
+  </body>
 </html>
 -->
 
