@@ -4,14 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Login</title>
-  <link rel="stylesheet" href="style.css">
   <style>
-    /* Reset some default styles */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    /* Reset styles */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -19,7 +14,7 @@
       justify-content: center;
       align-items: center;
       min-height: 100vh;
-      background: linear-gradient(135deg, #f8fafc, #e3eaf2);
+      background: linear-gradient(135deg, #021223, #077b9b);
       padding: 0;
     }
 
@@ -29,68 +24,76 @@
       border-radius: 10px;
       box-shadow: 0 8px 24px rgba(0,0,0,0.07);
       width: 100%;
-      max-width: 350px;
-      text-align: left;
+      max-width: 400px;
+      text-align: center;
       display: flex;
       flex-direction: column;
-      align-items: center;
       animation: fadeIn 0.6s ease-in-out;
     }
 
     @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    h2 {
-      color: #222;
-      font-size: 1.7rem;
-      font-weight: 600;
-      margin-bottom: 24px;
-      letter-spacing: 0.5px;
-      text-align: center;
-      width: 100%;
-    }
+    h2 { color: #222; font-size: 1.7rem; margin-bottom: 24px; }
 
     .form-group {
+      position: relative;
       width: 100%;
-      margin-bottom: 18px;
-      display: flex;
-      flex-direction: column;
+      margin-bottom: 20px;
+      min-height: 48px; /* prevents vertical shift */
     }
 
-    label {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    .form-group input {
+      width: 100%;
+      padding: 12px 13px;
       font-size: 1rem;
-      color: #444;
-      margin-bottom: 6px;
-      font-weight: 500;
-      letter-spacing: 0.2px;
-    }
-
-    input[type="email"],
-    input[type="password"] {
-      width: 100%;
-      padding: 11px 13px;
       border: 1px solid #dbe2ea;
       border-radius: 7px;
-      font-size: 1rem;
-      background: #f7f9fb;
-      transition: border-color 0.25s, box-shadow 0.25s;
+      background: transparent;
       outline: none;
+      transition: border-color 0.25s, box-shadow 0.25s;
+      padding-right: 60px; /* space for toggle */
     }
 
-    input[type="email"]:focus,
-    input[type="password"]:focus {
+    .form-group input:focus {
       border-color: #007bff;
       box-shadow: 0 0 0 2px #e3f0ff;
       background: #fff;
+    }
+
+    .form-group label {
+      position: absolute;
+      left: 13px;
+      top: 12px;
+      font-size: 1rem;
+      color: #777;
+      pointer-events: none;
+      transition: all 0.2s ease-out;
+      background: white;
+      padding: 0 4px;
+    }
+
+    .form-group input:focus + label,
+    .form-group input:not(:placeholder-shown) + label {
+      top: -8px;
+      left: 10px;
+      font-size: 0.75rem;
+      color: #007bff;
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      font-size: 0.85rem;
+      color: #007bff;
+      user-select: none;
+      width: 40px; /* fixed width prevents shift */
+      text-align: right;
     }
 
     .login-btn {
@@ -102,7 +105,6 @@
       font-size: 1.08rem;
       border-radius: 7px;
       font-weight: 600;
-      margin-top: 8px;
       cursor: pointer;
       transition: background 0.2s, box-shadow 0.2s;
       box-shadow: 0 2px 8px rgba(0,123,255,0.07);
@@ -134,29 +136,14 @@
       color: #555;
       margin: 18px 0 0 0;
       font-size: 0.97rem;
-      text-align: center;
-      width: 100%;
     }
 
-    a {
-      color: #007bff;
-      text-decoration: none;
-      font-weight: 500;
-    }
-
-    a:hover {
-      text-decoration: underline;
-    }
+    a { color: #007bff; text-decoration: none; font-weight: 500; }
+    a:hover { text-decoration: underline; }
 
     @media (max-width: 480px) {
-      .container {
-        padding: 22px 10px;
-        max-width: 98vw;
-      }
-
-      h2 {
-        font-size: 1.2rem;
-      }
+      .container { padding: 22px 10px; max-width: 98vw; }
+      h2 { font-size: 1.2rem; }
     }
   </style>
 </head>
@@ -165,53 +152,54 @@
     <h2>Login</h2>
     <form id="login-form" autocomplete="on">
       <div class="form-group">
+        <input type="email" id="email" placeholder=" " required autofocus />
         <label for="email">Email</label>
-        <input type="email" id="email" placeholder="Enter your email" required autofocus />
       </div>
-      <div class="form-group" style="margin-bottom:8px; position:relative;">
+
+      <div class="form-group">
+        <input type="password" id="password" placeholder=" " required />
         <label for="password">Password</label>
-        <input type="password" id="password" placeholder="Enter your password" required />
-        <span id="togglePassword" style="position:absolute; right:13px; top:38px; cursor:pointer; font-size:0.97rem; color:#007bff; user-select:none;">Show</span>
+        <span id="togglePassword" class="toggle-password">Show</span>
       </div>
+
       <button type="submit" class="login-btn">Login</button>
       <a href="#" class="forgot-link">Forgot Password?</a>
     </form>
     <p>Don't have an account? <a href="signup.html">Sign up</a></p>
   </div>
-  <script src="script.js"></script>
+
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      createToastContainer();
-      document.getElementById("login-form").addEventListener("submit", function (e) {
+      // Login form
+      const loginForm = document.getElementById("login-form");
+      loginForm.addEventListener("submit", function(e){
         e.preventDefault();
         const email = document.getElementById("email").value.trim();
         const password = document.getElementById("password").value;
         const storedUser = localStorage.getItem("user_" + email);
-        if (!storedUser) {
-          showToast("User not found! Please sign up first.", "error");
+
+        if(!storedUser){
+          alert("User not found! Please sign up first.");
           return;
         }
+
         const userData = JSON.parse(storedUser);
-        if (userData.password !== password) {
-          showToast("Incorrect password!", "error");
+        if(userData.password !== password){
+          alert("Incorrect password!");
           return;
         }
+
         localStorage.setItem("loggedInUser", userData.fullName);
-        showToast("Login successful!", "success");
-        setTimeout(() => {
-          window.location.href = "home.html";
-        }, 1000);
+        alert("Login successful!");
+        window.location.href = "home.html";
       });
-      // Forgot Password link (demo only)
-      document.querySelector('.forgot-link').addEventListener('click', function(e) {
-        e.preventDefault();
-        showToast("Password recovery is not implemented.", "info");
-      });
-      // Show/hide password toggle
+
+      // Password toggle
       const passwordInput = document.getElementById("password");
       const togglePassword = document.getElementById("togglePassword");
+
       togglePassword.addEventListener("click", () => {
-        if (passwordInput.type === "password") {
+        if(passwordInput.type === "password"){
           passwordInput.type = "text";
           togglePassword.textContent = "Hide";
         } else {
@@ -223,6 +211,7 @@
   </script>
 </body>
 </html>
+
 
 <!-- 
 ====== Previous login.html code (classic version) ======
