@@ -114,7 +114,7 @@ a:hover {
   }
 }
 
-  </style>>
+  </style>
 </head>
 <body>
     <div class="container">
@@ -123,6 +123,8 @@ a:hover {
       <form id="signup-form">
         <input type="text" id="fullName" placeholder="Full Name" required />
         <input type="email" id="email" placeholder="Email" required />
+        <span id="emailError" style="color:red; font-size:14px; display:block; margin-top:-8px; margin-bottom:8px;"></span>
+
         <input type="password" id="password" placeholder="Password" required />
         <button type="submit">Sign up</button>
       </form>
@@ -138,6 +140,34 @@ a:hover {
           const fullName = document.getElementById("fullName").value.trim();
           const email = document.getElementById("email").value.trim();
           const password = document.getElementById("password").value;
+          const emailError = document.getElementById("emailError");
+
+          //Allowed domains
+          const allowedDomains = ["gmail.com", "yahoo.com", "outlook.com", "hotmail.com"].map(d => d.toLowerCase());
+
+          //Email regex rules
+          
+          const emailRegex = /^[a-zA-Z][a-zA-Z0-9._-]{1,}@[a-zA-Z]+\.[a-zA-Z]{2,}$/;
+
+          if (!emailRegex.test(email)) {
+            emailError.textContent = "Invalid email format.";
+            return;
+          }
+
+          const parts = email.split("@");
+          const domain = parts[1].toLowerCase();
+
+          if (!allowedDomains.includes(domain)) {
+            emailError.textContent = "Only Gmail, Yahoo, Outlook, Hotmail allowed.";
+            return;
+          }
+
+          if (/(\.\.|__|--)/.test(parts[0])) {
+            emailError.textContent = "Invalid use of special characters.";
+            return;
+          }
+
+          emailError.textContent = ""; // clear error if valid
 
           if (!fullName || !email || !password) {
             alert("Please fill all fields");
