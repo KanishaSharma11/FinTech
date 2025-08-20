@@ -1,0 +1,112 @@
+<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Welcome</title>
+  <style>* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  color: #333;
+  background: linear-gradient(135deg, #021223, #077b9b);
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  font-family: Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+}
+
+.container {
+  text-align: center;
+  background: #fff;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 380px;
+  padding: 35px 25px;
+  animation: .5s ease-out fadeIn;
+  box-shadow: 0 8px 20px #00000026;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+h1 {
+  color: #036;
+  margin-bottom: 12px;
+}
+
+p {
+  color: #555;
+  margin-bottom: 20px;
+  font-size: .95rem;
+}
+
+button {
+  color: #fff;
+  cursor: pointer;
+  background-color: #007bff;
+  border: none;
+  border-radius: 6px;
+  width: 100%;
+  margin-top: 10px;
+  padding: 12px;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: background-color .3s, transform .15s;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+button:active {
+  transform: scale(.98);
+}
+
+a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+@media (width <= 480px) {
+  .container {
+    padding: 28px 20px;
+  }
+
+  h1 {
+    font-size: 1.4rem;
+  }
+}
+</style>
+</head>
+<body>
+  <div class="container">
+    <h1>Welcome to Fintech</h1>
+    <p>Select an option to continue:</p>
+    <button onclick="goTo('login.html')">Login</button>
+    <button onclick="goTo('signup.html')">Sign Up</button>
+  </div>
+
+  <script>function goTo(page) {
+    window.location.href = page;
+}
+
+</script>
+
+<script src="/FinTech-dolikansal.3464ddca.js"></script></body></html>

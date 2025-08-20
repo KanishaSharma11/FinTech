@@ -3,7 +3,7 @@ function showToast(message, type = 'info', duration = 3000) {
   const container = document.getElementById('toast-container');
   const toast = document.createElement('div');
   toast.className = `toast ${type}`;
-  toast.innerText = message;
+  toast.innerText = message; 
   container.appendChild(toast);
 
   setTimeout(() => {
@@ -15,15 +15,12 @@ function showToast(message, type = 'info', duration = 3000) {
 
 function createToastContainer() {
   if (document.getElementById('toast-container')) return;
-
-  // Wait for body to be ready
   const container = document.createElement('div');
   container.id = 'toast-container';
   container.style.position = 'fixed';
   container.style.top = '20px';
   container.style.right = '20px';
   container.style.zIndex = '9999';
-
   document.body.appendChild(container);
 }
 
@@ -139,7 +136,7 @@ async function fetchNews() {
   }
 }
 
-// Fetch Stock Data using Alpha Vantage API
+// Fetch Stock Data
 function fetchStockData() {
   const symbol = document.getElementById('stock-symbol').value.toUpperCase();
   const stockContainer = document.getElementById('stock-data');
@@ -189,16 +186,13 @@ function fetchStockData() {
     });
 }
 
-// Initialize the dashboard
+// Initialize dashboard
 document.addEventListener('DOMContentLoaded', () => {
   createToastContainer();
   fetchPrices();
   fetchNews();
 });
 
-
-// Fetch Real-Time Prices
-const apiKey = 'goldapi-10egv19mb0g83yk-io'; // Replace with your GoldAPI key
 const goldPriceEl = document.getElementById('gold-price');
 const silverPriceEl = document.getElementById('silver-price');
 const statusEl = document.getElementById('status-message');
@@ -222,6 +216,7 @@ function showTrend(el, currentPrice, prevPrice, metalName) {
   }
 }
 
+// ✅ FIXED fetchPrices()
 async function fetchPrices() {
   btn.disabled = true;
   statusEl.innerHTML = '<div class="loader"></div>';
@@ -243,23 +238,21 @@ async function fetchPrices() {
   }
 
   try {
-    const goldResponse = await fetch('https://www.goldapi.io/api/XAU/USD', {
-      headers: { 'x-access-token': apiKey, 'Content-Type': 'application/json' }
-    });
-    if (!goldResponse.ok) throw new Error(`Gold API error: ${goldResponse.status}`);
-    const goldData = await goldResponse.json();
+    const response = await fetch('/api/gold');
+    if (!response.ok) throw new Error(`Server error: ${response.status}`);
 
-    const silverResponse = await fetch('https://www.goldapi.io/api/XAG/USD', {
-      headers: { 'x-access-token': apiKey, 'Content-Type': 'application/json' }
-    });
-    if (!silverResponse.ok) throw new Error(`Silver API error: ${silverResponse.status}`);
-    const silverData = await silverResponse.json();
+    const data = await response.json();
 
-    const goldPrice = goldData.price;
-    const silverPrice = silverData.price;
+    const goldPrice = data.goldPriceINR ? data.goldPriceINR.perGram : null;
+    const silverPrice = data.silverPriceINR ? data.silverPriceINR.perGram : null;
 
-    goldPriceEl.textContent = `Gold Price: $${goldPrice.toFixed(2)} per ounce`;
-    silverPriceEl.textContent = `Silver Price: $${silverPrice.toFixed(2)} per ounce`;
+    goldPriceEl.textContent = goldPrice !== null
+      ? `Gold Price: ₹${goldPrice.toFixed(2)} per gram`
+      : 'Gold price unavailable';
+
+    silverPriceEl.textContent = silverPrice !== null
+      ? `Silver Price: ₹${silverPrice.toFixed(2)} per gram`
+      : 'Silver price unavailable';
 
     const prevGoldPrice = localStorage.getItem('prevGoldPrice') ? parseFloat(localStorage.getItem('prevGoldPrice')) : null;
     const prevSilverPrice = localStorage.getItem('prevSilverPrice') ? parseFloat(localStorage.getItem('prevSilverPrice')) : null;
@@ -267,8 +260,8 @@ async function fetchPrices() {
     showTrend(goldTrendEl, goldPrice, prevGoldPrice, 'Gold');
     showTrend(silverTrendEl, silverPrice, prevSilverPrice, 'Silver');
 
-    localStorage.setItem('prevGoldPrice', goldPrice);
-    localStorage.setItem('prevSilverPrice', silverPrice);
+    if (goldPrice !== null) localStorage.setItem('prevGoldPrice', goldPrice);
+    if (silverPrice !== null) localStorage.setItem('prevSilverPrice', silverPrice);
 
     statusEl.textContent = 'Prices updated successfully!';
     statusEl.style.color = 'green';
@@ -285,7 +278,7 @@ async function fetchPrices() {
   }
 }
 
-//Expense Calculator (your existing code continues here)
+// Expense tracker
 const descInput = document.getElementById('desc');
 const amountInput = document.getElementById('amount');
 const addExpenseBtn = document.getElementById('addExpenseBtn');
@@ -364,7 +357,7 @@ function showConfirm(message, onYes) {
 // Initial render
 updateExpensesUI();
 
-// Curreny Convertor
+// Currency Converter
 function convertCurrency() {
   const amount = parseFloat(document.getElementById('amountToConvert').value);
   const from = document.getElementById('fromCurrency').value;
