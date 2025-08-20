@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fintech</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+
+    
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f5f7fa;
+      color: #333;
+    }
+
+    header {
+      background: linear-gradient(135deg, #4f46e5, #3b82f6);
+      color: white;
+      padding: 1rem 2rem;
+      text-align: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .profile-page-container {
+      display: flex;
+      margin: 2rem;
+      gap: 2rem;
+    }
+
+    .profile-sidebar {
+      flex: 1;
+      background: white;
+      padding: 2rem;
+      border-radius: 1rem;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .profile-avatar i {
+      font-size: 80px;
+      color: #6366f1;
+    }
+
+    .profile-sidebar h2 {
+      margin: 1rem 0 0.3rem;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.7rem 1.2rem;
+      border: none;
+      border-radius: 0.5rem;
+      background: #3b82f6;
+      color: white;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background: #2563eb;
+    }
+
+    .profile-main-content {
+      flex: 3;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .profile-section {
+      background: white;
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .details-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .detail-item label {
+      font-weight: bold;
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    .edit-profile-form {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .edit-profile-form input {
+      flex: 1;
+      padding: 0.8rem;
+      border: 1px solid #ddd;
+      border-radius: 0.5rem;
+    }
+
+    .edit-profile-form button {
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: 0.5rem;
+      background: #10b981;
+      color: white;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .edit-profile-form button:hover {
+      background: #059669;
+    }
+
+    ul.expense-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    ul.expense-list li {
+      background: #f9fafb;
+      padding: 0.8rem;
+      border-radius: 0.5rem;
+      margin-bottom: 0.5rem;
+      border: 1px solid #eee;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .quick-links-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+
+    .quick-link {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 1rem;
+        background: #f9fafb;
+        border-radius: 0.5rem;
+        text-decoration: none;
+        color: #333;
+        transition: background-color 0.3s;
+    }
+
+    .quick-link:hover {
+        background-color: #eef2ff;
+    }
+
+    .quick-link i {
+        color: #6366f1;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Fintech</h1>
+  </header>
+
+  <div class="profile-page-container">
+    <aside class="profile-sidebar">
+      <div class="profile-avatar">
+        <i class="fas fa-user-circle"></i>
+      </div>
+      <h2 id="sidebar-username">User Name</h2>
+      <p id="sidebar-email">user@example.com</p>
+      <a href="home.html" class="btn"><i class="fas fa-arrow-left"></i> Back to Home</a>
+    </aside>
+
+    <main class="profile-main-content">
+      <section class="profile-section">
+        <h2>Account Details</h2>
+        <div class="details-grid">
+          <div class="detail-item">
+            <label>Full Name</label>
+            <p id="profile-name"></p>
+          </div>
+          <div class="detail-item">
+            <label>Email Address</label>
+            <p id="profile-email"></p>
+          </div>
+        </div>
+      </section>
+
+      <section class="profile-section">
+        <h2>Update Your Name</h2>
+        <div class="edit-profile-form">
+          <input type="text" id="newName" placeholder="Enter your new full name">
+          <button id="saveNameBtn">Save Changes</button>
+        </div>
+      </section>
+      
+      <section class="profile-section">
+        <h2>Quick Links</h2>
+        <div class="quick-links-grid">
+            <a href="home.html#sip-calculator" class="quick-link">
+                <i class="fas fa-calculator"></i>
+                <span>SIP Calculator</span>
+            </a>
+            <a href="home.html#mf-calculator" class="quick-link">
+                <i class="fas fa-chart-pie"></i>
+                <span>Mutual Funds</span>
+            </a>
+            <a href="home.html#currency-converter" class="quick-link">
+                <i class="fas fa-exchange-alt"></i>
+                <span>Currency Converter</span>
+            </a>
+             <a href="home.html#expenses" class="quick-link">
+                <i class="fas fa-wallet"></i>
+                <span>Expense Tracker</span>
+            </a>
+        </div>
+      </section>
+
+      <section class="profile-section">
+        <h2>Recent Activity</h2>
+        <ul id="recent-expenses" class="expense-list">
+          </ul>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const username = localStorage.getItem("loggedInUser");
+        const email = localStorage.getItem("loggedInUserEmail");
+
+        if (username && email) {
+            document.getElementById("sidebar-username").textContent = username;
+            document.getElementById("profile-name").textContent = username;
+            document.getElementById("sidebar-email").textContent = email;
+            document.getElementById("profile-email").textContent = email;
+        } else {
+            // Redirect to login if not logged in
+            window.location.href = "login.html";
+        }
+
+        document.getElementById("saveNameBtn").addEventListener("click", () => {
+            const newName = document.getElementById("newName").value.trim();
+            if (newName) {
+                const storedUserKey = "user_" + email;
+                const userData = JSON.parse(localStorage.getItem(storedUserKey));
+                
+                userData.fullName = newName;
+                
+                localStorage.setItem(storedUserKey, JSON.stringify(userData));
+                localStorage.setItem("loggedInUser", newName);
+
+                // Update UI
+                document.getElementById("sidebar-username").textContent = newName;
+                document.getElementById("profile-name").textContent = newName;
+
+                alert("Name updated successfully!");
+                document.getElementById("newName").value = "";
+            } else {
+                alert("Please enter a valid name.");
+            }
+        });
+
+        // Load expenses for recent activity
+        const expenses = JSON.parse(localStorage.getItem('expenses')) || [];
+        const recentExpensesList = document.getElementById('recent-expenses');
+        recentExpensesList.innerHTML = ''; 
+
+        if (expenses.length > 0) {
+            expenses.slice(-5).reverse().forEach(expense => {
+                const li = document.createElement('li');
+                li.innerHTML = `<span>${expense.description}</span> <span>₹${expense.amount.toFixed(2)}</span>`;
+                recentExpensesList.appendChild(li);
+            });
+        } else {
+            recentExpensesList.innerHTML = '<li>No recent expenses to display.</li>';
+        }
+    });
+  </script>
+</body>
+</html>
