@@ -1,0 +1,409 @@
+Adds a fully interactive, accessible form component with:
+- Inline validation & touched state
+- Live preview panel with avatar upload
+- JSON download and copy to clipboard
+- Skill selection, age slider, bio counter
+
+import React, { useState, useRef } from "react";
+import { motion } from "framer-motion";
+
+// Default export: Interactive form component ready to paste into a React + Tailwind + Framer Motion project
+export default function InteractiveFormsDemo() {
+  const [form, setForm] = useState({
+    fullName: "",
+    email: "",
+    age: 25,
+    role: "developer",
+    skills: ["JavaScript"],
+    bio: "",
+    subscribe: true,
+  });
+
+  const [errors, setErrors] = useState({});
+  const [touched, setTouched] = useState({});
+  const [avatarPreview, setAvatarPreview] = useState(null);
+  const [submitted, setSubmitted] = useState(null);
+  const fileRef = useRef(null);
+
+  const skillOptions = [
+    "JavaScript",
+    "TypeScript",
+    "React",
+    "Node.js",
+    "CSS",
+    "Python",
+  ];
+
+  // Lightweight validation
+  function validate(values) {
+    const e = {};
+    if (!values.fullName.trim()) e.fullName = "Full name is required";
+    if (!values.email.match(/^\S+@\S+\.\S+$/)) e.email = "Enter a valid email";
+    if (values.age < 13 || values.age > 100) e.age = "Age must be 13–100";
+    if (!Array.isArray(values.skills) || values.skills.length === 0)
+      e.skills = "Select at least one skill";
+    if (values.bio.length > 500) e.bio = "Bio must be under 500 characters";
+    return e;
+  }
+
+  function handleChange(e) {
+    const { name, value, type, checked } = e.target;
+    if (type === "checkbox") {
+      setForm((s) => ({ ...s, [name]: checked }));
+      return;
+    }
+    setForm((s) => ({ ...s, [name]: value }));
+  }
+
+  function handleAgeChange(e) {
+    const value = Number(e.target.value);
+    setForm((s) => ({ ...s, age: value }));
+  }
+
+  function toggleSkill(skill) {
+    setForm((s) => {
+      const has = s.skills.includes(skill);
+      return { ...s, skills: has ? s.skills.filter((x) => x !== skill) : [...s.skills, skill] };
+    });
+  }
+
+  function handleFileChange(e) {
+    const file = e.target.files?.[0];
+    if (!file) return setAvatarPreview(null);
+    const reader = new FileReader();
+    reader.onload = () => setAvatarPreview(reader.result);
+    reader.readAsDataURL(file);
+  }
+
+  function handleBlur(e) {
+    const { name } = e.target;
+    setTouched((t) => ({ ...t, [name]: true }));
+    setErrors(validate(form));
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    const e2 = validate(form);
+    setErrors(e2);
+    setTouched({
+      fullName: true,
+      email: true,
+      age: true,
+      skills: true,
+      bio: true,
+    });
+    if (Object.keys(e2).length === 0) {
+      setSubmitted({ ...form, avatarPreview });
+    } else {
+      setSubmitted(null);
+      // focus first error field (accessibility improvement)
+      const first = Object.keys(e2)[0];
+      const el = document.querySelector(`[name="${first}"]`);
+      if (el) el.focus();
+    }
+  }
+
+  function downloadJSON() {
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify({ ...submitted }, null, 2));
+    const a = document.createElement("a");
+    a.href = dataStr;
+    a.download = "form-data.json";
+    a.click();
+  }
+
+  const liveErrors = validate(form);
+
+  return (
+    <div className="min-h-screen bg-slate-50 p-6 md:p-12">
+      <div className="max-w-6xl mx-auto grid gap-6 md:grid-cols-2">
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.35 }}
+          className="space-y-4"
+        >
+          <div className="flex items-center justify-between">
+            <h1 className="text-2xl md:text-3xl font-semibold">Interactive Form</h1>
+            <div className="text-sm text-slate-500">Accessible · Mobile-first · Instant preview</div>
+          </div>
+
+          <form onSubmit={handleSubmit} className="space-y-5 bg-white p-6 rounded-2xl shadow-sm">
+            {/* Name */}
+            <label className="block">
+              <div className="flex items-center justify-between">
+                <span className="font-medium">Full name</span>
+                <span className="text-xs text-slate-400">required</span>
+              </div>
+              <input
+                name="fullName"
+                value={form.fullName}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                aria-invalid={!!(touched.fullName && errors.fullName)}
+                className={`mt-2 block w-full rounded-lg border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-300 ${
+                  touched.fullName && errors.fullName ? "border-red-300" : "border-slate-200"
+                }`}
+                placeholder="Your name"
+              />
+              {touched.fullName && errors.fullName && (
+                <div className="text-sm text-red-600 mt-1">{errors.fullName}</div>
+              )}
+            </label>
+
+            {/* Email */}
+            <label className="block">
+              <div className="flex items-center justify-between">
+                <span className="font-medium">Email</span>
+                <span className="text-xs text-slate-400">for notifications</span>
+              </div>
+              <input
+                name="email"
+                value={form.email}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                placeholder="you@company.com"
+                className={`mt-2 block w-full rounded-lg border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-300 ${
+                  touched.email && errors.email ? "border-red-300" : "border-slate-200"
+                }`}
+                aria-describedby="emailHelp"
+              />
+              <div id="emailHelp" className="text-xs text-slate-400 mt-1">We'll never share your email.</div>
+              {touched.email && errors.email && <div className="text-sm text-red-600 mt-1">{errors.email}</div>}
+            </label>
+
+            {/* Age slider and role */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <label className="block">
+                <div className="flex items-center justify-between">
+                  <span className="font-medium">Age</span>
+                  <span className="text-xs text-slate-400">{form.age}</span>
+                </div>
+                <input
+                  name="age"
+                  type="range"
+                  min={13}
+                  max={100}
+                  value={form.age}
+                  onChange={handleAgeChange}
+                  onBlur={handleBlur}
+                  className="mt-3 w-full"
+                />
+                {touched.age && liveErrors.age && <div className="text-sm text-red-600 mt-1">{liveErrors.age}</div>}
+              </label>
+
+              <label className="block">
+                <div className="flex items-center justify-between">
+                  <span className="font-medium">Role</span>
+                </div>
+                <select
+                  name="role"
+                  value={form.role}
+                  onChange={handleChange}
+                  className="mt-2 block w-full rounded-lg border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-300 border-slate-200"
+                >
+                  <option value="developer">Developer</option>
+                  <option value="designer">Designer</option>
+                  <option value="product">Product</option>
+                  <option value="student">Student</option>
+                </select>
+              </label>
+            </div>
+
+            {/* Skills (checkbox group) */}
+            <fieldset>
+              <legend className="font-medium">Skills</legend>
+              <div className="mt-3 grid grid-cols-2 sm:grid-cols-3 gap-2">
+                {skillOptions.map((s) => (
+                  <button
+                    key={s}
+                    type="button"
+                    onClick={() => toggleSkill(s)}
+                    className={`flex items-center justify-between gap-2 rounded-lg px-3 py-2 text-sm border ${
+                      form.skills.includes(s) ? "bg-indigo-50 border-indigo-300" : "border-slate-200"
+                    }`}
+                    aria-pressed={form.skills.includes(s)}
+                  >
+                    <span>{s}</span>
+                    {form.skills.includes(s) ? (
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                    ) : null}
+                  </button>
+                ))}
+              </div>
+              {touched.skills && liveErrors.skills && <div className="text-sm text-red-600 mt-2">{liveErrors.skills}</div>}
+            </fieldset>
+
+            {/* Bio with character counter */}
+            <label className="block">
+              <div className="flex items-center justify-between">
+                <span className="font-medium">Short bio</span>
+                <span className="text-xs text-slate-400">{form.bio.length}/500</span>
+              </div>
+              <textarea
+                name="bio"
+                value={form.bio}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                rows={4}
+                placeholder="Tell us something about yourself (max 500 chars)"
+                className={`mt-2 block w-full rounded-lg border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-300 ${
+                  form.bio.length > 500 ? "border-red-300" : "border-slate-200"
+                }`}
+              />
+              {form.bio.length > 450 && (
+                <div className="text-xs text-amber-600 mt-1">Almost there — keep it concise.</div>
+              )}
+              {touched.bio && liveErrors.bio && <div className="text-sm text-red-600 mt-1">{liveErrors.bio}</div>}
+            </label>
+
+            {/* File upload */}
+            <label className="block">
+              <div className="flex items-center justify-between">
+                <span className="font-medium">Avatar (optional)</span>
+                <span className="text-xs text-slate-400">PNG, JPG</span>
+              </div>
+              <input
+                ref={fileRef}
+                name="avatar"
+                type="file"
+                accept="image/*"
+                onChange={handleFileChange}
+                className="mt-2"
+              />
+              {avatarPreview && (
+                <div className="mt-3 flex items-center gap-3">
+                  <img src={avatarPreview} alt="avatar preview" className="h-14 w-14 rounded-full object-cover border" />
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setAvatarPreview(null);
+                      if (fileRef.current) fileRef.current.value = null;
+                    }}
+                    className="text-sm text-rose-600"
+                  >
+                    Remove
+                  </button>
+                </div>
+              )}
+            </label>
+
+            {/* Subscribe */}
+            <label className="inline-flex items-center gap-2">
+              <input type="checkbox" name="subscribe" checked={form.subscribe} onChange={handleChange} />
+              <span className="text-sm">Subscribe to product updates</span>
+            </label>
+
+            <div className="flex items-center gap-3">
+              <button
+                type="submit"
+                className="rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 font-medium shadow"
+              >
+                Save & Preview
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setForm({ fullName: "", email: "", age: 25, role: "developer", skills: [], bio: "", subscribe: true });
+                  setErrors({});
+                  setTouched({});
+                  setAvatarPreview(null);
+                  setSubmitted(null);
+                  if (fileRef.current) fileRef.current.value = null;
+                }}
+                className="rounded-2xl border px-3 py-2 text-sm"
+              >
+                Reset
+              </button>
+            </div>
+          </form>
+
+          <div className="space-y-2">
+            <h2 className="text-lg font-medium">Live validation</h2>
+            <div className="text-sm text-slate-500">Fields update validation state instantly — errors shown when field is touched.</div>
+            <ul className="mt-2 grid grid-cols-1 sm:grid-cols-2 gap-2">
+              <li className="rounded-lg border px-3 py-2 text-sm">Name: {form.fullName || <em className="text-slate-400">(empty)</em>}</li>
+              <li className="rounded-lg border px-3 py-2 text-sm">Email: {form.email || <em className="text-slate-400">(empty)</em>}</li>
+              <li className="rounded-lg border px-3 py-2 text-sm">Role: {form.role}</li>
+              <li className="rounded-lg border px-3 py-2 text-sm">Skills: {form.skills.join(", ") || <em className="text-slate-400">none</em>}</li>
+            </ul>
+          </div>
+        </motion.div>
+
+        {/* Right column: preview + submitted JSON */}
+        <motion.aside
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.05 }}
+          className="space-y-4"
+        >
+          <div className="bg-white p-6 rounded-2xl shadow-sm">
+            <h3 className="text-lg font-medium">Live preview</h3>
+            <div className="mt-4 border rounded-lg p-4 bg-gradient-to-b from-white to-slate-50">
+              <div className="flex items-center gap-3">
+                <div className="h-12 w-12 rounded-full bg-slate-100 flex items-center justify-center text-slate-400">
+                  {avatarPreview ? (
+                    <img src={avatarPreview} alt="avatar" className="h-12 w-12 rounded-full object-cover" />
+                  ) : (
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v4m0 0a4 4 0 100 8 4 4 0 000-8z" />
+                    </svg>
+                  )}
+                </div>
+                <div>
+                  <div className="font-medium text-sm">{form.fullName || "Your name"}</div>
+                  <div className="text-xs text-slate-400">{form.role} • {form.age} years</div>
+                </div>
+              </div>
+
+              <div className="mt-3 text-sm text-slate-600">{form.bio || "A short personal description will appear here."}</div>
+
+              <div className="mt-4 text-sm">
+                <strong>Skills:</strong> {form.skills.length ? form.skills.join(", ") : "—"}
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white p-6 rounded-2xl shadow-sm">
+            <h3 className="text-lg font-medium">Submitted data</h3>
+            {submitted ? (
+              <div className="mt-3 space-y-3">
+                <pre className="max-h-56 overflow-auto rounded-md bg-slate-900 text-slate-50 p-3 text-sm">{JSON.stringify(submitted, null, 2)}</pre>
+                <div className="flex items-center gap-2">
+                  <button onClick={downloadJSON} className="rounded-2xl bg-emerald-600 text-white px-3 py-2 text-sm">
+                    Download JSON
+                  </button>
+                  <button
+                    onClick={() => {
+                      // simple copy to clipboard
+                      navigator.clipboard.writeText(JSON.stringify(submitted, null, 2));
+                    }}
+                    className="rounded-2xl border px-3 py-2 text-sm"
+                  >
+                    Copy
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div className="mt-3 text-sm text-slate-500">No saved submission yet. Fill the form and click <em>Save & Preview</em>.</div>
+            )}
+          </div>
+
+          {/* small tips card */}
+          <div className="bg-white p-4 rounded-2xl shadow-sm text-sm text-slate-600">
+            <strong>Tips</strong>
+            <ul className="mt-2 list-disc pl-5 space-y-1">
+              <li>Validate fields as users interact to reduce friction.</li>
+              <li>Show a live preview so users instantly see the result of their inputs.</li>
+              <li>Keep forms short and split into steps for long flows.</li>
+            </ul>
+          </div>
+        </motion.aside>
+      </div>
+
+      <footer className="max-w-6xl mx-auto mt-8 text-sm text-slate-500">Made with ❤️ — paste this file into a React + Tailwind project (Framer Motion optional).</footer>
+    </div>
+  );
+}
+
