@@ -20,6 +20,7 @@ app.get('/api/gold', async (req, res) => {
       return res.status(response.status).json({ 
         error: 'Failed to fetch metal prices', 
         details: errorBody 
+        
       });
     }
 

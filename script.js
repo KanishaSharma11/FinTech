@@ -353,7 +353,6 @@ function showConfirm(message, onYes) {
   ok.onclick = () => { cleanup(); onYes(); };
   cancel.onclick = cleanup;
 }
-
 // Initial render
 updateExpensesUI();
 
