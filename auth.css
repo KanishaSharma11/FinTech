@@ -1,0 +1,136 @@
+/* Reset */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: radial-gradient(circle at top left, #0f2027, #203a43, #2c5364);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+/* Auth container */
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.auth-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-radius: 14px;
+  padding: 40px 30px;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  color: white;
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+h2 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  color: #fff;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.6);
+}
+
+.form-group {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 1rem;
+  border: 1px solid rgba(255,255,255,0.4);
+  border-radius: 8px;
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  outline: none;
+  transition: border-color 0.25s, box-shadow 0.25s;
+}
+
+.form-group input:focus {
+  border-color: #00c6ff;
+  box-shadow: 0 0 6px rgba(0,198,255,0.5);
+}
+
+.form-group label {
+  position: absolute;
+  left: 14px;
+  top: 12px;
+  font-size: 1rem;
+  color: rgba(255,255,255,0.7);
+  pointer-events: none;
+  transition: all 0.2s ease-out;
+  background: rgba(0,0,0,0.4);
+  padding: 0 4px;
+  border-radius: 3px;
+}
+
+.form-group input:focus + label,
+.form-group input:not(:placeholder-shown) + label {
+  top: -8px;
+  left: 10px;
+  font-size: 0.75rem;
+  color: #00c6ff;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 0.85rem;
+  color: #00c6ff;
+  user-select: none;
+}
+
+.btn {
+  width: 100%;
+  padding: 12px;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.3s;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,114,255,0.4);
+}
+
+.forgot-link {
+  display: block;
+  margin-top: 12px;
+  font-size: 0.9rem;
+  color: #00c6ff;
+}
+
+.switch-text {
+  margin-top: 20px;
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.8);
+}
+
+.switch-text a {
+  color: #00c6ff;
+  font-weight: bold;
+}
