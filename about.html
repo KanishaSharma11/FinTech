@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About Fintech</title>
+    <link rel="stylesheet" href="about.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+  </head>
+
+  <body>
+    <header>
+      <div class="header-bar">
+        <h1>Fintech</h1>
+        <div id="user-info"></div>
+      </div>
+    </header>
+
+    <main>
+      <div class="about-container">
+        <div class="card about-card">
+          <h2>About FinTech</h2>
+          <p>
+            <strong>FinTech</strong> is a simple and secure web application
+            designed to help users efficiently manage their personal finances.
+            Our mission is to provide a user-friendly platform with essential
+            tools for financial tracking and planning. Whether you're a beginner
+            or an experienced investor, our dashboard offers a clear overview
+            and powerful calculators to help you make informed decisions.
+          </p>
+          <p>
+            We believe that everyone should have access to the tools they need
+            to achieve financial stability and growth. Our platform simplifies
+            complex financial concepts, making them accessible to a wider
+            audience. With <em>continuous innovation</em>, we are committed to
+            adding new features and improving existing ones to meet the evolving
+            needs of our users.
+          </p>
+          <p>
+            Our goal is to empower you to take control of your financial future
+            with confidence and ease, ensuring that finance management becomes
+            an effortless part of your daily routine.
+          </p>
+        </div>
+
+        <div class="card features-card">
+          <h2>Key Features</h2>
+          <ul>
+            <li>
+              <i class="fas fa-user-shield"></i>
+              <strong>Secure User Authentication:</strong> Register and log in
+              securely to access your personalized dashboard.
+            </li>
+            <li>
+              <i class="fas fa-chart-line"></i>
+              <strong>Financial Calculators:</strong> Use our integrated SIP,
+              Mutual Fund, and Expense calculators to plan and track your
+              investments.
+            </li>
+            <li>
+              <i class="fas fa-exchange-alt"></i>
+              <strong>Real-time Data:</strong> Stay updated with real-time gold
+              and silver prices and a live currency converter.
+            </li>
+            <li>
+              <i class="fas fa-newspaper"></i>
+              <strong>Finance News:</strong> Access the latest financial news to
+              stay informed about market trends.
+            </li>
+            <li>
+              <i class="fas fa-mobile-alt"></i>
+              <strong>Responsive Design:</strong> Enjoy a seamless experience
+              across all devices, from desktop to mobile.
+            </li>
+          </ul>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <div class="footer">
+        <p>© 2025 <strong>Fintech Dashboard</strong>. All rights reserved.</p>
+        <div class="footer-links">
+          <a href="#privacy">Privacy Policy</a>
+          <a href="#terms">Terms of Service</a>
+          <a href="#contact">Contact Us</a>
+        </div>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-linkedin"></i></a>
+          <a href="#"><i class="fab fa-github"></i></a>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const userInfoDiv = document.getElementById("user-info");
+        const username = localStorage.getItem("loggedInUser");
+
+        // Check login
+        if (username) {
+          userInfoDiv.innerHTML = `
+            <span class="username">Welcome, <strong class="user-welcome">${username}</strong></span>
+            <a href="#" id="logout" class="btn logout-btn">Logout</a>
+          `;
+          document
+            .getElementById("logout")
+            .addEventListener("click", (e) => {
+              e.preventDefault();
+              localStorage.removeItem("loggedInUser");
+              window.location.href = "login.html";
+            });
+        } else {
+          userInfoDiv.innerHTML = `
+            <a href="login.html" class="btn">Login</a>
+            <a href="signup.html" class="btn">Sign Up</a>
+          `;
+        }
+
+        // Smooth scroll for footer links
+        document.querySelectorAll(".footer-links a").forEach((link) => {
+          link.addEventListener("click", (e) => {
+            e.preventDefault();
+            alert(`You clicked on ${link.textContent}`);
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
+
+
