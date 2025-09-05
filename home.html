@@ -1,15 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Fintech Dashboard</title>
   <link rel="stylesheet" href="style.css" />
-  <!-- Using Font Awesome icons  -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"> /
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
-
 <body>
   <header>
     <div class="header-bar">
@@ -24,7 +21,6 @@
 
   <main>
     <div class="dashboard-grid">
-
       <!-- Stock Prediction -->
       <div class="card stock">
         <h2>Stock Prediction</h2>
@@ -58,6 +54,8 @@
         <input type="number" id="years" placeholder="e.g., 10" />
         <div id="sip-error" class="error-msg"></div>
         <button onclick="calculateSIP()">Calculate</button>
+        <button id="sip-voice-btn" title="Use voice command"><i class="fas fa-microphone"></i></button>
+        <p class="voice-example">Voice example: "Calculate SIP for monthly 5000 rate 12 years 10"</p>
         <div id="sip-results"></div>
       </div>
 
@@ -73,6 +71,8 @@
         <input type="number" id="mf-years" placeholder="e.g., 5" />
         <div id="mf-error" class="error-msg"></div>
         <button onclick="calculateMF()">Calculate</button>
+        <button id="mf-voice-btn" title="Use voice command"><i class="fas fa-microphone"></i></button>
+        <p class="voice-example">Voice example: "Calculate mutual fund for amount 100000 rate 10 years 5"</p>
         <div id="mf-results"></div>
       </div>
 
@@ -85,19 +85,19 @@
         <label for="amount">Amount (₹)</label>
         <input type="number" id="amount" placeholder="e.g. 25" min="0" step="0.01" />
         <button id="addExpenseBtn">Add Expense</button>
+        <button id="expense-voice-btn" title="Use voice command"><i class="fas fa-microphone"></i></button>
+        <p class="voice-example">Voice example: "Add expense groceries 25" or "Spent 25 on groceries"</p>
         <div id="expensesList"></div>
         <div id="totalAmount">Total: $0.00</div>
         <button class="clear-btn" id="clearExpensesBtn">Clear All Expenses</button>
       </div>
 
-      <!-- Currency Convertor -->
+      <!-- Currency Converter -->
       <div class="card">
         <h2>Currency Converter</h2>
         <img src="image/CurrencyConvertorImage.jpg" alt="Currency Image">
-        
         <label for="amountToConvert">Amount:</label>
         <input type="number" id="amountToConvert" placeholder="e.g., 100" />
-
         <label for="fromCurrency">From:</label>
         <select id="fromCurrency">
           <option value="INR">INR</option>
@@ -106,7 +106,6 @@
           <option value="GBP">GBP</option>
           <option value="JPY">JPY</option>
         </select>
-
         <label for="toCurrency">To:</label>
         <select id="toCurrency">
           <option value="USD">USD</option>
@@ -115,10 +114,11 @@
           <option value="GBP">GBP</option>
           <option value="JPY">JPY</option>
         </select>
-
         <button onclick="convertCurrency()">Convert</button>
+        <button id="currency-voice-btn" title="Use voice command"><i class="fas fa-microphone"></i></button>
+        <p class="voice-example">Voice example: "Convert 100 from USD to EUR"</p>
         <div id="conversionResult"></div>
-    </div>
+      </div>
 
       <!-- Finance News -->
       <div class="card">
@@ -132,74 +132,63 @@
         <button id="confirm-ok">Yes</button>
         <button id="confirm-cancel">No</button>
       </div>
-
     </div>
 
-      <!-- Contact Form -->
+    <!-- Contact Form -->
     <footer>
       <div class="image-contact">
         <img class="image-con" src="./flat-line-design-website-banner-development-process-idea-to-realization-modern-vector-illustration-web-69537597.jpg" alt="Contact Image">
       </div>
-    <div class="card">
+      <div class="card">
         <h2>Contact Us Form</h2>
-           <section class="contact-section">
-    <div class="container">
-      <p class="intro-text">
-        Have questions, feedback, or collaboration ideas? Reach out to us!
-      </p>
-
-      <div class="contact-grid">
-        <form class="contact-form">
-          <label for="name">Name</label>
-          <input type="text" id="name" placeholder="Enter your name " required />
-
-          <label for="email">Email</label>
-          <input type="email" id="email" placeholder="Enter your mail" required />
-
-          <label for="message">Message</label>
-          <textarea id="message" style="font-family: sans-serif; font-size: 16px;padding: 5px;" placeholder="Enter your message" required></textarea>
-
-          <button type="submit">Send Message</button>
-        </form>
-          <!-- Social & Contact Info -->
-        <div class="contact-info">
-          <h2>Our Team</h2>
-          <p>Email: devteam@example.com</p>
-          <p>Phone: +1 234 567 890</p>
-          <div class="social-links">
-            <a href="https://twitter.com/yourteam"><i class="fab fa-twitter"></i></a>
-            <a href="https://www.linkedin.com/in/kanisha-sharma11/"><i class="fab fa-linkedin"></i></a>
-            <a href="https://github.com/KanishaSharma11"><i class="fab fa-github"></i></a>
+        <section class="contact-section">
+          <div class="container">
+            <p class="intro-text">
+              Have questions, feedback, or collaboration ideas? Reach out to us!
+            </p>
+            <div class="contact-grid">
+              <form class="contact-form">
+                <label for="name">Name</label>
+                <input type="text" id="name" placeholder="Enter your name" required />
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="Enter your mail" required />
+                <label for="message">Message</label>
+                <textarea id="message" style="font-family: sans-serif; font-size: 16px;padding: 5px;" placeholder="Enter your message" required></textarea>
+                <button type="submit">Send Message</button>
+              </form>
+              <div class="contact-info">
+                <h2>Our Team</h2>
+                <p>Email: devteam@example.com</p>
+                <p>Phone: +1 234 567 890</p>
+                <div class="social-links">
+                  <a href="https://twitter.com/yourteam"><i class="fab fa-twitter"></i></a>
+                  <a href="https://www.linkedin.com/in/kanisha-sharma11/"><i class="fab fa-linkedin"></i></a>
+                  <a href="https://github.com/KanishaSharma11"><i class="fab fa-github"></i></a>
+                </div>
+                <p class="social-text">Have questions or ready to explore fintech solutions? We’d love to hear from you! Reach out via email, phone, or the form below—let’s discuss how we can innovate finance together. Your vision starts with a conversation.</p>
+              </div>
+            </div>
+            <p class="ending-text">Connect with us. Innovation starts with a conversation.</p>
           </div>
-          <p class="social-text">Have questions or ready to explore fintech solutions? We’d love to hear from you! Reach out via email, phone, or the form below—let’s discuss how we can innovate finance together. Your vision starts with a conversation.</p>
+          <div id="mf-error" class="error-msg"></div>
+          <div id="mf-results"></div>
+        </section>
+      </div>
+      <div class="footer">
+        <p>© 2025 <strong>Fintech Dashboard</strong>. All rights reserved.</p>
+        <div class="footer-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">Contact Us</a>
+        </div>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-linkedin"></i></a>
+          <a href="#"><i class="fab fa-github"></i></a>
         </div>
       </div>
-      <p class="ending-text">Connect with us. Innovation starts with a conversation.</p>
-    </div>
-  <!-- https://twitter.com/yourteam -->
-   <!-- "https://github.com/KanishaSharma11" -->
-       
-        <div id="mf-error" class="error-msg"></div>
-        <div id="mf-results"></div>
-      </div>
+    </footer>
   </main>
-
-  <div class="footer">
-    <p>© 2025 <strong>Fintech Dashboard</strong>. All rights reserved.</p>
-  
-    <div class="footer-links">
-      <a href="#">Privacy Policy</a>
-      <a href="#">Terms of Service</a>
-      <a href="#">Contact Us</a>
-    </div>
-
-    <div class="social-icons">
-      <a href="#"><i class="fab fa-twitter"></i></a>
-      <a href="#"><i class="fab fa-linkedin"></i></a>
-      <a href="#"><i class="fab fa-github"></i></a>
-    </div>
-  </div>
- </footer>
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
@@ -208,10 +197,9 @@
 
       if (username) {
         userInfoDiv.innerHTML = `
-  <span class="username">Welcome, <strong class="user-welcome">${username}</strong></span>
-  <a href="#" id="logout" class="btn logout-btn">Logout</a>
-`;
-
+          <span class="username">Welcome, <strong class="user-welcome">${username}</strong></span>
+          <a href="#" id="logout" class="btn logout-btn">Logout</a>
+        `;
         document.getElementById("logout").addEventListener("click", (e) => {
           e.preventDefault();
           localStorage.removeItem("loggedInUser");
@@ -225,9 +213,6 @@
       }
     });
   </script>
-
   <script src="script.js"></script>
 </body>
-
 </html>
-

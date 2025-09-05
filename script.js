@@ -53,14 +53,17 @@ function calculateSIP() {
 
   if (isNaN(monthly) || monthly <= 0) {
     errorEl.textContent = 'Please enter a valid monthly amount.';
+    speak('Please enter a valid monthly amount.');
     return;
   }
   if (isNaN(rate) || rate <= 0) {
     errorEl.textContent = 'Please enter a valid return rate.';
+    speak('Please enter a valid return rate.');
     return;
   }
   if (isNaN(years) || years <= 0) {
     errorEl.textContent = 'Please enter a valid duration.';
+    speak('Please enter a valid duration.');
     return;
   }
 
@@ -76,6 +79,7 @@ function calculateSIP() {
     <p><strong>Total Value:</strong> ₹${futureValue.toFixed(2)}</p>
   `;
   showToast('SIP calculation completed', 'success');
+  speak(`SIP calculation completed. Total Invested: ₹${totalInvested.toFixed(2)}, Estimated Returns: ₹${returns.toFixed(2)}, Total Value: ₹${futureValue.toFixed(2)}`);
 }
 
 // Mutual Fund Calculator
@@ -91,14 +95,17 @@ function calculateMF() {
 
   if (isNaN(amount) || amount <= 0) {
     errorEl.textContent = 'Please enter a valid investment amount.';
+    speak('Please enter a valid investment amount.');
     return;
   }
   if (isNaN(rate) || rate <= 0) {
     errorEl.textContent = 'Please enter a valid return rate.';
+    speak('Please enter a valid return rate.');
     return;
   }
   if (isNaN(years) || years <= 0) {
     errorEl.textContent = 'Please enter a valid duration.';
+    speak('Please enter a valid duration.');
     return;
   }
 
@@ -111,6 +118,7 @@ function calculateMF() {
     <p><strong>Total Value:</strong> ₹${futureValue.toFixed(2)}</p>
   `;
   showToast('Mutual Fund calculation completed', 'success');
+  speak(`Mutual Fund calculation completed. Invested Amount: ₹${amount.toFixed(2)}, Estimated Returns: ₹${returns.toFixed(2)}, Total Value: ₹${futureValue.toFixed(2)}`);
 }
 
 // Fetch Finance News
@@ -216,7 +224,6 @@ function showTrend(el, currentPrice, prevPrice, metalName) {
   }
 }
 
-// ✅ FIXED fetchPrices()
 async function fetchPrices() {
   btn.disabled = true;
   statusEl.innerHTML = '<div class="loader"></div>';
@@ -315,10 +322,12 @@ addExpenseBtn.addEventListener('click', () => {
 
   if (!desc) {
     showToast('Please enter a description.', 'error');
+    speak('Please enter a description.');
     return;
   }
   if (isNaN(amount) || amount <= 0) {
     showToast('Please enter a valid positive amount.', 'error');
+    speak('Please enter a valid positive amount.');
     return;
   }
 
@@ -329,6 +338,7 @@ addExpenseBtn.addEventListener('click', () => {
 
   updateExpensesUI();
   showToast('Expense added.', 'success');
+  speak(`Expense added: ${desc} for ₹${amount.toFixed(2)}`);
 });
 
 clearExpensesBtn.addEventListener('click', () => {
@@ -336,6 +346,7 @@ clearExpensesBtn.addEventListener('click', () => {
     expenses = [];
     updateExpensesUI();
     showToast('All expenses cleared.', 'info');
+    speak('All expenses cleared.');
   });
 });
 
@@ -366,6 +377,7 @@ function convertCurrency() {
 
   if (!amount || isNaN(amount)) {
     resultDiv.innerText = "Please enter a valid amount.";
+    speak('Please enter a valid amount.');
     return;
   }
 
@@ -378,12 +390,143 @@ function convertCurrency() {
         const rate = data.rates[to];
         const converted = (amount * rate).toFixed(2);
         resultDiv.innerText = `${amount} ${from} = ${converted} ${to}`;
+        showToast('Currency conversion completed.', 'success');
+        speak(`Converted ${amount} ${from} to ${converted} ${to}`);
       } else {
         resultDiv.innerText = "Conversion failed. Please check the currencies.";
+        showToast('Conversion failed.', 'error');
+        speak('Conversion failed. Please check the currencies.');
       }
     })
     .catch(error => {
       console.error("Error:", error);
       resultDiv.innerText = "Error fetching conversion rates.";
+      showToast('Error fetching conversion rates.', 'error');
+      speak('Error fetching conversion rates.');
     });
+}
+
+// Voice Command Functionality
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+let recognition;
+
+if (SpeechRecognition) {
+  recognition = new SpeechRecognition();
+  recognition.continuous = false;
+  recognition.lang = 'en-US';
+  recognition.interimResults = false;
+  recognition.maxAlternatives = 1;
+
+  // Speak function for audio feedback
+  function speak(text) {
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'en-US';
+    window.speechSynthesis.speak(utterance);
+  }
+
+  // Function to parse voice input and trigger appropriate calculator
+  function processVoiceCommand(transcript, calculatorType) {
+    transcript = transcript.toLowerCase().trim();
+
+    if (calculatorType === 'sip') {
+      // Expected format: "calculate sip for monthly [amount] rate [rate] years [years]"
+      const sipRegex = /calculate sip for monthly (\d+) rate (\d+\.?\d*) years (\d+)/;
+      const match = transcript.match(sipRegex);
+      if (match) {
+        const monthly = parseFloat(match[1]);
+        const rate = parseFloat(match[2]);
+        const years = parseFloat(match[3]);
+        document.getElementById('monthly').value = monthly;
+        document.getElementById('rate').value = rate;
+        document.getElementById('years').value = years;
+        calculateSIP();
+      } else {
+        showToast('Invalid SIP command. Say: "calculate sip for monthly [amount] rate [rate] years [years]"', 'error');
+        speak('Invalid SIP command. Please say: calculate sip for monthly [amount] rate [rate] years [years]');
+      }
+    } else if (calculatorType === 'mf') {
+      // Expected format: "calculate mutual fund for amount [amount] rate [rate] years [years]"
+      const mfRegex = /calculate mutual fund for amount (\d+) rate (\d+\.?\d*) years (\d+)/;
+      const match = transcript.match(mfRegex);
+      if (match) {
+        const amount = parseFloat(match[1]);
+        const rate = parseFloat(match[2]);
+        const years = parseFloat(match[3]);
+        document.getElementById('mf-amount').value = amount;
+        document.getElementById('mf-rate').value = rate;
+        document.getElementById('mf-years').value = years;
+        calculateMF();
+      } else {
+        showToast('Invalid Mutual Fund command. Say: "calculate mutual fund for amount [amount] rate [rate] years [years]"', 'error');
+        speak('Invalid Mutual Fund command. Please say: calculate mutual fund for amount [amount] rate [rate] years [years]');
+      }
+    } else if (calculatorType === 'expense') {
+      // Expected format: "add expense [description] [amount]" or "spent [amount] on [description]"
+      const expenseRegex = /(?:add expense (\w+) (\d+\.?\d*)|spent (\d+\.?\d*) on (\w+))/;
+      const match = transcript.match(expenseRegex);
+      if (match) {
+        const desc = match[1] || match[4]; // Use description from either pattern
+        const amount = parseFloat(match[2] || match[3]); // Use amount from either pattern
+        document.getElementById('desc').value = desc;
+        document.getElementById('amount').value = amount;
+        addExpenseBtn.click();
+      } else {
+        showToast('Invalid Expense command. Say: "add expense [description] [amount]" or "spent [amount] on [description]"', 'error');
+        speak('Invalid Expense command. Please say: add expense [description] [amount] or spent [amount] on [description]');
+      }
+    } else if (calculatorType === 'currency') {
+      // Expected format: "convert [amount] from [currency] to [currency]"
+      const currencyRegex = /convert (\d+\.?\d*) from (\w+) to (\w+)/;
+      const match = transcript.match(currencyRegex);
+      if (match) {
+        const amount = parseFloat(match[1]);
+        const fromCurrency = match[2].toUpperCase();
+        const toCurrency = match[3].toUpperCase();
+        if (['INR', 'USD', 'EUR', 'GBP', 'JPY'].includes(fromCurrency) && ['INR', 'USD', 'EUR', 'GBP', 'JPY'].includes(toCurrency)) {
+          document.getElementById('amountToConvert').value = amount;
+          document.getElementById('fromCurrency').value = fromCurrency;
+          document.getElementById('toCurrency').value = toCurrency;
+          convertCurrency();
+        } else {
+          showToast('Invalid currency codes. Use INR, USD, EUR, GBP, or JPY.', 'error');
+          speak('Invalid currency codes. Please use INR, USD, EUR, GBP, or JPY.');
+        }
+      } else {
+        showToast('Invalid Currency command. Say: "convert [amount] from [currency] to [currency]"', 'error');
+        speak('Invalid Currency command. Please say: convert [amount] from [currency] to [currency]');
+      }
+    }
+  }
+
+  // Function to start voice recognition
+  function startVoiceRecognition(calculatorType) {
+    recognition.start();
+    showToast(`Listening for ${calculatorType.toUpperCase()} command...`, 'info');
+    speak(`Please say your ${calculatorType} command.`);
+    recognition.onresult = (event) => {
+      const transcript = event.results[0][0].transcript;
+      showToast(`Heard: "${transcript}"`, 'info');
+      processVoiceCommand(transcript, calculatorType);
+    };
+    recognition.onerror = (event) => {
+      showToast(`Voice recognition error: ${event.error}`, 'error');
+      speak(`Voice recognition error: ${event.error}`);
+    };
+    recognition.onend = () => {
+      showToast('Voice recognition stopped.', 'info');
+    };
+  }
+
+  // Add event listeners for voice buttons
+  document.getElementById('sip-voice-btn').addEventListener('click', () => startVoiceRecognition('sip'));
+  document.getElementById('mf-voice-btn').addEventListener('click', () => startVoiceRecognition('mf'));
+  document.getElementById('expense-voice-btn').addEventListener('click', () => startVoiceRecognition('expense'));
+  document.getElementById('currency-voice-btn').addEventListener('click', () => startVoiceRecognition('currency'));
+} else {
+  // Disable voice buttons if Web Speech API is not supported
+  document.querySelectorAll('#sip-voice-btn, #mf-voice-btn, #expense-voice-btn, #currency-voice-btn').forEach(btn => {
+    btn.disabled = true;
+    btn.title = 'Voice commands not supported in this browser';
+  });
+  showToast('Voice commands not supported in this browser.', 'error');
 }
