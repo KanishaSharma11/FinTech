@@ -12,6 +12,8 @@
   </head>
 
   <body>
+    <div id="navbar"></div>
+
     <header>
       <div class="header-bar">
         <h1>Fintech</h1>
@@ -130,7 +132,16 @@
         });
       });
     </script>
+    <script>
+  fetch("navbar.html")
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById("navbar").innerHTML = data;
+    });
+</script>
+
   </body>
 </html>
+
 
 
