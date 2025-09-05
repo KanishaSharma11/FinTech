@@ -7,18 +7,12 @@
   <title>Fintech Dashboard</title>
   <link rel="stylesheet" href="style.css" />
   <!-- Using Font Awesome icons  -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"> /
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
 <body>
-  <header>
-    <div class="header-bar">
-      <h1>Fintech</h1>
-      <div id="user-info">
-        <!-- Welcome message and logout button will be inserted here -->
-      </div>
-    </div>
-  </header>
+  <!-- Reusable Navbar -->
+  <div id="navbar"></div>
 
   <div id="toast-container"></div>
 
@@ -90,7 +84,7 @@
         <button class="clear-btn" id="clearExpensesBtn">Clear All Expenses</button>
       </div>
 
-      <!-- Currency Convertor -->
+      <!-- Currency Converter -->
       <div class="card">
         <h2>Currency Converter</h2>
         <img src="image/CurrencyConvertorImage.jpg" alt="Currency Image">
@@ -176,8 +170,6 @@
       </div>
       <p class="ending-text">Connect with us. Innovation starts with a conversation.</p>
     </div>
-  <!-- https://twitter.com/yourteam -->
-   <!-- "https://github.com/KanishaSharma11" -->
        
         <div id="mf-error" class="error-msg"></div>
         <div id="mf-results"></div>
@@ -203,31 +195,41 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      const userInfoDiv = document.getElementById("user-info");
+      const userInfoDiv = document.querySelector("#navbar #user-info");
       const username = localStorage.getItem("loggedInUser");
 
-      if (username) {
-        userInfoDiv.innerHTML = `
-  <span class="username">Welcome, <strong class="user-welcome">${username}</strong></span>
-  <a href="#" id="logout" class="btn logout-btn">Logout</a>
-`;
+      if (userInfoDiv) {
+        if (username) {
+          userInfoDiv.innerHTML = `
+            <span class="username">Welcome, <strong class="user-welcome">${username}</strong></span>
+            <a href="#" id="logout" class="btn logout-btn">Logout</a>
+          `;
 
-        document.getElementById("logout").addEventListener("click", (e) => {
-          e.preventDefault();
-          localStorage.removeItem("loggedInUser");
-          window.location.href = "login.html"; // redirect to login
-        });
-      } else {
-        userInfoDiv.innerHTML = `
-          <a href="login.html" class="btn">Login</a>
-          <a href="signup.html" class="btn">Sign Up</a>
-        `;
+          document.getElementById("logout").addEventListener("click", (e) => {
+            e.preventDefault();
+            localStorage.removeItem("loggedInUser");
+            window.location.href = "login.html";
+          });
+        } else {
+          userInfoDiv.innerHTML = `
+            <a href="login.html" class="btn">Login</a>
+            <a href="signup.html" class="btn">Sign Up</a>
+          `;
+        }
       }
     });
   </script>
 
+  <script>
+    fetch("navbar.html")
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById("navbar").innerHTML = data;
+      });
+  </script>
+
   <script src="script.js"></script>
 </body>
-
 </html>
+
 
