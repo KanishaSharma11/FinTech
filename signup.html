@@ -2,168 +2,46 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Signup</title>
-  <style>
-    /* Reset styles */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #021223, #077b9b);
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-    }
-
-    .container {
-      background: #fff;
-      padding: 40px 30px;
-      border-radius: 12px;
-      box-shadow: 0 12px 25px rgba(0,0,0,0.2);
-      width: 100%;
-      max-width: 400px;
-      text-align: center;
-      animation: fadeIn 0.6s ease-in-out;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    h2 {
-      color: #333;
-      margin-bottom: 20px;
-    }
-
-    p {
-      color: #555;
-      margin: 15px 0;
-      font-size: 0.95rem;
-    }
-
-    /* Floating label input group */
-    .form-group {
-      position: relative;
-      width: 100%;
-      margin-bottom: 18px;
-    }
-
-    .form-group input {
-      width: 100%;
-      padding: 12px 13px;
-      font-size: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      background: transparent;
-      outline: none;
-      transition: border-color 0.25s, box-shadow 0.25s;
-    }
-
-    .form-group input:focus {
-      border-color: #007bff;
-      box-shadow: 0 0 0 2px rgba(0,123,255,0.2);
-      background: #fff;
-    }
-
-    .form-group label {
-      position: absolute;
-      left: 13px;
-      top: 12px;
-      font-size: 1rem;
-      color: #777;
-      pointer-events: none;
-      transition: all 0.2s ease-out;
-      background: white;
-      padding: 0 4px;
-    }
-
-    .form-group input:focus + label,
-    .form-group input:not(:placeholder-shown) + label {
-      top: -8px;
-      left: 10px;
-      font-size: 0.75rem;
-      color: #007bff;
-    }
-
-    /* Password toggle */
-    .toggle-password {
-      position: absolute;
-      right: 12px;
-      top: 12px;
-      cursor: pointer;
-      font-size: 0.85rem;
-      color: #007bff;
-      user-select: none;
-    }
-
-    button {
-      width: 100%;
-      background-color: #007bff;
-      color: #fff;
-      border: none;
-      padding: 12px;
-      font-size: 1rem;
-      border-radius: 8px;
-      margin-top: 15px;
-      cursor: pointer;
-      transition: background-color 0.3s ease, transform 0.2s ease;
-    }
-
-    button:hover { background-color: #0056b3; }
-    button:active { transform: scale(0.98); }
-
-    a { color: #007bff; text-decoration: none; }
-    a:hover { text-decoration: underline; }
-
-    @media (max-width: 480px) {
-      .container { padding: 30px 20px; }
-      h2 { font-size: 1.4rem; }
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up | Fintech</title>
+  <link rel="stylesheet" href="auth.css">
 </head>
 <body>
-  <div class="container">
-    <h2>Signup</h2>
-    <form id="signup-form">
-      <div class="form-group">
-        <input type="text" id="fullName" placeholder=" " required />
-        <label for="fullName">Full Name</label>
-      </div>
+  <div class="auth-container">
+    <div class="auth-card">
+      <h2>Create Account</h2>
+      <form id="signup-form">
+        <div class="form-group">
+          <input type="text" id="fullName" placeholder=" " required>
+          <label for="fullName">Full Name</label>
+        </div>
 
-      <div class="form-group">
-        <input type="email" id="email" placeholder=" " required />
-        <label for="email">Email</label>
-      </div>
+        <div class="form-group">
+          <input type="email" id="email" placeholder=" " required>
+          <label for="email">Email</label>
+        </div>
 
-      <div class="form-group" style="position:relative;">
-        <input type="password" id="password" placeholder=" " required />
-        <label for="password">Password</label>
-        <span class="toggle-password" id="togglePassword">Show</span>
-      </div>
+        <div class="form-group">
+          <input type="password" id="password" placeholder=" " required>
+          <label for="password">Password</label>
+          <span class="toggle-password" id="toggleSignupPassword">Show</span>
+        </div>
 
-      <button type="submit">Sign up</button>
-    </form>
-    <p>Already have an account? <a href="login.html">Login</a></p>
+        <button type="submit" class="btn">Sign Up</button>
+      </form>
+      <p class="switch-text">Already have an account? <a href="login.html">Login</a></p>
+    </div>
   </div>
 
   <script>
-    // Signup form
-    document.getElementById("signup-form").addEventListener("submit", function(e){
+    const signupForm = document.getElementById("signup-form");
+    signupForm.addEventListener("submit", (e) => {
       e.preventDefault();
-
       const fullName = document.getElementById("fullName").value.trim();
       const email = document.getElementById("email").value.trim();
       const password = document.getElementById("password").value;
 
-      if(!fullName || !email || !password){
+      if (!fullName || !email || !password) {
         alert("Please fill all fields");
         return;
       }
@@ -177,10 +55,9 @@
 
     // Password toggle
     const passwordInput = document.getElementById("password");
-    const togglePassword = document.getElementById("togglePassword");
-
+    const togglePassword = document.getElementById("toggleSignupPassword");
     togglePassword.addEventListener("click", () => {
-      if(passwordInput.type === "password"){
+      if (passwordInput.type === "password") {
         passwordInput.type = "text";
         togglePassword.textContent = "Hide";
       } else {

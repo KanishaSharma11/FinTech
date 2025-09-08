@@ -2,376 +2,69 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Login</title>
-  <style>
-    /* Reset styles */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      background: linear-gradient(135deg, #021223, #077b9b);
-      padding: 0;
-    }
-
-    .container {
-      background: #fff;
-      padding: 32px 28px;
-      border-radius: 10px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.07);
-      width: 100%;
-      max-width: 400px;
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      animation: fadeIn 0.6s ease-in-out;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    h2 { color: #222; font-size: 1.7rem; margin-bottom: 24px; }
-
-    .form-group {
-      position: relative;
-      width: 100%;
-      margin-bottom: 20px;
-      min-height: 48px; /* prevents vertical shift */
-    }
-
-    .form-group input {
-      width: 100%;
-      padding: 12px 13px;
-      font-size: 1rem;
-      border: 1px solid #dbe2ea;
-      border-radius: 7px;
-      background: transparent;
-      outline: none;
-      transition: border-color 0.25s, box-shadow 0.25s;
-      padding-right: 60px; /* space for toggle */
-    }
-
-    .form-group input:focus {
-      border-color: #007bff;
-      box-shadow: 0 0 0 2px #e3f0ff;
-      background: #fff;
-    }
-
-    .form-group label {
-      position: absolute;
-      left: 13px;
-      top: 12px;
-      font-size: 1rem;
-      color: #777;
-      pointer-events: none;
-      transition: all 0.2s ease-out;
-      background: white;
-      padding: 0 4px;
-    }
-
-    .form-group input:focus + label,
-    .form-group input:not(:placeholder-shown) + label {
-      top: -8px;
-      left: 10px;
-      font-size: 0.75rem;
-      color: #007bff;
-    }
-
-    .toggle-password {
-      position: absolute;
-      right: 12px;
-      top: 50%;
-      transform: translateY(-50%);
-      cursor: pointer;
-      font-size: 0.85rem;
-      color: #007bff;
-      user-select: none;
-      width: 40px; /* fixed width prevents shift */
-      text-align: right;
-    }
-
-    .login-btn {
-      width: 100%;
-      background-color: #007bff;
-      color: #fff;
-      border: none;
-      padding: 13px;
-      font-size: 1.08rem;
-      border-radius: 7px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.2s, box-shadow 0.2s;
-      box-shadow: 0 2px 8px rgba(0,123,255,0.07);
-    }
-
-    .login-btn:hover {
-      background-color: #0056b3;
-      box-shadow: 0 4px 16px rgba(0,123,255,0.10);
-    }
-
-    .forgot-link {
-      display: block;
-      margin: 16px 0 0 0;
-      text-align: center;
-      color: #007bff;
-      font-size: 0.97rem;
-      text-decoration: none;
-      font-weight: 500;
-      opacity: 0.85;
-      transition: opacity 0.2s;
-    }
-
-    .forgot-link:hover {
-      opacity: 1;
-      text-decoration: underline;
-    }
-
-    p {
-      color: #555;
-      margin: 18px 0 0 0;
-      font-size: 0.97rem;
-    }
-
-    a { color: #007bff; text-decoration: none; font-weight: 500; }
-    a:hover { text-decoration: underline; }
-
-    @media (max-width: 480px) {
-      .container { padding: 22px 10px; max-width: 98vw; }
-      h2 { font-size: 1.2rem; }
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | Fintech</title>
+  <link rel="stylesheet" href="auth.css">
 </head>
 <body>
-  <div class="container">
-    <h2>Login</h2>
-    <form id="login-form" autocomplete="on">
-      <div class="form-group">
-        <input type="email" id="email" placeholder=" abc@gmail.com" required autofocus />
-        <label for="email">Email</label>
-      </div>
+  <div class="auth-container">
+    <div class="auth-card">
+      <h2>Welcome Back</h2>
+      <form id="login-form">
+        <div class="form-group">
+          <input type="email" id="email" placeholder=" " required>
+          <label for="email">Email</label>
+        </div>
 
-      <!--icon overlap issue solved and new placeholders added-->
-      <div class="form-group">
-        <input type="password" id="password" placeholder=" Password" required />
-        <label for="password">Password</label>
-        <span id="togglePassword" class="toggle-password">Show</span>
-      </div>
+        <div class="form-group">
+          <input type="password" id="password" placeholder=" " required>
+          <label for="password">Password</label>
+          <span class="toggle-password" id="toggleLoginPassword">Show</span>
+        </div>
 
-      <button type="submit" class="login-btn">Login</button>
-      <a href="#" class="forgot-link">Forgot Password?</a>
-    </form>
-    <p>Don't have an account? <a href="signup.html">Sign up</a></p>
+        <button type="submit" class="btn">Login</button>
+        <a href="#" class="forgot-link">Forgot Password?</a>
+      </form>
+      <p class="switch-text">Don't have an account? <a href="signup.html">Sign Up</a></p>
+    </div>
   </div>
 
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      // Login form
-      const loginForm = document.getElementById("login-form");
-      loginForm.addEventListener("submit", function(e){
-        e.preventDefault();
-        const email = document.getElementById("email").value.trim();
-        const password = document.getElementById("password").value;
-        const storedUser = localStorage.getItem("user_" + email);
+    const loginForm = document.getElementById("login-form");
+    loginForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
 
-        if(!storedUser){
-          alert("User not found! Please sign up first.");
-          return;
-        }
+      const storedUser = localStorage.getItem("user_" + email);
+      if (!storedUser) {
+        alert("User not found! Please sign up first.");
+        return;
+      }
 
-        const userData = JSON.parse(storedUser);
-        if(userData.password !== password){
-          alert("Incorrect password!");
-          return;
-        }
+      const userData = JSON.parse(storedUser);
+      if (userData.password !== password) {
+        alert("Incorrect password!");
+        return;
+      }
 
-        localStorage.setItem("loggedInUser", userData.fullName);
-        alert("Login successful!");
-        window.location.href = "home.html";
-      });
+      localStorage.setItem("loggedInUser", userData.fullName);
+      alert("Login successful! Redirecting...");
+      window.location.href = "home.html";
+    });
 
-      // Password toggle
-      const passwordInput = document.getElementById("password");
-      const togglePassword = document.getElementById("togglePassword");
-
-      togglePassword.addEventListener("click", () => {
-        if(passwordInput.type === "password"){
-          passwordInput.type = "text";
-          togglePassword.textContent = "Hide";
-        } else {
-          passwordInput.type = "password";
-          togglePassword.textContent = "Show";
-        }
-      });
+    // Password toggle
+    const loginPassword = document.getElementById("password");
+    const togglePassword = document.getElementById("toggleLoginPassword");
+    togglePassword.addEventListener("click", () => {
+      if (loginPassword.type === "password") {
+        loginPassword.type = "text";
+        togglePassword.textContent = "Hide";
+      } else {
+        loginPassword.type = "password";
+        togglePassword.textContent = "Show";
+      }
     });
   </script>
 </body>
 </html>
-
-
-<!-- 
-====== Previous login.html code (classic version) ======
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Login</title>
-  <style>
-    /* Reset some default styles */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #021223, #077b9b);
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-    }
-    .container {
-      background: #fff;
-      padding: 40px 30px;
-      border-radius: 12px;
-      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
-      width: 100%;
-      max-width: 400px;
-      text-align: center;
-      animation: fadeIn 0.6s ease-in-out;
-    }
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    h1, h2 {
-      color: #333;
-      margin-bottom: 20px;
-    }
-    p {
-      color: #555;
-      margin: 15px 0;
-      font-size: 0.95rem;
-    }
-    input[type="text"],
-    input[type="email"],
-    input[type="password"] {
-      width: 100%;
-      padding: 12px 14px;
-      margin: 12px 0;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 1rem;
-      transition: all 0.3s ease;
-    }
-    input:focus {
-      border-color: #007bff;
-      box-shadow: 0 0 5px rgba(0, 123, 255, 0.4);
-      outline: none;
-    }
-    button {
-      width: 100%;
-      background-color: #007bff;
-      color: #fff;
-      border: none;
-      padding: 12px;
-      font-size: 1rem;
-      border-radius: 8px;
-      margin-top: 15px;
-      cursor: pointer;
-      transition: background-color 0.3s ease, transform 0.2s ease;
-    }
-    button:hover {
-      background-color: #0056b3;
-    }
-    button:active {
-      transform: scale(0.98);
-    }
-    a {
-      color: #007bff;
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-    @media (max-width: 480px) {
-      .container {
-        padding: 30px 20px;
-      }
-      h1, h2 {
-        font-size: 1.4rem;
-      }
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h2>Login</h2>
-    <form id="login-form">
-      <input type="email" id="email" placeholder="Email" required autofocus />
-      <div style="position:relative;">
-        <input type="password" id="password" placeholder="Password" required />
-        <span id="togglePassword" style="position:absolute; right:12px; top:16px; cursor:pointer; font-size:0.95rem; color:#007bff;">Show</span>
-      </div>
-      <button type="submit">Login</button>
-    </form>
-    <p>Don't have an account? <a href="signup.html">Sign up</a></p>
-  </div>
-  <script src="script.js"></script>
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      // Assuming createToastContainer and showToast are defined elsewhere
-      createToastContainer();
-      document.getElementById("login-form").addEventListener("submit", function (e) {
-        e.preventDefault();
-        const email = document.getElementById("email").value.trim();
-        const password = document.getElementById("password").value;
-        const storedUser = localStorage.getItem("user_" + email);
-        if (!storedUser) {
-          alert("User not found! Please sign up first.");
-          return;
-        }
-        const userData = JSON.parse(storedUser);
-        if (userData.password !== password) {
-          alert("Incorrect password!");
-          return;
-        }
-        localStorage.setItem("loggedInUser", userData.fullName);
-        showToast("Login successful!", "success");
-        setTimeout(() => {
-          window.location.href = "home.html";
-        }, 1000);
-      });
-      // Show/hide password toggle
-      const passwordInput = document.getElementById("password");
-      const togglePassword = document.getElementById("togglePassword");
-      togglePassword.addEventListener("click", () => {
-        if (passwordInput.type === "password") {
-          passwordInput.type = "text";
-          togglePassword.textContent = "Hide";
-        } else {
-          passwordInput.type = "password";
-          togglePassword.textContent = "Show";
-        }
-      });
-    });
-  </script>
-</body>
-</html>
--->
-
