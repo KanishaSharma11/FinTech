@@ -17,9 +17,11 @@
       background: linear-gradient(135deg, #021223, #077b9b);
       min-height: 100vh;
       display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
+      flex-direction: column; /* so navbar stays on top */
+    }
+
+    #navbar {
+      width: 100%; /* navbar spans full width */
     }
 
     .container {
@@ -31,6 +33,7 @@
       max-width: 400px;
       text-align: center;
       animation: fadeIn 0.6s ease-in-out;
+      margin: auto; /* center form within remaining space */
     }
 
     @keyframes fadeIn {
@@ -130,6 +133,10 @@
   </style>
 </head>
 <body>
+  <!-- Navbar stays at top -->
+  <div id="navbar"></div>
+
+  <!-- Signup form container centered below navbar -->
   <div class="container">
     <h2>Signup</h2>
     <form id="signup-form">
@@ -189,5 +196,13 @@
       }
     });
   </script>
+  <script>
+    fetch("navbar.html")
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById("navbar").innerHTML = data;
+      });
+  </script>
+
 </body>
 </html>
