@@ -17,10 +17,11 @@
       background: linear-gradient(135deg, #021223, #077b9b);
       min-height: 100vh;
       display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-      color: #333;
+      flex-direction: column; /* navbar at top, content below */
+    }
+
+    #navbar {
+      width: 100%;
     }
 
     .container {
@@ -32,6 +33,7 @@
       max-width: 380px;
       text-align: center;
       animation: fadeIn 0.5s ease-out;
+      margin: auto; /* centers in remaining space */
     }
 
     @keyframes fadeIn {
@@ -98,6 +100,10 @@
   </style>
 </head>
 <body>
+  <!-- Navbar at top -->
+  <div id="navbar"></div>
+
+  <!-- Centered Welcome Box -->
   <div class="container">
     <h1>Welcome to Fintech</h1>
     <p>Select an option to continue:</p>
@@ -109,6 +115,13 @@
     function goTo(page) {
       window.location.href = page;
     }
+  </script>
+  <script>
+    fetch("navbar.html")
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById("navbar").innerHTML = data;
+      });
   </script>
 </body>
 </html>
