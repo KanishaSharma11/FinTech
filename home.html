@@ -8,6 +8,169 @@
   <link rel="stylesheet" href="style.css" />
   <!-- Using Font Awesome icons  -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <style>
+  
+
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: #111827;
+      color: #fff;
+      padding: 2rem;
+      margin-top: 2rem;
+    }
+
+    .footer-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+    }
+
+    .footer-col h3 {
+      margin-bottom: 1rem;
+      color: #f3f3f4;
+    }
+
+    .footer-col a {
+      display: block;
+      color: #d1d5db;
+      text-decoration: none;
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-col a:hover {
+      color: #2563eb;
+    }
+
+    .footer-col p:hover {
+      color: #2563eb;
+    }
+    .social-icons {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .social-icons a {
+      font-size: 1.1rem;
+      color: #fff;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+    }
+.social-icons a:hover {
+      font-size: 1.1rem;
+      color: #2563eb;
+
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+    }
+    .social-icons a i {
+      margin-right: 8px;
+    }
+
+    .footer-col p {
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .footer-credit {
+      text-align: center;
+      margin-top: 2rem;
+      font-size: 0.9rem;
+      color: #9ca3af;
+    }
+    
+
+    /* ===== MEDIA QUERIES ===== */
+    @media(max-width: 768px) {
+      
+      .footer-container {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .footer-col .social-icons {
+        justify-content: center;
+      }
+    }
+    /* ===== MEDIA QUERIES ===== */
+@media(max-width: 768px) {
+  
+
+  /* ✅ FIX FOOTER COLUMNS */
+  .footer-container {
+    grid-template-columns: 1fr;   /* stack all columns */
+    text-align: center;
+  }
+
+  .footer-col {
+    margin-bottom: 1.5rem;        /* spacing between sections */
+  }
+
+  .footer-col .social-icons {
+    justify-content: center;
+    flex-direction: row;          /* icons side by side on mobile */
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+}
+@media(max-width: 768px) {
+  .footer-container {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    text-align: center;
+  }
+  .footer-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  /* Social icons horizontal */
+  .footer-col .social-icons { 
+    flex-direction: row; 
+    justify-content: center; 
+    gap: 1rem; 
+  }
+  /* Contact & paragraphs truly centered */
+  .footer-col p { 
+    display: block; 
+    margin: 0.25rem 0; 
+    text-align: center; 
+  }
+}
+@media(max-width: 768px) {
+  .footer-container {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    text-align: center;
+  }
+  .footer-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  /* Social icons stacked vertically on mobile */
+  .footer-col .social-icons { 
+    flex-direction: column; 
+    justify-content: center; 
+    gap: 0.5rem; 
+  }
+  /* Contact paragraphs centered */
+  .footer-col p { 
+    display: block; 
+    margin: 0.25rem 0; 
+    text-align: center; 
+  }
+}
+
+  </style>
 </head>
 
 <body>
@@ -208,23 +371,39 @@
   </main>
 
 
-  <div class="footer">
-    <p>© 2025 <strong>Fintech Dashboard</strong>. All rights reserved.</p>
-
-    <div class="footer-links">
-      <a href="#">Privacy Policy</a>
-      <a href="term_service.html">Terms of Service</a>
-      <a href="#contact-section">Contact Us</a>
+  <footer>
+    <div class="footer-container">
+      <div class="footer-col">
+        <h3><i class="fa-solid fa-briefcase"></i> Job Junction</h3>
+        <p>Find internships, part-time jobs, and remote opportunities tailored for you.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Important Links</h3>
+        <a href="home.html"><i class="fa-solid fa-house"></i> Home</a>
+        <a href="about.html"><i class="fa-solid fa-graduation-cap"></i> About</a>
+        <a href="term_service.html"><i class="fa-solid fa-clock"></i> Serivices</a>
+        <a href="contact.html"><i class="fa-solid fa-building"></i> Contact Us</a>
+      </div>
+      <div class="footer-col">
+        <h3>Contact</h3>
+        <p><i class="fa-solid fa-phone"></i> +91 98765 43210</p>
+        <p><i class="fa-solid fa-envelope"></i> support@fintech.com</p>
+      </div>
+      <div class="footer-col">
+        <h3>Follow Us</h3>
+        <div class="social-icons">
+          <a href="#"><i class="fa-brands fa-facebook"></i> Facebook</a>
+          <a href="#"><i class="fa-brands fa-twitter"></i> Twitter</a>
+          <a href="#"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+          <a href="#"><i class="fa-brands fa-instagram"></i> Instagram</a>
+        </div>
+      </div>
     </div>
-
-    <div class="social-icons">
-      <a href="mailto:sharmakan11052005@gmail.com"><i class="fa-solid fa-envelope"></i></a>
-      <a href="https://www.linkedin.com/in/https://www.linkedin.com/in/kanisha-sharma11/"><i
-          class="fab fa-linkedin"></i></a>
-      <a href="https://github.com/KanishaSharma11"><i class="fab fa-github"></i></a>
+    <div class="footer-credit">
+      &copy; 2025 fintech. All rights reserved.
     </div>
-  </div>
   </footer>
+
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
