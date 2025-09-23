@@ -5,7 +5,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Fintech Dashboard</title>
-  <link rel="stylesheet" href="style.css" />
   <!-- Using Font Awesome icons  -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <!-- Font Awesome Icons -->
@@ -169,213 +168,653 @@
     text-align: center; 
   }
 }
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #f5f5f5;
+}
+
+main {
+  padding: 20px;
+background-color: rgba(106, 83, 219, 0.1); /* faint / very light purple */
+}
+
+.dashboard-grid {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(3, 1fr); /* Always 3 per row on large screens */
+}
+
+.card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+
+/* Hover effect */
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.2);
+  background: #e6f0ff; /* light hover color */
+}
+
+.card h2 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 1.5rem;
+  text-align: center;
+  
+}
+
+.card img {
+  width: 100%;
+  max-height: 180px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+.card label {
+  align-self: flex-start;
+  margin-top: 10px;
+  font-weight: bold;
+  
+}
+
+.card input,
+.card select,
+.card button {
+  width: 100%;
+  padding: 8px 10px;
+  margin: 5px 0 10px 0;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.card button {
+  background: #007BFF;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.card button:hover {
+  background: #0056b3;
+}
+
+.stockbtn {
+  list-style: none;
+  margin: 5px 0;
+}
+
+.stockbtn a {
+  text-decoration: none;
+  color: #007BFF;
+  display: block;
+  padding: 6px;
+  border-radius: 5px;
+  border: 1px solid #007BFF;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.stockbtn a:hover {
+  background: #007BFF;
+  color: #fff;
+}
+
+#totalAmount {
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+/* Responsive Layout */
+@media (max-width: 1024px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 cards per row on medium */
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr; /* 1 card per row on small screens */
+  }
+}
+/* MAIN SECTION SPACING */
+main {
+  padding: 40px 20px;  /* top/bottom: 40px, left/right: 20px */
+  max-width: 1400px;   /* optional: keep content centered on large screens */
+  margin: 0 auto;      /* center main section */
+  box-sizing: border-box;
+}
+
+/* DASHBOARD GRID */
+.dashboard-grid {
+  display: grid;
+  gap: 25px;  /* spacing between cards */
+  grid-template-columns: repeat(3, 1fr); /* 3 cards per row on large screens */
+}
+
+/* Responsive Layout */
+@media (max-width: 1024px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 cards per row on medium */
+    gap: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr; /* 1 card per row on small screens */
+    gap: 15px;
+  }
+}
+/* NAVBAR */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff; /* same as cards */
+  padding: 15px 30px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  border-radius: 10px;
+  margin-bottom: 30px;
+  position: relative;
+  z-index: 10;
+  
+}
+
+.nav-logo a {
+  text-decoration: none;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #007BFF; /* same accent color as card buttons */
+}
+
+.nav-links {
+  
+  list-style: none;
+  display: flex;
+  gap: 25px;
+}
+
+.nav-links li a {
+  text-decoration: none;
+  color: #333; /* dark text */
+  font-weight: 500;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.nav-links li a:hover {
+  color: #007BFF;
+  transform: translateY(-2px);
+}
+
+/* Hamburger Menu for Mobile */
+.nav-toggle {
+  display: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #007BFF;
+}
+
+/* MEDIA QUERIES */
+@media (max-width: 768px) {
+  .nav-links {
+    position: absolute;
+
+    top: 65px;
+    left: 0;
+    right: 0;
+    background: #fff;
+    flex-direction: column;
+    align-items: center;
+    display: none;
+    gap: 15px;
+    padding: 20px 0;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border-radius: 0 0 10px 10px;
+    
+  }
+
+  .nav-links.active {
+    display: flex;
+  }
+
+  .nav-toggle {
+    display: block;
+  }
+}
+/* General Card Styling */
+.news-card {
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 20px;
+  width: 1200px;
+  margin: 20px auto;
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    background-color: rgba(106, 83, 219, 0.1); /* faint / very light purple */
+
+  
+}
+.contact-card {
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 20px;
+  width: 1200px;
+  margin: 20px auto;
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+
+}
+.section-title {
+  font-size: 22px;
+  margin-bottom: 15px;
+  color: #007BFF;
+  text-align: center;
+  
+}
+
+.news-image {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.news-content {
+  margin-top: 10px;
+  font-size: 16px;
+}
+
+/* Confirm Box */
+.confirm-box {
+  display: none;
+  position: fixed;
+  width: 300px;
+  padding: 20px;
+  background: #fff;
+  border-radius: 10px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  z-index: 9999;
+  text-align: center;
+}
+
+.btn {
+  background: #007BFF;
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  margin: 8px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.btn:hover {
+  background: #0056b3;
+}
+
+/* Contact Section */
+.contact-section-wrapper {
+  background: #f9f9f9;
+  padding: 30px 0;
+}
+
+.contact-banner {
+  text-align: center;
+}
+
+.contact-banner-img {
+  width: 100%;
+  max-height: 250px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.contact-container {
+  padding: 20px;
+}
+
+.contact-grid {
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.contact-form {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-form input,
+.contact-form textarea {
+  border: 1px solid #ccc;
+  padding: 8px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  outline: none;
+  border-color: #007BFF;
+}
+
+.contact-info {
+  flex: 1;
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.social-links {
+  margin: 15px 0;
+}
+
+.social-links a {
+  margin-right: 10px;
+  font-size: 20px;
+  color: #007BFF;
+  text-decoration: none;
+}
+
+.social-links a:hover {
+  color: #0056b3;
+}
+
+.intro-text,
+.social-text,
+.ending-text {
+  font-size: 14px;
+  line-height: 1.6;
+}
+/* Card Hover Effects */
+.news-card:hover,
+.contact-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+/* Buttons Hover already added */
+.btn:hover {
+  background: #0056b3;
+  transform: translateY(-2px);
+  transition: all 0.2s ease;
+}
+
+/* Social icons hover (already has color change) */
+.social-links a:hover {
+  color: #0056b3;
+  transform: scale(1.1);
+  transition: all 0.2s ease;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  /* News Card */
+  .news-card {
+    width: 90%;
+    padding: 15px;
+  }
+
+  .news-image {
+    height: 200px;
+  }
+
+  /* Contact Section */
+  .contact-section-wrapper {
+    padding: 20px 10px;
+  }
+
+  .contact-card {
+    width: 95%;
+    margin: 10px auto;
+    padding: 15px;
+  }
+
+  .contact-grid {
+    flex-direction: column;
+  }
+
+  .contact-form,
+  .contact-info {
+    width: 100%;
+  }
+
+  .contact-banner-img {
+    max-height: 200px;
+  }
+
+  .btn {
+    padding: 8px 15px;
+    font-size: 13px;
+  }
+}
+
 
   </style>
 </head>
 
 <body>
-  <!-- Reusable Navbar -->
-  <div id="navbar"></div>
+  <header>
+  <nav class="navbar">
+    <div class="nav-logo">
+      <a href="home.html">Fintech</a>
+    </div>
+    <ul class="nav-links">
+      <li><a href="home.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="#contact-card">Contact</a></li>
+      <li><a href="term_service.html">Terms</a></li>
+      <li><a href="services.html">Services</a></li>
+    </ul>
+    <div class="nav-toggle">
+      <i class="fa fa-bars"></i>
+    </div>
+  </nav>
+</header>
+
 
   <div id="toast-container"></div>
 
   <main>
-    <div class="dashboard-grid">
+  <div class="dashboard-grid">
 
-      <!-- Stock Prediction -->
-      <div class="card stock">
-        <h2>Stock Prediction</h2>
-        <img src="image/stock.webp" alt="Stock Image">
-        <ul>
-          <li class="stockbtn"><a href="stock/singleStock.html">Single Stock & Analytics</a></li>
-          <li class="stockbtn"><a href="stock/compareStock.html">Stock Comparison & Analytics</a></li>
-        </ul>
-        <div id="stock-data"></div>
-      </div>
-
-      <!-- Gold & Silver Prices -->
-      <div class="card">
-        <h2>Gold & Silver Prices</h2>
-        <img src="image/goldsilver.avif" alt="Gold Silver Image">
-        <div id="gold-price">Gold price will appear here</div>
-        <div id="silver-price">Silver price will appear here</div>
-        <button id="fetch-prices-btn">Predict & Fetch</button>
-        <div id="status-message" style="color: red;"></div>
-      </div>
-
-      <!-- SIP Calculator -->
-      <div class="card">
-        <h2>SIP Calculator</h2>
-        <img src="image/sip.avif" alt="SIP Image">
-        <label for="monthly">Monthly Investment (₹):</label>
-        <input type="number" id="monthly" placeholder="e.g., 5000" />
-        <label for="rate">Expected Annual Return (%):</label>
-        <input type="number" id="rate" placeholder="e.g., 12" />
-        <label for="years">Investment Duration (Years):</label>
-        <input type="number" id="years" placeholder="e.g., 10" />
-        <div id="sip-error" class="error-msg"></div>
-        <button onclick="calculateSIP()">Calculate</button>
-        <div id="sip-results"></div>
-      </div>
-
-      <!-- Mutual Fund Calculator -->
-      <div class="card">
-        <h2>Mutual Fund Calculator</h2>
-        <img src="image/mutualfund.avif" alt="MF Image">
-        <label for="mf-amount">Investment Amount (₹):</label>
-        <input type="number" id="mf-amount" placeholder="e.g., 100000" />
-        <label for="mf-rate">Expected Annual Return (%):</label>
-        <input type="number" id="mf-rate" placeholder="e.g., 10" />
-        <label for="mf-years">Investment Duration (Years):</label>
-        <input type="number" id="mf-years" placeholder="e.g., 5" />
-        <div id="mf-error" class="error-msg"></div>
-        <button onclick="calculateMF()">Calculate</button>
-        <div id="mf-results"></div>
-      </div>
-
-      <!-- Expense Calculator -->
-      <div class="card">
-        <h2>Expense Calculator</h2>
-        <img src="image/expense.avif" alt="Expense Image">
-        <label for="desc">Expense Description</label>
-        <input type="text" id="desc" placeholder="e.g. Groceries" />
-        <label for="amount">Amount (₹)</label>
-        <input type="number" id="amount" placeholder="e.g. 25" min="0" step="0.01" />
-        <button id="addExpenseBtn">Add Expense</button>
-        <div id="expensesList"></div>
-        <div id="totalAmount">Total: $0.00</div>
-        <button class="clear-btn" id="clearExpensesBtn">Clear All Expenses</button>
-      </div>
-
-      <!-- Currency Converter -->
-      <div class="card">
-        <h2>Currency Converter</h2>
-        <img src="image/CurrencyConvertorImage.jpg" alt="Currency Image">
-
-        <label for="amountToConvert">Amount:</label>
-        <input type="number" id="amountToConvert" placeholder="e.g., 100" />
-
-        <label for="fromCurrency">From:</label>
-        <select id="fromCurrency">
-          <option value="INR">INR</option>
-          <option value="USD">USD</option>
-          <option value="EUR">EUR</option>
-          <option value="GBP">GBP</option>
-          <option value="JPY">JPY</option>
-        </select>
-
-        <label for="toCurrency">To:</label>
-        <select id="toCurrency">
-          <option value="USD">USD</option>
-          <option value="INR">INR</option>
-          <option value="EUR">EUR</option>
-          <option value="GBP">GBP</option>
-          <option value="JPY">JPY</option>
-        </select>
-
-        <button onclick="convertCurrency()">Convert</button>
-        <div id="conversionResult"></div>
-
-    </div>
-     <!--Crypto Price Tracker-->
+    <!-- Crypto Price Tracker -->
     <div class="card">
       <h2>Crypto Price Tracker</h2>
       <img src="https://images.theconversation.com/files/612000/original/file-20240807-17-almvkh.jpg?ixlib=rb-4.1.0&rect=43%2C52%2C5751%2C3762&q=20&auto=format&w=320&fit=clip&dpr=2&usm=12&cs=strip" alt="Crypto Image">
-       <button onclick="loadCryptoPrices()">Get Latest Prices</button>
-        <div id="crypto-output" style="margin-top:10px;"></div>
+<p>Stay updated with the latest cryptocurrency prices and trends.</p>
+
+      <button onclick="loadCryptoPrices()">Get Latest Prices</button>
+      <div id="crypto-output" style="margin-top:10px;"></div>
     </div>
 
-      </div>
-
-
-       <!-- Finance News -->
-      <div class="card">
-        <h2>Finance News</h2>
-        <img src="image/news.avif" alt="News Image">
-        <div id="news-articles">Loading news...</div>
-      </div>
-
-      <div id="confirm-box"
-        style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:#fff; padding:1rem; box-shadow:0 0 10px rgba(0,0,0,0.2); border-radius:8px; z-index:9999;">
-        <p id="confirm-msg">Are you sure?</p>
-        <button id="confirm-ok">Yes</button>
-        <button id="confirm-cancel">No</button>
-      </div>
-
+    <!-- Stock Prediction -->
+    <div class="card stock">
+      <h2>Stock Prediction</h2>
+      <img src="image/stock.webp" alt="Stock Image">
+      <ul>
+        <li class="stockbtn"><a href="stock/singleStock.html">Single Stock & Analytics</a></li>
+        <li class="stockbtn"><a href="stock/compareStock.html">Stock Comparison & Analytics</a></li>
+      </ul>
+      <div id="stock-data"></div>
     </div>
 
-    <!-- Contact Form -->
-    <footer>
-      <section id="contact-page">
-      <div class="image-contact">
-        <img class="image-con"
-          src="./flat-line-design-website-banner-development-process-idea-to-realization-modern-vector-illustration-web-69537597.jpg"
-          alt="Contact Image">
-      </div>
-      
-        <div class="card">
-          <h2>Contact Us Form</h2>
-          <section id="contact-section">
-            <div class="container">
-              <p class="intro-text">
-                Have questions, feedback, or collaboration ideas? Reach out to us!
-              </p>
+    <!-- Gold & Silver Prices -->
+    <div class="card">
+      <h2>Gold & Silver Prices</h2>
+      <img src="image/goldsilver.avif" alt="Gold Silver Image">
+      <div id="gold-price">Gold price will appear here</div>
+      <div id="silver-price">Silver price will appear here</div>
+      <button id="fetch-prices-btn">Predict & Fetch</button>
+      <div id="status-message" style="color: red;"></div>
+    </div>
 
-              <div class="contact-grid">
-                <form class="contact-form">
-                  <label for="name">Name</label>
-                  <input type="text" id="name" placeholder="Enter your name " required />
+    <!-- SIP Calculator -->
+    <div class="card">
+      <h2>SIP Calculator</h2>
+      <img src="image/sip.avif" alt="SIP Image">
+      <label for="monthly">Monthly Investment (₹):</label>
+      <input type="number" id="monthly" placeholder="e.g., 5000" />
+      <label for="rate">Expected Annual Return (%):</label>
+      <input type="number" id="rate" placeholder="e.g., 12" />
+      <label for="years">Investment Duration (Years):</label>
+      <input type="number" id="years" placeholder="e.g., 10" />
+      <div id="sip-error" class="error-msg"></div>
+      <button onclick="calculateSIP()">Calculate</button>
+      <div id="sip-results"></div>
+    </div>
 
-                  <label for="email">Email</label>
-                  <input type="email" id="email" placeholder="Enter your mail" required />
+    <!-- Mutual Fund Calculator -->
+    <div class="card">
+      <h2>Mutual Fund Calculator</h2>
+      <img src="image/mutualfund.avif" alt="MF Image">
+      <label for="mf-amount">Investment Amount (₹):</label>
+      <input type="number" id="mf-amount" placeholder="e.g., 100000" />
+      <label for="mf-rate">Expected Annual Return (%):</label>
+      <input type="number" id="mf-rate" placeholder="e.g., 10" />
+      <label for="mf-years">Investment Duration (Years):</label>
+      <input type="number" id="mf-years" placeholder="e.g., 5" />
+      <div id="mf-error" class="error-msg"></div>
+      <button onclick="calculateMF()">Calculate</button>
+      <div id="mf-results"></div>
+    </div>
 
-                  <label for="message">Message</label>
-                  <textarea id="message" style="font-family: sans-serif; font-size: 16px;padding: 5px;"
-                    placeholder="Enter your message" required></textarea>
+    <!-- Expense Calculator -->
+    <div class="card">
+      <h2>Expense Calculator</h2>
+      <img src="image/expense.avif" alt="Expense Image">
+      <label for="desc">Expense Description</label>
+      <input type="text" id="desc" placeholder="e.g. Groceries" />
+      <label for="amount">Amount (₹)</label>
+      <input type="number" id="amount" placeholder="e.g. 25" min="0" step="0.01" />
+      <button id="addExpenseBtn">Add Expense</button>
+      <div id="expensesList"></div>
+      <div id="totalAmount">Total: $0.00</div>
+      <button class="clear-btn" id="clearExpensesBtn">Clear All Expenses</button>
+    </div>
 
-                  <button type="submit">Send Message</button>
-                </form>
-                <!-- Social & Contact Info -->
-                <div class="contact-info">
-                  <h2>Our Team</h2>
-                  <p>Email: devteam@example.com</p>
-                  <p>Phone: +1 234 567 890</p>
-                  <div class="social-links">
-                    <a href="mailto:sharmakan11052005@gmail.com"><i class="fa-solid fa-envelope"></i></a>
-                    <a href="https://www.linkedin.com/in/kanisha-sharma11/"><i class="fab fa-linkedin"></i></a>
-                    <a href="https://github.com/KanishaSharma11"><i class="fab fa-github"></i></a>
-                  </div>
-                  <p class="social-text">Have questions or ready to explore fintech solutions? We’d love to hear from
-                    you! Reach out via email, phone, or the form below—let’s discuss how we can innovate finance
-                    together. Your vision starts with a conversation.</p>
-                </div>
-              </div>
-              <p class="ending-text">Connect with us. Innovation starts with a conversation.</p>
-            </div>
-        </section>
-          <!-- https://twitter.com/yourteam -->
-          <!-- "https://github.com/KanishaSharma11" -->
+    <!-- Currency Converter -->
+    <div class="card">
+      <h2>Currency Converter</h2>
+      <img src="image/CurrencyConvertorImage.jpg" alt="Currency Image">
+      <label for="amountToConvert">Amount:</label>
+      <input type="number" id="amountToConvert" placeholder="e.g., 100" />
+      <label for="fromCurrency">From:</label>
+      <select id="fromCurrency">
+        <option value="INR">INR</option>
+        <option value="USD">USD</option>
+        <option value="EUR">EUR</option>
+        <option value="GBP">GBP</option>
+        <option value="JPY">JPY</option>
+      </select>
+      <label for="toCurrency">To:</label>
+      <select id="toCurrency">
+        <option value="USD">USD</option>
+        <option value="INR">INR</option>
+        <option value="EUR">EUR</option>
+        <option value="GBP">GBP</option>
+        <option value="JPY">JPY</option>
+      </select>
+      <button onclick="convertCurrency()">Convert</button>
+      <div id="conversionResult"></div>
+    </div>
 
-          <div id="mf-error" class="error-msg"></div>
-          <div id="mf-results"></div>
+    
+
+  </div>
+</main>
+
+
+     <!-- Finance News -->
+<div class="news-card">
+  <h2 class="section-title">Finance News</h2>
+  <img src="image/news.avif" alt="News Image" class="news-image">
+  <div id="news-articles" class="news-content">Loading news...</div>
+</div>
+
+<!-- Confirm Box -->
+<div id="confirm-box" class="confirm-box">
+  <p id="confirm-msg">Are you sure?</p>
+  <button id="confirm-ok" class="btn">Yes</button>
+  <button id="confirm-cancel" class="btn">No</button>
+</div>
+
+<!-- Contact Form -->
+<section class="contact-section-wrapper">
+  <div class="contact-banner">
+    <img src="./flat-line-design-website-banner-development-process-idea-to-realization-modern-vector-illustration-web-69537597.jpg" 
+         alt="Contact Banner" class="contact-banner-img">
+  </div>
+
+  <div class="contact-card" id="contact-card">
+    <h2 class="section-title">Contact Us Form</h2>
+    <div class="contact-container">
+      <p class="intro-text">
+        Have questions, feedback, or collaboration ideas? Reach out to us!
+      </p>
+
+      <div class="contact-grid">
+        <!-- Form -->
+        <form class="contact-form">
+          <label for="name">Name</label>
+          <input type="text" id="name" placeholder="Enter your name" required />
+
+          <label for="email">Email</label>
+          <input type="email" id="email" placeholder="Enter your email" required />
+
+          <label for="message">Message</label>
+          <textarea id="message" placeholder="Enter your message" required></textarea>
+
+          <button type="submit" class="btn">Send Message</button>
+        </form>
+
+        <!-- Info -->
+        <div class="contact-info">
+          <h2 class="section-title">Our Team</h2>
+          <p>Email: devteam@example.com</p>
+          <p>Phone: +1 234 567 890</p>
+          <div class="social-links">
+            <a href="mailto:sharmakan11052005@gmail.com"><i class="fa-solid fa-envelope"></i></a>
+            <a href="https://www.linkedin.com/in/kanisha-sharma11/"><i class="fab fa-linkedin"></i></a>
+            <a href="https://github.com/KanishaSharma11"><i class="fab fa-github"></i></a>
+          </div>
+          <p class="social-text">
+            Have questions or ready to explore fintech solutions? 
+            We’d love to hear from you! Reach out via email, phone, or the form below—let’s discuss how we can innovate finance together. 
+            Your vision starts with a conversation.
+          </p>
         </div>
-
       </div>
+
       <p class="ending-text">Connect with us. Innovation starts with a conversation.</p>
     </div>
-       
-        <div id="mf-error" class="error-msg"></div>
-        <div id="mf-results"></div>
-      </div>
+  </div>
+</section>
 
-  </main>
 
 
   <footer>
     <div class="footer-container">
       <div class="footer-col">
-        <h3><i class="fa-solid fa-briefcase"></i> Job Junction</h3>
-        <p>Find internships, part-time jobs, and remote opportunities tailored for you.</p>
+        <h3><i class="fa-solid fa-briefcase"></i> Fintech</h3>
       </div>
       <div class="footer-col">
         <h3>Important Links</h3>
@@ -406,6 +845,12 @@
 
 
   <script>
+const toggle = document.querySelector(".nav-toggle");
+const links = document.querySelector(".nav-links");
+
+toggle.addEventListener("click", () => {
+  links.classList.toggle("active");
+});
     document.addEventListener("DOMContentLoaded", () => {
       const userInfoDiv = document.querySelector("#navbar #user-info");
       const username = localStorage.getItem("loggedInUser");
