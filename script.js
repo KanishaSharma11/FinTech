@@ -1,3 +1,4 @@
+
 // utils
 function showToast(message, type = 'info', duration = 3000) {
   const container = document.getElementById('toast-container');
@@ -112,7 +113,47 @@ function calculateMF() {
   `;
   showToast('Mutual Fund calculation completed', 'success');
 }
+// Crypto API
+document.getElementById("get-prices-btn").addEventListener("click", loadCryptoPrices);
 
+
+async function loadCryptoPrices() {
+    const output = document.getElementById("crypto-output");
+    output.innerHTML = "Loading...";
+
+
+    try {
+        let btcRes = await fetch("https://api.binance.com/api/v3/ticker/24hr?symbol=BTCUSDT");
+        let btcData = await btcRes.json();
+
+        let ethRes = await fetch("https://api.binance.com/api/v3/ticker/24hr?symbol=ETHUSDT");
+        let ethData = await ethRes.json();
+
+
+        let btcPrice = parseFloat(btcData.lastPrice).toLocaleString();
+        let btcChange = parseFloat(btcData.priceChangePercent).toFixed(2);
+        let ethPrice = parseFloat(ethData.lastPrice).toLocaleString();
+        let ethChange = parseFloat(ethData.priceChangePercent).toFixed(2);
+        let btcChangeFormatted = (btcChange >= 0 ? "+" : "") + btcChange;
+        let ethChangeFormatted = (ethChange >= 0 ? "+" : "") + ethChange;
+
+
+        output.innerHTML = `
+            <p>Bitcoin: $${btcPrice}
+                <span style="color:${btcChange >= 0 ? 'green' : 'red'};">
+                    (${btcChangeFormatted}%)
+                </span>
+            </p>
+            <p>Ethereum: $${ethPrice}
+                <span style="color:${ethChange >= 0 ? 'green' : 'red'};">
+                    (${ethChangeFormatted}%)
+                </span>
+            </p>
+        `;
+    } catch (error) {
+        output.innerHTML = `Error loading prices: ${error.message}`;
+    }
+}
 // Fetch Finance News
 async function fetchNews() {
   const newsContainer = document.getElementById('news-articles');
@@ -387,3 +428,4 @@ function convertCurrency() {
       resultDiv.innerText = "Error fetching conversion rates.";
     });
 }
+

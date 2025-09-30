@@ -1,70 +1,225 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login | Fintech</title>
-  <link rel="stylesheet" href="auth.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Login | Fintech</title>
+  <style>
+    /* Reset styles */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #021223, #077b9b);
+      display: flex;
+      flex-direction: column; /* navbar on top, content below */
+    }
+
+    #navbar {
+      width: 100%;
+    }
+
+    .container {
+      background: #fff;
+      padding: 32px 28px;
+      border-radius: 10px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.07);
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      animation: fadeIn 0.6s ease-in-out;
+      margin: auto; /* centers login box in available space */
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h2 { color: #222; font-size: 1.7rem; margin-bottom: 24px; }
+
+    .form-group {
+      position: relative;
+      width: 100%;
+      margin-bottom: 20px;
+      min-height: 48px; /* prevents vertical shift */
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 12px 13px;
+      font-size: 1rem;
+      border: 1px solid #dbe2ea;
+      border-radius: 7px;
+      background: transparent;
+      outline: none;
+      transition: border-color 0.25s, box-shadow 0.25s;
+      padding-right: 60px; /* space for toggle */
+    }
+
+    .form-group input:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 0 2px #e3f0ff;
+      background: #fff;
+    }
+
+    .form-group label {
+      position: absolute;
+      left: 13px;
+      top: 12px;
+      font-size: 1rem;
+      color: #777;
+      pointer-events: none;
+      transition: all 0.2s ease-out;
+      background: white;
+      padding: 0 4px;
+    }
+
+    .form-group input:focus + label,
+    .form-group input:not(:placeholder-shown) + label {
+      top: -8px;
+      left: 10px;
+      font-size: 0.75rem;
+      color: #007bff;
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      font-size: 0.85rem;
+      color: #007bff;
+      user-select: none;
+      width: 40px; /* fixed width prevents shift */
+      text-align: right;
+    }
+
+    .login-btn {
+      width: 100%;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      padding: 13px;
+      font-size: 1.08rem;
+      border-radius: 7px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, box-shadow 0.2s;
+      box-shadow: 0 2px 8px rgba(0,123,255,0.07);
+    }
+
+    .login-btn:hover {
+      background-color: #0056b3;
+      box-shadow: 0 4px 16px rgba(0,123,255,0.10);
+    }
+
+    .forgot-link {
+      display: block;
+      margin: 16px 0 0 0;
+      text-align: center;
+      color: #007bff;
+      font-size: 0.97rem;
+      text-decoration: none;
+      font-weight: 500;
+      opacity: 0.85;
+      transition: opacity 0.2s;
+    }
+
+    .forgot-link:hover {
+      opacity: 1;
+      text-decoration: underline;
+    }
+
+    p {
+      color: #555;
+      margin: 18px 0 0 0;
+      font-size: 0.97rem;
+    }
+
+    a { color: #007bff; text-decoration: none; font-weight: 500; }
+    a:hover { text-decoration: underline; }
+
+    @media (max-width: 480px) {
+      .container { padding: 22px 10px; max-width: 98vw; }
+      h2 { font-size: 1.2rem; }
+    }
+  </style>
 </head>
 <body>
-  <div class="auth-container">
-    <div class="auth-card">
-      <h2>Welcome Back</h2>
-      <form id="login-form">
-        <div class="form-group">
-          <input type="email" id="email" placeholder=" " required>
-          <label for="email">Email</label>
-        </div>
+    <div id="navbar"></div>
 
-        <div class="form-group">
-          <input type="password" id="password" placeholder=" " required>
-          <label for="password">Password</label>
-          <span class="toggle-password" id="toggleLoginPassword">Show</span>
-        </div>
+    <div class="container">
+    <h2>Welcome Back</h2>
+    <form id="login-form" autocomplete="on">
+      <div class="form-group">
+        <input type="email" id="email" placeholder=" " required autofocus />
+        <label for="email">Email</label>
+      </div>
 
-        <button type="submit" class="btn">Login</button>
-        <a href="#" class="forgot-link">Forgot Password?</a>
-      </form>
-      <p class="switch-text">Don't have an account? <a href="signup.html">Sign Up</a></p>
-    </div>
-  </div>
+      <div class="form-group">
+        <input type="password" id="password" placeholder=" " required />
+        <label for="password">Password</label>
+        <span id="togglePassword" class="toggle-password">Show</span>
+      </div>
 
-  <script>
-    const loginForm = document.getElementById("login-form");
-    loginForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value;
+      <button type="submit" class="login-btn">Login</button>
+      <a href="#" class="forgot-link">Forgot Password?</a>
+    </form>
+    <p>Don't have an account? <a href="signup.html">Sign up</a></p>
+  </div>
 
-      const storedUser = localStorage.getItem("user_" + email);
-      if (!storedUser) {
-        alert("User not found! Please sign up first.");
-        return;
-      }
+  <script>
+    const loginForm = document.getElementById("login-form");
+    loginForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
 
-      const userData = JSON.parse(storedUser);
-      if (userData.password !== password) {
-        alert("Incorrect password!");
-        return;
-      }
+      const storedUser = localStorage.getItem("user_" + email);
+      if (!storedUser) {
+        alert("User not found! Please sign up first.");
+        return;
+      }
 
-      localStorage.setItem("loggedInUser", userData.fullName);
-      alert("Login successful! Redirecting...");
-      window.location.href = "home.html";
-    });
+      const userData = JSON.parse(storedUser);
+      if (userData.password !== password) {
+        alert("Incorrect password!");
+        return;
+      }
 
-    // Password toggle
-    const loginPassword = document.getElementById("password");
-    const togglePassword = document.getElementById("toggleLoginPassword");
-    togglePassword.addEventListener("click", () => {
-      if (loginPassword.type === "password") {
-        loginPassword.type = "text";
-        togglePassword.textContent = "Hide";
-      } else {
-        loginPassword.type = "password";
-        togglePassword.textContent = "Show";
-      }
-    });
-  </script>
+      localStorage.setItem("loggedInUser", userData.fullName);
+      alert("Login successful! Redirecting...");
+      window.location.href = "home.html";
+    });
+
+    // Password toggle
+    const loginPassword = document.getElementById("password");
+    const togglePassword = document.getElementById("togglePassword"); // Using 'togglePassword' id from version B's HTML
+    
+    if (togglePassword) {
+      togglePassword.addEventListener("click", () => {
+        if (loginPassword.type === "password") {
+          loginPassword.type = "text";
+          togglePassword.textContent = "Hide";
+        } else {
+          loginPassword.type = "password";
+          togglePassword.textContent = "Show";
+        }
+      });
+    }
+  </script>
+  <script>
+    // Navbar loading script
+    fetch("navbar.html")
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById("navbar").innerHTML = data;
+      });
+  </script>
 </body>
 </html>
