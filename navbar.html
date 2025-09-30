@@ -1,4 +1,4 @@
-<nav class="navbar">
+<nav class="navbar" role="navigation" aria-label="Main Navigation">
   <div class="logo">
     <a href="index.html">Fintech</a>
   </div>
@@ -8,7 +8,7 @@
     <li><a href="login.html">Login</a></li>
     <li><a href="signup.html">Signup</a></li>
   </ul>
-  <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+  <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="navLinks">☰</button>
 </nav>
 
 <style>
@@ -58,11 +58,14 @@
     display: none;
     flex-direction: column;
     background: #333;
-    position: absolute;
+    position: fixed;
     top: 60px;
-    right: 20px;
+    right: 12px;
     padding: 15px;
     border-radius: 5px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    z-index: 9999;
+    min-width: 160px;
   }
 
   .navbar .nav-links.show {
@@ -71,12 +74,33 @@
 
   .menu-toggle {
     display: block;
+    background: transparent;
+    border: none;
+    color: white;
   }
 }
 </style>
 
 <script>
 function toggleMenu() {
-  document.getElementById("navLinks").classList.toggle("show");
+  const nav = document.getElementById("navLinks");
+  nav.classList.toggle("show");
+  const btn = document.getElementById('menuToggle');
+  if (btn) btn.setAttribute('aria-expanded', nav.classList.contains('show'));
 }
+
+// wire button to toggle and close on outside click
+document.addEventListener('DOMContentLoaded', () => {
+  const btn = document.getElementById('menuToggle');
+  const nav = document.getElementById('navLinks');
+  if (btn && nav) {
+    btn.addEventListener('click', toggleMenu);
+    document.addEventListener('click', (e) => {
+      if (!nav.contains(e.target) && !btn.contains(e.target)) {
+        nav.classList.remove('show');
+        btn.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+});
 </script>

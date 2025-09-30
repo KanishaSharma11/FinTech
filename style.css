@@ -137,10 +137,18 @@ section {
 
 .card img {
   width: 100%;
-  height: 160px;
+  height: auto; /* let image scale naturally */
+  max-height: 240px; /* limit very tall images */
   object-fit: cover;
   border-radius: 10px;
   margin-bottom: 15px;
+}
+
+/* Make all images responsive by default */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
 }
 
 .card h2 {
@@ -277,14 +285,15 @@ button:active {
 
 /* ========== Footer ========== */
 .footer {
-  width: 100vw;
-  margin-left: calc(-50vw + 50%);
+  width: 100%;
+  box-sizing: border-box;
   background: linear-gradient(90deg, #002f4b, #006494);
   color: #ffffff;
   text-align: center;
   padding: 25px 10px;
   border-top: 1px solid rgba(255, 255, 255, 0.15);
   font-size: 0.95rem;
+  position: relative;
 }
 
 .footer p {
@@ -495,6 +504,47 @@ button:active {
   }
 }
 
+/* Mobile-first tweaks */
+@media (max-width: 1024px) {
+  .card img { max-height: 220px; }
+  .card { padding: 18px; }
+}
+
+@media (max-width: 768px) {
+  body { padding: 12px; }
+  .card img { max-height: 200px; }
+  .card { gap: 0.75rem; }
+  .container { padding: 12px; }
+}
+
+@media (max-width: 480px) {
+  .card img { max-height: 160px; }
+  header, .navbar { padding: 8px 12px; }
+  .header-bar { flex-direction: column; gap: 8px; align-items: stretch; }
+  .auth-buttons { justify-content: flex-end; gap: 8px; }
+  .footer { font-size: 0.85rem; padding: 18px 8px; }
+}
+
+/* Navbar fallback styles for nav included via navbar.html */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #333;
+  padding: 10px 20px;
+  position: relative;
+  z-index: 10;
+}
+.navbar .nav-links { list-style: none; display: flex; gap: 20px; }
+.navbar .nav-links li a { color: white; text-decoration: none; }
+.menu-toggle { display: none; }
+
+@media (max-width: 768px) {
+  .navbar .nav-links { display: none; }
+  .menu-toggle { display: block; font-size: 24px; color: white; cursor: pointer; }
+  .navbar .nav-links.show { display: flex; flex-direction: column; gap: 12px; }
+}
+
 /*=========contect us =========*/
 
     .container {
@@ -536,11 +586,10 @@ button:active {
       border-radius: 8px;
       box-shadow: 5px 5px 10px rgba(13, 10, 10, 0.3);
       display: grid;
-      grid-template-columns: auto 1fr;
-      align-items: center;
-      gap: 15px;
+      grid-template-columns: 1fr;
+      align-items: start;
+      gap: 12px;
       background:#086882;
-      height: 400px;
       width: 100%;
     }
     
@@ -556,7 +605,7 @@ button:active {
     
     .contact-form input,
     .contact-form textarea {
-      width: 90%;
+      width: 100%;
       border: 1px solid black;
       box-shadow: 1px 1px 1px black;
       border-radius: 5px;
@@ -616,7 +665,19 @@ button:active {
       .contact-grid {
         grid-template-columns: 1fr;
       }
+      .contact-form {
+        height: auto;
+        padding: 14px;
+      }
     }
+
+/* Smaller devices */
+@media (max-width: 480px) {
+  .container { padding: 10px; }
+  .card { padding: 12px; }
+  input, select, textarea { font-size: 0.95rem; }
+  .nav-links { gap: 8px; }
+}
 
     .image-con {
       width: 100%;
