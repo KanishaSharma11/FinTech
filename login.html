@@ -221,6 +221,20 @@
       .then(response => response.text())
       .then(data => {
         document.getElementById("navbar").innerHTML = data;
+        const btn = document.getElementById('menuToggle');
+        const nav = document.getElementById('navLinks');
+        if (btn && nav) {
+          btn.addEventListener('click', () => {
+            nav.classList.toggle('show');
+            btn.setAttribute('aria-expanded', nav.classList.contains('show'));
+          });
+          document.addEventListener('click', (e) => {
+            if (!nav.contains(e.target) && !btn.contains(e.target)) {
+              nav.classList.remove('show');
+              btn.setAttribute('aria-expanded', 'false');
+            }
+          });
+        }
       });
   </script>
 </body>
