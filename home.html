@@ -2,272 +2,251 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Fintech Dashboard</title>
-  <link rel="stylesheet" href="style.css" />
-  <!-- Using Font Awesome icons  -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fintech Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
 <body>
-  <!-- Reusable Navbar -->
-  <div id="navbar"></div>
+    <div id="navbar"></div>
 
-  <div id="toast-container"></div>
+  <div id="toast-container"></div>
 
-  <main>
-    <div class="dashboard-grid">
+  <main>
+    <div class="dashboard-grid">
 
-      <!-- Stock Prediction -->
-      <div class="card stock">
-        <h2>Stock Prediction</h2>
-        <img src="image/stock.webp" alt="Stock Image">
-        <ul>
-          <li class="stockbtn"><a href="stock/singleStock.html">Single Stock & Analytics</a></li>
-          <li class="stockbtn"><a href="stock/compareStock.html">Stock Comparison & Analytics</a></li>
-        </ul>
-        <div id="stock-data"></div>
-      </div>
+            <div class="card stock">
+        <h2>Stock Prediction</h2>
+        <img src="image/stock.webp" alt="Stock Image">
+        <ul>
+          <li class="stockbtn"><a href="stock/singleStock.html">Single Stock & Analytics</a></li>
+          <li class="stockbtn"><a href="stock/compareStock.html">Stock Comparison & Analytics</a></li>
+        </ul>
+        <div id="stock-data"></div>
+      </div>
 
-      <!-- Gold & Silver Prices -->
-      <div class="card">
-        <h2>Gold & Silver Prices</h2>
-        <img src="image/goldsilver.avif" alt="Gold Silver Image">
-        <div id="gold-price">Gold price will appear here</div>
-        <div id="silver-price">Silver price will appear here</div>
-        <button id="fetch-prices-btn">Predict & Fetch</button>
-        <div id="status-message" style="color: red;"></div>
-      </div>
+            <div class="card">
+        <h2>Gold & Silver Prices</h2>
+        <img src="image/goldsilver.avif" alt="Gold Silver Image">
+        <div id="gold-price">Gold price will appear here</div>
+        <div id="silver-price">Silver price will appear here</div>
+        <button id="fetch-prices-btn">Predict & Fetch</button>
+        <div id="status-message" style="color: red;"></div>
+      </div>
 
-      <!-- SIP Calculator -->
-      <div class="card">
-        <h2>SIP Calculator</h2>
-        <img src="image/sip.avif" alt="SIP Image">
-        <label for="monthly">Monthly Investment (₹):</label>
-        <input type="number" id="monthly" placeholder="e.g., 5000" />
-        <label for="rate">Expected Annual Return (%):</label>
-        <input type="number" id="rate" placeholder="e.g., 12" />
-        <label for="years">Investment Duration (Years):</label>
-        <input type="number" id="years" placeholder="e.g., 10" />
-        <div id="sip-error" class="error-msg"></div>
-        <button onclick="calculateSIP()">Calculate</button>
-        <div id="sip-results"></div>
-      </div>
+            <div class="card">
+        <h2>SIP Calculator</h2>
+        <img src="image/sip.avif" alt="SIP Image">
+        <label for="monthly">Monthly Investment (₹):</label>
+        <input type="number" id="monthly" placeholder="e.g., 5000" />
+        <label for="rate">Expected Annual Return (%):</label>
+        <input type="number" id="rate" placeholder="e.g., 12" />
+        <label for="years">Investment Duration (Years):</label>
+        <input type="number" id="years" placeholder="e.g., 10" />
+        <div id="sip-error" class="error-msg"></div>
+        <button onclick="calculateSIP()">Calculate</button>
+        <div id="sip-results"></div>
+      </div>
 
-      <!-- Mutual Fund Calculator -->
-      <div class="card">
-        <h2>Mutual Fund Calculator</h2>
-        <img src="image/mutualfund.avif" alt="MF Image">
-        <label for="mf-amount">Investment Amount (₹):</label>
-        <input type="number" id="mf-amount" placeholder="e.g., 100000" />
-        <label for="mf-rate">Expected Annual Return (%):</label>
-        <input type="number" id="mf-rate" placeholder="e.g., 10" />
-        <label for="mf-years">Investment Duration (Years):</label>
-        <input type="number" id="mf-years" placeholder="e.g., 5" />
-        <div id="mf-error" class="error-msg"></div>
-        <button onclick="calculateMF()">Calculate</button>
-        <div id="mf-results"></div>
-      </div>
+            <div class="card">
+        <h2>Mutual Fund Calculator</h2>
+        <img src="image/mutualfund.avif" alt="MF Image">
+        <label for="mf-amount">Investment Amount (₹):</label>
+        <input type="number" id="mf-amount" placeholder="e.g., 100000" />
+        <label for="mf-rate">Expected Annual Return (%):</label>
+        <input type="number" id="mf-rate" placeholder="e.g., 10" />
+        <label for="mf-years">Investment Duration (Years):</label>
+        <input type="number" id="mf-years" placeholder="e.g., 5" />
+        <div id="mf-error" class="error-msg"></div>
+        <button onclick="calculateMF()">Calculate</button>
+        <div id="mf-results"></div>
+      </div>
 
-      <!-- Expense Calculator -->
-      <div class="card">
-        <h2>Expense Calculator</h2>
-        <img src="image/expense.avif" alt="Expense Image">
-        <label for="desc">Expense Description</label>
-        <input type="text" id="desc" placeholder="e.g. Groceries" />
-        <label for="amount">Amount (₹)</label>
-        <input type="number" id="amount" placeholder="e.g. 25" min="0" step="0.01" />
-        <button id="addExpenseBtn">Add Expense</button>
-        <div id="expensesList"></div>
-        <div id="totalAmount">Total: $0.00</div>
-        <button class="clear-btn" id="clearExpensesBtn">Clear All Expenses</button>
-      </div>
+            <div class="card">
+        <h2>Expense Calculator</h2>
+        <img src="image/expense.avif" alt="Expense Image">
+        <label for="desc">Expense Description</label>
+        <input type="text" id="desc" placeholder="e.g. Groceries" />
+        <label for="amount">Amount (₹)</label>
+        <input type="number" id="amount" placeholder="e.g. 25" min="0" step="0.01" />
+        <button id="addExpenseBtn">Add Expense</button>
+        <div id="expensesList"></div>
+        <div id="totalAmount">Total: $0.00</div>
+        <button class="clear-btn" id="clearExpensesBtn">Clear All Expenses</button>
+      </div>
 
-      <!-- Currency Converter -->
-      <div class="card">
-        <h2>Currency Converter</h2>
-        <img src="image/CurrencyConvertorImage.jpg" alt="Currency Image">
+            <div class="card">
+        <h2>Currency Converter</h2>
+        <img src="image/CurrencyConvertorImage.jpg" alt="Currency Image">
 
-        <label for="amountToConvert">Amount:</label>
-        <input type="number" id="amountToConvert" placeholder="e.g., 100" />
+        <label for="amountToConvert">Amount:</label>
+        <input type="number" id="amountToConvert" placeholder="e.g., 100" />
 
-        <label for="fromCurrency">From:</label>
-        <select id="fromCurrency">
-          <option value="INR">INR</option>
-          <option value="USD">USD</option>
-          <option value="EUR">EUR</option>
-          <option value="GBP">GBP</option>
-          <option value="JPY">JPY</option>
-        </select>
+        <label for="fromCurrency">From:</label>
+        <select id="fromCurrency">
+          <option value="INR">INR</option>
+          <option value="USD">USD</option>
+          <option value="EUR">EUR</option>
+          <option value="GBP">GBP</option>
+          <option value="JPY">JPY</option>
+        </select>
 
-        <label for="toCurrency">To:</label>
-        <select id="toCurrency">
-          <option value="USD">USD</option>
-          <option value="INR">INR</option>
-          <option value="EUR">EUR</option>
-          <option value="GBP">GBP</option>
-          <option value="JPY">JPY</option>
-        </select>
+        <label for="toCurrency">To:</label>
+        <select id="toCurrency">
+          <option value="USD">USD</option>
+          <option value="INR">INR</option>
+          <option value="EUR">EUR</option>
+          <option value="GBP">GBP</option>
+          <option value="JPY">JPY</option>
+        </select>
 
-        <button onclick="convertCurrency()">Convert</button>
-        <div id="conversionResult"></div>
+        <button onclick="convertCurrency()">Convert</button>
+        <div id="conversionResult"></div>
 
-    </div>
-     <!--Crypto Price Tracker-->
-    <div class="card">
-      <h2>Crypto Price Tracker</h2>
-      <img src="https://images.theconversation.com/files/612000/original/file-20240807-17-almvkh.jpg?ixlib=rb-4.1.0&rect=43%2C52%2C5751%2C3762&q=20&auto=format&w=320&fit=clip&dpr=2&usm=12&cs=strip" alt="Crypto Image">
-       <button onclick="loadCryptoPrices()">Get Latest Prices</button>
-        <div id="crypto-output" style="margin-top:10px;"></div>
-    </div>
+    </div>
+         <div class="card">
+      <h2>Crypto Price Tracker</h2>
+      <img src="https://images.theconversation.com/files/612000/original/file-20240807-17-almvkh.jpg?ixlib=rb-4.1.0&rect=43%2C52%2C5751%2C3762&q=20&auto=format&w=320&fit=clip&dpr=2&usm=12&cs=strip" alt="Crypto Image">
+       <button onclick="loadCryptoPrices()">Get Latest Prices</button>
+        <div id="crypto-output" style="margin-top:10px;"></div>
+    </div>
 
-      </div>
+      </div>
 
 
-       <!-- Finance News -->
-      <div class="card">
-        <h2>Finance News</h2>
-        <img src="image/news.avif" alt="News Image">
-        <div id="news-articles">Loading news...</div>
-      </div>
+             <div class="card">
+        <h2>Finance News</h2>
+        <img src="image/news.avif" alt="News Image">
+        <div id="news-articles">Loading news...</div>
+      </div>
 
-      <div id="confirm-box"
-        style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:#fff; padding:1rem; box-shadow:0 0 10px rgba(0,0,0,0.2); border-radius:8px; z-index:9999;">
-        <p id="confirm-msg">Are you sure?</p>
-        <button id="confirm-ok">Yes</button>
-        <button id="confirm-cancel">No</button>
-      </div>
+      <div id="confirm-box"
+        style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:#fff; padding:1rem; box-shadow:0 0 10px rgba(0,0,0,0.2); border-radius:8px; z-index:9999;">
+        <p id="confirm-msg">Are you sure?</p>
+        <button id="confirm-ok">Yes</button>
+        <button id="confirm-cancel">No</button>
+      </div>
 
-    </div>
+    </div>
 
-    <!-- Contact Form -->
-    <footer>
-      <section id="contact-page">
-      <div class="image-contact">
-        <img class="image-con"
-          src="./flat-line-design-website-banner-development-process-idea-to-realization-modern-vector-illustration-web-69537597.jpg"
-          alt="Contact Image">
-      </div>
-      
-        <div class="card">
-          <h2>Contact Us Form</h2>
-          <section id="contact-section">
-            <div class="container">
-              <p class="intro-text">
-                Have questions, feedback, or collaboration ideas? Reach out to us!
-              </p>
+        <footer>
+      <section id="contact-page">
+      <div class="image-contact">
+        <img class="image-con"
+          src="./flat-line-design-website-banner-development-process-idea-to-realization-modern-vector-illustration-web-69537597.jpg"
+          alt="Contact Image">
+      </div>
+      
+        <div class="card">
+          <h2>Contact Us Form</h2>
+          <section id="contact-section">
+            <div class="container">
+              <p class="intro-text">
+                Have questions, feedback, or collaboration ideas? Reach out to us!
+              </p>
 
-              <div class="contact-grid">
-                <form class="contact-form">
-                  <label for="name">Name</label>
-                  <input type="text" id="name" placeholder="Enter your name " required />
+              <div class="contact-grid">
+                <form class="contact-form">
+                  <label for="name">Name</label>
+                  <input type="text" id="name" placeholder="Enter your name " required />
 
-                  <label for="email">Email</label>
-                  <input type="email" id="email" placeholder="Enter your mail" required />
+                  <label for="email">Email</label>
+                  <input type="email" id="email" placeholder="Enter your mail" required />
 
-                  <label for="message">Message</label>
-                  <textarea id="message" style="font-family: sans-serif; font-size: 16px;padding: 5px;"
-                    placeholder="Enter your message" required></textarea>
+                  <label for="message">Message</label>
+                  <textarea id="message" style="font-family: sans-serif; font-size: 16px;padding: 5px;"
+                    placeholder="Enter your message" required></textarea>
 
-                  <button type="submit">Send Message</button>
-                </form>
-                <!-- Social & Contact Info -->
-                <div class="contact-info">
-                  <h2>Our Team</h2>
-                  <p>Email: devteam@example.com</p>
-                  <p>Phone: +1 234 567 890</p>
-                  <div class="social-links">
-                    <a href="mailto:sharmakan11052005@gmail.com"><i class="fa-solid fa-envelope"></i></a>
-                    <a href="https://www.linkedin.com/in/kanisha-sharma11/"><i class="fab fa-linkedin"></i></a>
-                    <a href="https://github.com/KanishaSharma11"><i class="fab fa-github"></i></a>
-                  </div>
-                  <p class="social-text">Have questions or ready to explore fintech solutions? We’d love to hear from
-                    you! Reach out via email, phone, or the form below—let’s discuss how we can innovate finance
-                    together. Your vision starts with a conversation.</p>
-                </div>
-              </div>
-              <p class="ending-text">Connect with us. Innovation starts with a conversation.</p>
-            </div>
-        </section>
-          <!-- https://twitter.com/yourteam -->
-          <!-- "https://github.com/KanishaSharma11" -->
+                  <button type="submit">Send Message</button>
+                </form>
+                                <div class="contact-info">
+                  <h2>Our Team</h2>
+                  <p>Email: devteam@example.com</p>
+                  <p>Phone: +1 234 567 890</p>
+                  <div class="social-links">
+                    <a href="mailto:sharmakan11052005@gmail.com"><i class="fa-solid fa-envelope"></i></a>
+                    <a href="https://www.linkedin.com/in/kanisha-sharma11/"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://github.com/KanishaSharma11"><i class="fab fa-github"></i></a>
+                  </div>
+                  <p class="social-text">Have questions or ready to explore fintech solutions? We’d love to hear from
+                    you! Reach out via email, phone, or the form below—let’s discuss how we can innovate finance
+                    together. Your vision starts with a conversation.</p>
+                </div>
+              </div>
+              <p class="ending-text">Connect with us. Innovation starts with a conversation.</p>
+            </div>
+        </section>
+                              <div id="mf-error" class="error-msg"></div>
+          <div id="mf-results"></div>
+        </div>
 
-          <div id="mf-error" class="error-msg"></div>
-          <div id="mf-results"></div>
-        </div>
+      </div>
+      <p class="ending-text">Connect with us. Innovation starts with a conversation.</p>
+    </div>
+       
+        <div id="mf-error" class="error-msg"></div>
+        <div id="mf-results"></div>
+      </div>
 
-      </div>
-      <p class="ending-text">Connect with us. Innovation starts with a conversation.</p>
-    </div>
-       
-        <div id="mf-error" class="error-msg"></div>
-        <div id="mf-results"></div>
-      </div>
-
-  </main>
+  </main>
 
 
-  <div class="footer">
-    <p>© 2025 <strong>Fintech Dashboard</strong>. All rights reserved.</p>
+  <div class="footer">
+    <p>© 2025 <strong>Fintech Dashboard</strong>. All rights reserved.</p>
 
-    <div class="footer-links">
-      <a href="privacy.html">Privacy Policy</a>
-      <a href="term_service.html">Terms of Service</a>
-      <a href="#contact-section">Contact Us</a>
-    </div>
+    <div class="footer-links">
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="term_service.html">Terms of Service</a>
+      <a href="#contact-section">Contact Us</a>
+    </div>
 
-    <div class="social-icons">
-      <a href="mailto:sharmakan11052005@gmail.com"><i class="fa-solid fa-envelope"></i></a>
-      <a href="https://www.linkedin.com/in/https://www.linkedin.com/in/kanisha-sharma11/"><i
-          class="fab fa-linkedin"></i></a>
-      <a href="https://github.com/KanishaSharma11"><i class="fab fa-github"></i></a>
-    </div>
-  </div>
-  </footer>
+    <div class="social-icons">
+      <a href="mailto:sharmakan11052005@gmail.com"><i class="fa-solid fa-envelope"></i></a>
+      <a href="https://www.linkedin.com/in/https://www.linkedin.com/in/kanisha-sharma11/"><i
+          class="fab fa-linkedin"></i></a>
+      <a href="https://github.com/KanishaSharma11"><i class="fab fa-github"></i></a>
+    </div>
+  </div>
+  </footer>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const userInfoDiv = document.querySelector("#navbar #user-info");
-      const username = localStorage.getItem("loggedInUser");
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const userInfoDiv = document.querySelector("#navbar #user-info");
+      const username = localStorage.getItem("loggedInUser");
 
-      if (userInfoDiv) {
-        if (username) {
-          userInfoDiv.innerHTML = `
-            <span class="username">Welcome, <strong class="user-welcome">${username}</strong></span>
-            <a href="#" id="logout" class="btn logout-btn">Logout</a>
-          `;
+      if (userInfoDiv) {
+        if (username) {
+          userInfoDiv.innerHTML = `
+            <span class="username">Welcome, <strong class="user-welcome">${username}</strong></span>
+            <a href="#" id="logout" class="btn logout-btn">Logout</a>
+          `;
 
-          document.getElementById("logout").addEventListener("click", (e) => {
-            e.preventDefault();
-            localStorage.removeItem("loggedInUser");
-            window.location.href = "login.html";
-          });
-        } else {
-          userInfoDiv.innerHTML = `
-            <a href="login.html" class="btn">Login</a>
-            <a href="signup.html" class="btn">Sign Up</a>
-          `;
-        }
-      }
-    });
-  </script>
+          document.getElementById("logout").addEventListener("click", (e) => {
+            e.preventDefault();
+            localStorage.removeItem("loggedInUser");
+            window.location.href = "login.html";
+          });
+        } else {
+          userInfoDiv.innerHTML = `
+            <a href="login.html" class="btn">Login</a>
+            <a href="signup.html" class="btn">Sign Up</a>
+          `;
+        }
+      }
+    });
+  </script>
 
-  <script>
-    fetch("navbar.html")
-      .then(response => response.text())
-      .then(data => {
-        document.getElementById("navbar").innerHTML = data;
-      });
-  </script>
+  <script>
+    fetch("navbar.html")
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById("navbar").innerHTML = data;
+      });
+  </script>
 
-  <script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 
 </html>
-
-
-
-
-</html>
-
