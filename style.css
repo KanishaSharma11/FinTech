@@ -167,11 +167,25 @@ nav ul {
 }
 .card img {
   width: 100%;
+
+  height: auto; /* let image scale naturally */
+  max-height: 240px; /* limit very tall images */
   height: 200px;
+
   object-fit: cover;
   border-radius: 10px;
   margin-bottom: 18px;
 }
+
+
+/* Make all images responsive by default */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+
 .card h2 {
   font-size: 1.4rem;
   font-weight: 700;
@@ -212,6 +226,83 @@ nav ul {
   width: 100%;
   padding: 10px;
   border-radius: 6px;
+
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  opacity: 1;
+}
+
+.toast.success { background-color: #4caf50; }
+.toast.error   { background-color: #f44336; }
+.toast.info    { background-color: #2196f3; }
+
+/* ========== Footer ========== */
+.footer {
+  width: 100%;
+  box-sizing: border-box;
+  background: linear-gradient(90deg, #002f4b, #006494);
+  color: #ffffff;
+  text-align: center;
+  padding: 25px 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  font-size: 0.95rem;
+  position: relative;
+}
+
+.footer p {
+  margin: 0 0 8px;
+}
+
+.footer-links {
+  margin-bottom: 10px;
+}
+
+.footer-links a {
+  color: #ffda79;
+  margin: 0 12px;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+}
+
+.social-icons a {
+  color: white;
+  font-size: 1.2rem;
+  margin: 0 8px;
+  transition: color 0.3s ease;
+}
+
+.social-icons a:hover {
+  color: #ffda79;
+}
+
+/* ========== Loader ========== */
+.loader {
+  border: 4px solid #eee;
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  animation: spin 1s linear infinite;
+  display: inline-block;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ========== Expense Tracker ========== */
+.expenses-list {
+  margin-top: 30px;
+  max-height: 200px;
+  overflow-y: auto;
+  border-top: 1px solid #eee;
+  padding-top: 15px;
+=======
   border: none;
   background: #121212; /* dark glass background */
   color: #fff;
@@ -219,6 +310,7 @@ nav ul {
   outline: none;
   transition: box-shadow 0.3s ease, border 0.3s ease;
   appearance: none; /* remove default arrow */
+
 }
 
 /* Glow when focused */
@@ -386,4 +478,193 @@ button:hover {
 .image-contact {
   display: none;
 }
+
+/* Mobile-first tweaks */
+@media (max-width: 1024px) {
+  .card img { max-height: 220px; }
+  .card { padding: 18px; }
+}
+
+@media (max-width: 768px) {
+  body { padding: 12px; }
+  .card img { max-height: 200px; }
+  .card { gap: 0.75rem; }
+  .container { padding: 12px; }
+}
+
+@media (max-width: 480px) {
+  .card img { max-height: 160px; }
+  header, .navbar { padding: 8px 12px; }
+  .header-bar { flex-direction: column; gap: 8px; align-items: stretch; }
+  .auth-buttons { justify-content: flex-end; gap: 8px; }
+  .footer { font-size: 0.85rem; padding: 18px 8px; }
+}
+
+/* Navbar fallback styles for nav included via navbar.html */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #333;
+  padding: 10px 20px;
+  position: relative;
+  z-index: 10;
+}
+.navbar .nav-links { list-style: none; display: flex; gap: 20px; }
+.navbar .nav-links li a { color: white; text-decoration: none; }
+.menu-toggle { display: none; }
+
+@media (max-width: 768px) {
+  .navbar .nav-links { display: none; }
+  .menu-toggle { display: block; font-size: 24px; color: white; cursor: pointer; }
+  .navbar .nav-links.show { display: flex; flex-direction: column; gap: 12px; }
+}
+
+/*=========contect us =========*/
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 15px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+      font-size: 2rem;
+    }
+
+    .intro-text {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #555;
+    }
+    .social-text{
+      color: #555;
+      margin-top: 50px;
+    }
+    .ending-text{
+      text-align: center;
+      color: #555;
+      margin-top: 30px;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 30px;
+    }
+
+    .contact-form {
+      background: #fff;
+      padding: 10px;
+      border-radius: 8px;
+      box-shadow: 5px 5px 10px rgba(13, 10, 10, 0.3);
+      display: grid;
+      grid-template-columns: 1fr;
+      align-items: start;
+      gap: 12px;
+      background:#086882;
+      width: 100%;
+    }
+    
+    .contact-form label {
+      font-weight: bold;
+      font-size: medium;
+      color: white;
+    }
+    
+    .contact-form label::after {
+      content: ":";
+    }
+    
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      border: 1px solid black;
+      box-shadow: 1px 1px 1px black;
+      border-radius: 5px;
+    }
+    .contact-form textarea {
+      height: 100px;
+      font-size: large;
+    }
+    .contact-form button {
+      grid-column: span 2;
+      padding: 10px;
+      background: #0077b6;
+      color: #fff;
+      border: 0.5px solid whitesmoke;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .contact-form button:hover {
+      background: #023e8a;
+    }
+
+    .contact-info {
+      background:#086882;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 5px 5px 10px rgba(13, 10, 10, 0.3);
+    }
+
+    .contact-info h2 {
+      margin-bottom: 15px;
+      color: white;
+    }
+
+    .contact-info p {
+      margin-bottom: 10px;
+      color: white;
+    }
+
+    .social-links a {
+      display: inline-block;
+      margin-right: 20px;
+      text-decoration: none;
+      color: white;
+      font-size: 22px;
+      margin-top: 15px;
+    }
+
+    .social-links a:hover {
+      text-decoration: underline;
+    }
+
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+      .contact-form {
+        height: auto;
+        padding: 14px;
+      }
+    }
+
+/* Smaller devices */
+@media (max-width: 480px) {
+  .container { padding: 10px; }
+  .card { padding: 12px; }
+  input, select, textarea { font-size: 0.95rem; }
+  .nav-links { gap: 8px; }
+}
+
+    .image-con {
+      width: 100%;
+      height: 300px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+    
+    .image-con img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; 
+      object-position: center; 
+    }
 

@@ -3,6 +3,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Compare Stocks</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
@@ -80,6 +81,12 @@
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 16px;
       margin-top: 30px;
+    }
+    /* Make the chart responsive */
+    canvas {
+      max-width: 100%;
+      height: auto !important;
+      display: block;
     }
     .card {
       background-color: var(--bg-color);

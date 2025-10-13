@@ -133,6 +133,92 @@
   </style>
 </head>
 <body>
+
+  <!-- Navbar stays at top -->
+  <div id="navbar"></div>
+
+  <!-- Signup form container centered below navbar -->
+  <div class="container">
+    <h2>Signup</h2>
+    <form id="signup-form">
+      <div class="form-group">
+        <input type="text" id="fullName" placeholder=" " required />
+        <label for="fullName">Full Name</label>
+      </div>
+
+      <div class="form-group">
+        <input type="email" id="email" placeholder=" " required />
+        <label for="email">Email</label>
+      </div>
+
+      <div class="form-group" style="position:relative;">
+        <input type="password" id="password" placeholder=" " required />
+        <label for="password">Password</label>
+        <span class="toggle-password" id="togglePassword">Show</span>
+      </div>
+
+      <button type="submit">Sign up</button>
+    </form>
+    <p>Already have an account? <a href="login.html">Login</a></p>
+  </div>
+
+  <script>
+    // Signup form
+    document.getElementById("signup-form").addEventListener("submit", function(e){
+      e.preventDefault();
+
+      const fullName = document.getElementById("fullName").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+
+      if(!fullName || !email || !password){
+        alert("Please fill all fields");
+        return;
+      }
+
+      const userData = { fullName, password };
+      localStorage.setItem("user_" + email, JSON.stringify(userData));
+
+      alert("Signup successful! Redirecting to login...");
+      window.location.href = "login.html";
+    });
+
+    // Password toggle
+    const passwordInput = document.getElementById("password");
+    const togglePassword = document.getElementById("togglePassword");
+
+    togglePassword.addEventListener("click", () => {
+      if(passwordInput.type === "password"){
+        passwordInput.type = "text";
+        togglePassword.textContent = "Hide";
+      } else {
+        passwordInput.type = "password";
+        togglePassword.textContent = "Show";
+      }
+    });
+  </script>
+  <script>
+    fetch("navbar.html")
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById("navbar").innerHTML = data;
+        const btn = document.getElementById('menuToggle');
+        const nav = document.getElementById('navLinks');
+        if (btn && nav) {
+          btn.addEventListener('click', () => {
+            nav.classList.toggle('show');
+            btn.setAttribute('aria-expanded', nav.classList.contains('show'));
+          });
+          document.addEventListener('click', (e) => {
+            if (!nav.contains(e.target) && !btn.contains(e.target)) {
+              nav.classList.remove('show');
+              btn.setAttribute('aria-expanded', 'false');
+            }
+          });
+        }
+      });
+  </script>
+=======
     <div id="navbar"></div>
 
     <div class="container">
@@ -203,6 +289,7 @@
         document.getElementById("navbar").innerHTML = data;
       });
   </script>
+
 
 </body>
 </html>

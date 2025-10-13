@@ -151,6 +151,94 @@
   </style>
 </head>
 <body>
+
+  <!-- Navbar at top -->
+  <div id="navbar"></div>
+
+  <!-- Login box centered below navbar -->
+  <div class="container">
+    <h2>Login</h2>
+    <form id="login-form" autocomplete="on">
+      <div class="form-group">
+        <input type="email" id="email" placeholder=" abc@gmail.com" required autofocus />
+        <label for="email">Email</label>
+      </div>
+
+      <div class="form-group">
+        <input type="password" id="password" placeholder=" Password" required />
+        <label for="password">Password</label>
+        <span id="togglePassword" class="toggle-password">Show</span>
+      </div>
+
+      <button type="submit" class="login-btn">Login</button>
+      <a href="#" class="forgot-link">Forgot Password?</a>
+    </form>
+    <p>Don't have an account? <a href="signup.html">Sign up</a></p>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // Login form
+      const loginForm = document.getElementById("login-form");
+      loginForm.addEventListener("submit", function(e){
+        e.preventDefault();
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value;
+        const storedUser = localStorage.getItem("user_" + email);
+
+        if(!storedUser){
+          alert("User not found! Please sign up first.");
+          return;
+        }
+
+        const userData = JSON.parse(storedUser);
+        if(userData.password !== password){
+          alert("Incorrect password!");
+          return;
+        }
+
+        localStorage.setItem("loggedInUser", userData.fullName);
+        alert("Login successful!");
+        window.location.href = "home.html";
+      });
+
+      // Password toggle
+      const passwordInput = document.getElementById("password");
+      const togglePassword = document.getElementById("togglePassword");
+
+      togglePassword.addEventListener("click", () => {
+        if(passwordInput.type === "password"){
+          passwordInput.type = "text";
+          togglePassword.textContent = "Hide";
+        } else {
+          passwordInput.type = "password";
+          togglePassword.textContent = "Show";
+        }
+      });
+    });
+  </script>
+  <script>
+    fetch("navbar.html")
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById("navbar").innerHTML = data;
+        const btn = document.getElementById('menuToggle');
+        const nav = document.getElementById('navLinks');
+        if (btn && nav) {
+          btn.addEventListener('click', () => {
+            nav.classList.toggle('show');
+            btn.setAttribute('aria-expanded', nav.classList.contains('show'));
+          });
+          document.addEventListener('click', (e) => {
+            if (!nav.contains(e.target) && !btn.contains(e.target)) {
+              nav.classList.remove('show');
+              btn.setAttribute('aria-expanded', 'false');
+            }
+          });
+        }
+      });
+  </script>
+
     <div id="navbar"></div>
 
     <div class="container">
@@ -221,5 +309,6 @@
         document.getElementById("navbar").innerHTML = data;
       });
   </script>
+
 </body>
 </html>
