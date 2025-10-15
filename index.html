@@ -1,125 +1,342 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Welcome</title>
-  <style>
-    /* Reset */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Welcome to Fintech</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #021223, #077b9b);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column; /* navbar at top, content below */
-    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0f4c75 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow-x: hidden;
+    }
 
-    #navbar {
-      width: 100%;
-    }
+    /* Animated background particles */
+    .bg-animation {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: 0;
+    }
 
-    .container {
-      background: #fff;
-      padding: 35px 25px;
-      border-radius: 12px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-      width: 100%;
-      max-width: 380px;
-      text-align: center;
-      animation: fadeIn 0.5s ease-out;
-      margin: auto; /* centers in remaining space */
-    }
+    .particle {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 50%;
+      animation: float 20s infinite ease-in-out;
+    }
 
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
+    .particle:nth-child(1) { width: 80px; height: 80px; left: 10%; animation-delay: 0s; }
+    .particle:nth-child(2) { width: 60px; height: 60px; left: 70%; animation-delay: 3s; }
+    .particle:nth-child(3) { width: 100px; height: 100px; left: 40%; animation-delay: 6s; }
+    .particle:nth-child(4) { width: 50px; height: 50px; left: 80%; animation-delay: 9s; }
+    .particle:nth-child(5) { width: 70px; height: 70px; left: 20%; animation-delay: 12s; }
 
-    h1 {
-      color: #003366;
-      margin-bottom: 12px;
-    }
+    @keyframes float {
+      0%, 100% { transform: translateY(100vh) scale(0); opacity: 0; }
+      10% { opacity: 0.3; }
+      90% { opacity: 0.3; }
+      50% { transform: translateY(-20vh) scale(1); }
+    }
 
-    p {
-      color: #555;
-      margin-bottom: 20px;
-      font-size: 0.95rem;
-    }
+    #navbar {
+      width: 100%;
+      z-index: 10;
+    }
 
-    button {
-      width: 100%;
-      background-color: #007bff;
-      color: #fff;
-      border: none;
-      padding: 12px;
-      font-size: 1rem;
-      border-radius: 6px;
-      margin-top: 10px;
-      cursor: pointer;
-      font-weight: bold;
-      transition: background-color 0.3s ease, transform 0.15s ease;
-    }
+    .main-content {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      position: relative;
+      z-index: 1;
+    }
 
-    button:hover {
-      background-color: #0056b3;
-    }
+    .container {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      padding: 50px 40px;
+      border-radius: 24px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), 
+                  0 0 100px rgba(15, 76, 117, 0.2);
+      width: 100%;
+      max-width: 440px;
+      text-align: center;
+      animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
 
-    button:active {
-      transform: scale(0.98);
-    }
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
 
-    a {
-      color: #007bff;
-      text-decoration: none;
-    }
+    /* Glowing accent */
+    .container::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(135deg, #00d4ff, #0099ff, #0066cc);
+      border-radius: 24px;
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
 
-    a:hover {
-      text-decoration: underline;
-    }
+    .container:hover::before {
+      opacity: 0.1;
+    }
 
-    @media (max-width: 480px) {
-      .container {
-        padding: 28px 20px;
-      }
-      h1 {
-        font-size: 1.4rem;
-      }
-    }
-  </style>
+    .logo-wrapper {
+      margin-bottom: 30px;
+      animation: fadeIn 1s ease-out 0.3s both;
+    }
+
+    .logo {
+      width: 70px;
+      height: 70px;
+      background: linear-gradient(135deg, #0099ff, #00d4ff);
+      border-radius: 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      font-weight: bold;
+      color: white;
+      box-shadow: 0 10px 30px rgba(0, 153, 255, 0.3);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    h1 {
+      background: linear-gradient(135deg, #0a0e27, #0f4c75);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 16px;
+      font-size: 2.2rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      animation: fadeIn 1s ease-out 0.5s both;
+    }
+
+    p {
+      color: #4a5568;
+      margin-bottom: 35px;
+      font-size: 1.05rem;
+      line-height: 1.6;
+      animation: fadeIn 1s ease-out 0.7s both;
+    }
+
+    .button-group {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    button {
+      width: 100%;
+      border: none;
+      padding: 16px 24px;
+      font-size: 1.05rem;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #0099ff, #00d4ff);
+      color: white;
+      box-shadow: 0 10px 25px rgba(0, 153, 255, 0.3);
+      animation: fadeIn 1s ease-out 0.9s both;
+    }
+
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.5s;
+    }
+
+    .btn-primary:hover::before {
+      left: 100%;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 35px rgba(0, 153, 255, 0.4);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0);
+    }
+
+    .btn-secondary {
+      background: white;
+      color: #0099ff;
+      border: 2px solid #e2e8f0;
+      animation: fadeIn 1s ease-out 1s both;
+    }
+
+    .btn-secondary:hover {
+      background: #f7fafc;
+      border-color: #cbd5e0;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    }
+
+    .btn-secondary:active {
+      transform: translateY(0);
+    }
+
+    .features {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-top: 40px;
+      animation: fadeIn 1s ease-out 1.2s both;
+    }
+
+    .feature {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .feature-icon {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #e0f2fe, #bfdbfe);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+
+    .feature-text {
+      font-size: 0.75rem;
+      color: #64748b;
+      font-weight: 500;
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 40px 30px;
+        border-radius: 20px;
+      }
+      h1 {
+        font-size: 1.8rem;
+      }
+      .logo {
+        width: 60px;
+        height: 60px;
+        font-size: 28px;
+      }
+      .features {
+        gap: 16px;
+      }
+      .feature-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 18px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div id="navbar"></div>
+  <div class="bg-animation">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+  </div>
 
-    <div class="container">
-    <h1>Welcome to Fintech</h1>
-    <p>Select an option to continue:</p>
-    <button onclick="goTo('login.html')">Login</button>
-    <button onclick="goTo('signup.html')">Sign Up</button>
-  </div>
+  <div id="navbar"></div>
 
-  <script>
-    function goTo(page) {
-      window.location.href = page;
-    }
-  </script>
-  <script>
-    fetch("navbar.html")
-      .then(response => response.text())
-      .then(data => {
-        document.getElementById("navbar").innerHTML = data;
-      });
-  </script>
+  <div class="main-content">
+    <div class="container">
+      <div class="logo-wrapper">
+        <div class="logo">₹</div>
+      </div>
+      
+      <h1>Welcome to Fintech</h1>
+      <p>Your journey to smarter financial management starts here</p>
+      
+      <div class="button-group">
+        <button class="btn-primary" onclick="goTo('login.html')">Login</button>
+        <button class="btn-secondary" onclick="goTo('signup.html')">Create Account</button>
+      </div>
+
+      <div class="features">
+        <div class="feature">
+          <div class="feature-icon">🔒</div>
+          <div class="feature-text">Secure</div>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">⚡</div>
+          <div class="feature-text">Fast</div>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">📱</div>
+          <div class="feature-text">Easy</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function goTo(page) {
+      window.location.href = page;
+    }
+
+    fetch("navbar.html")
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById("navbar").innerHTML = data;
+      })
+      .catch(err => console.log('Navbar not found'));
+  </script>
 </body>
 </html>

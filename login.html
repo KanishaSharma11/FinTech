@@ -1,225 +1,453 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Login | Fintech</title>
-  <style>
-    /* Reset styles */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Login | Fintech</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      min-height: 100vh;
-      background: linear-gradient(135deg, #021223, #077b9b);
-      display: flex;
-      flex-direction: column; /* navbar on top, content below */
-    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0f4c75 100%);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow-x: hidden;
+    }
 
-    #navbar {
-      width: 100%;
-    }
+    /* Animated background particles */
+    .bg-animation {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: 0;
+    }
 
-    .container {
-      background: #fff;
-      padding: 32px 28px;
-      border-radius: 10px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.07);
-      width: 100%;
-      max-width: 400px;
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      animation: fadeIn 0.6s ease-in-out;
-      margin: auto; /* centers login box in available space */
-    }
+    .particle {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 50%;
+      animation: float 20s infinite ease-in-out;
+    }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+    .particle:nth-child(1) { width: 80px; height: 80px; left: 10%; animation-delay: 0s; }
+    .particle:nth-child(2) { width: 60px; height: 60px; left: 70%; animation-delay: 3s; }
+    .particle:nth-child(3) { width: 100px; height: 100px; left: 40%; animation-delay: 6s; }
+    .particle:nth-child(4) { width: 50px; height: 50px; left: 80%; animation-delay: 9s; }
 
-    h2 { color: #222; font-size: 1.7rem; margin-bottom: 24px; }
+    @keyframes float {
+      0%, 100% { transform: translateY(100vh) scale(0); opacity: 0; }
+      10% { opacity: 0.3; }
+      90% { opacity: 0.3; }
+      50% { transform: translateY(-20vh) scale(1); }
+    }
 
-    .form-group {
-      position: relative;
-      width: 100%;
-      margin-bottom: 20px;
-      min-height: 48px; /* prevents vertical shift */
-    }
+    #navbar {
+      width: 100%;
+      z-index: 10;
+    }
 
-    .form-group input {
-      width: 100%;
-      padding: 12px 13px;
-      font-size: 1rem;
-      border: 1px solid #dbe2ea;
-      border-radius: 7px;
-      background: transparent;
-      outline: none;
-      transition: border-color 0.25s, box-shadow 0.25s;
-      padding-right: 60px; /* space for toggle */
-    }
+    .main-content {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      position: relative;
+      z-index: 1;
+    }
 
-    .form-group input:focus {
-      border-color: #007bff;
-      box-shadow: 0 0 0 2px #e3f0ff;
-      background: #fff;
-    }
+    .container {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      padding: 45px 40px;
+      border-radius: 24px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), 
+                  0 0 100px rgba(15, 76, 117, 0.2);
+      width: 100%;
+      max-width: 440px;
+      text-align: center;
+      animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
 
-    .form-group label {
-      position: absolute;
-      left: 13px;
-      top: 12px;
-      font-size: 1rem;
-      color: #777;
-      pointer-events: none;
-      transition: all 0.2s ease-out;
-      background: white;
-      padding: 0 4px;
-    }
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
 
-    .form-group input:focus + label,
-    .form-group input:not(:placeholder-shown) + label {
-      top: -8px;
-      left: 10px;
-      font-size: 0.75rem;
-      color: #007bff;
-    }
+    .container::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(135deg, #00d4ff, #0099ff, #0066cc);
+      border-radius: 24px;
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
 
-    .toggle-password {
-      position: absolute;
-      right: 12px;
-      top: 50%;
-      transform: translateY(-50%);
-      cursor: pointer;
-      font-size: 0.85rem;
-      color: #007bff;
-      user-select: none;
-      width: 40px; /* fixed width prevents shift */
-      text-align: right;
-    }
+    .container:hover::before {
+      opacity: 0.1;
+    }
 
-    .login-btn {
-      width: 100%;
-      background-color: #007bff;
-      color: #fff;
-      border: none;
-      padding: 13px;
-      font-size: 1.08rem;
-      border-radius: 7px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.2s, box-shadow 0.2s;
-      box-shadow: 0 2px 8px rgba(0,123,255,0.07);
-    }
+    .logo-wrapper {
+      margin-bottom: 25px;
+      animation: fadeIn 0.8s ease-out 0.2s both;
+    }
 
-    .login-btn:hover {
-      background-color: #0056b3;
-      box-shadow: 0 4px 16px rgba(0,123,255,0.10);
-    }
+    .logo {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #0099ff, #00d4ff);
+      border-radius: 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      font-weight: bold;
+      color: white;
+      box-shadow: 0 8px 20px rgba(0, 153, 255, 0.3);
+    }
 
-    .forgot-link {
-      display: block;
-      margin: 16px 0 0 0;
-      text-align: center;
-      color: #007bff;
-      font-size: 0.97rem;
-      text-decoration: none;
-      font-weight: 500;
-      opacity: 0.85;
-      transition: opacity 0.2s;
-    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
 
-    .forgot-link:hover {
-      opacity: 1;
-      text-decoration: underline;
-    }
+    h2 {
+      background: linear-gradient(135deg, #0a0e27, #0f4c75);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-size: 2rem;
+      margin-bottom: 12px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      animation: fadeIn 0.8s ease-out 0.3s both;
+    }
 
-    p {
-      color: #555;
-      margin: 18px 0 0 0;
-      font-size: 0.97rem;
-    }
+    .subtitle {
+      color: #64748b;
+      font-size: 0.95rem;
+      margin-bottom: 35px;
+      animation: fadeIn 0.8s ease-out 0.4s both;
+    }
 
-    a { color: #007bff; text-decoration: none; font-weight: 500; }
-    a:hover { text-decoration: underline; }
+    .form-group {
+      position: relative;
+      width: 100%;
+      margin-bottom: 24px;
+      text-align: left;
+      animation: fadeIn 0.8s ease-out both;
+    }
 
-    @media (max-width: 480px) {
-      .container { padding: 22px 10px; max-width: 98vw; }
-      h2 { font-size: 1.2rem; }
-    }
-  </style>
+    .form-group:nth-child(1) { animation-delay: 0.5s; }
+    .form-group:nth-child(2) { animation-delay: 0.6s; }
+
+    .form-group input {
+      width: 100%;
+      padding: 14px 16px;
+      font-size: 1rem;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      background: #f8fafc;
+      outline: none;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      padding-right: 60px;
+    }
+
+    .form-group input:focus {
+      border-color: #0099ff;
+      background: white;
+      box-shadow: 0 0 0 4px rgba(0, 153, 255, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .form-group label {
+      position: absolute;
+      left: 16px;
+      top: 14px;
+      font-size: 1rem;
+      color: #94a3b8;
+      pointer-events: none;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      background: transparent;
+      padding: 0 4px;
+    }
+
+    .form-group input:focus + label,
+    .form-group input:not(:placeholder-shown) + label {
+      top: -10px;
+      left: 12px;
+      font-size: 0.75rem;
+      color: #0099ff;
+      background: white;
+      font-weight: 600;
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      font-size: 0.85rem;
+      color: #0099ff;
+      user-select: none;
+      font-weight: 600;
+      padding: 4px 8px;
+      border-radius: 6px;
+      transition: background 0.2s;
+    }
+
+    .toggle-password:hover {
+      background: rgba(0, 153, 255, 0.1);
+    }
+
+    .login-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #0099ff, #00d4ff);
+      color: white;
+      border: none;
+      padding: 16px;
+      font-size: 1.05rem;
+      border-radius: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 10px 25px rgba(0, 153, 255, 0.3);
+      margin-top: 10px;
+      position: relative;
+      overflow: hidden;
+      animation: fadeIn 0.8s ease-out 0.7s both;
+    }
+
+    .login-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.5s;
+    }
+
+    .login-btn:hover::before {
+      left: 100%;
+    }
+
+    .login-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 35px rgba(0, 153, 255, 0.4);
+    }
+
+    .login-btn:active {
+      transform: translateY(0);
+    }
+
+    .forgot-link {
+      display: inline-block;
+      margin: 20px 0;
+      text-align: center;
+      color: #0099ff;
+      font-size: 0.95rem;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.2s;
+      animation: fadeIn 0.8s ease-out 0.8s both;
+    }
+
+    .forgot-link:hover {
+      color: #0077cc;
+      text-decoration: underline;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin: 30px 0;
+      animation: fadeIn 0.8s ease-out 0.9s both;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, transparent, #e2e8f0, transparent);
+    }
+
+    .divider span {
+      color: #94a3b8;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+
+    .signup-prompt {
+      color: #64748b;
+      font-size: 0.95rem;
+      animation: fadeIn 0.8s ease-out 1s both;
+    }
+
+    .signup-prompt a {
+      color: #0099ff;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+
+    .signup-prompt a:hover {
+      color: #0077cc;
+      text-decoration: underline;
+    }
+
+    .security-badge {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 25px;
+      padding: 12px;
+      background: linear-gradient(135deg, #e0f2fe, #f0f9ff);
+      border-radius: 10px;
+      animation: fadeIn 0.8s ease-out 1.1s both;
+    }
+
+    .security-badge span {
+      font-size: 0.85rem;
+      color: #0f4c75;
+      font-weight: 500;
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 35px 25px;
+        border-radius: 20px;
+      }
+      h2 {
+        font-size: 1.6rem;
+      }
+      .logo {
+        width: 50px;
+        height: 50px;
+        font-size: 24px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div id="navbar"></div>
+  <div class="bg-animation">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+  </div>
 
-    <div class="container">
-    <h2>Welcome Back</h2>
-    <form id="login-form" autocomplete="on">
-      <div class="form-group">
-        <input type="email" id="email" placeholder=" " required autofocus />
-        <label for="email">Email</label>
-      </div>
+  <div id="navbar"></div>
 
-      <div class="form-group">
-        <input type="password" id="password" placeholder=" " required />
-        <label for="password">Password</label>
-        <span id="togglePassword" class="toggle-password">Show</span>
-      </div>
+  <div class="main-content">
+    <div class="container">
+      <div class="logo-wrapper">
+        <div class="logo">₹</div>
+      </div>
+      
+      <h2>Welcome Back</h2>
+      <p class="subtitle">Sign in to continue your financial journey</p>
+      
+      <form id="login-form" autocomplete="on">
+        <div class="form-group">
+          <input type="email" id="email" placeholder=" " required autofocus />
+          <label for="email">Email</label>
+        </div>
 
-      <button type="submit" class="login-btn">Login</button>
-      <a href="#" class="forgot-link">Forgot Password?</a>
-    </form>
-    <p>Don't have an account? <a href="signup.html">Sign up</a></p>
-  </div>
+        <div class="form-group">
+          <input type="password" id="password" placeholder=" " required />
+          <label for="password">Password</label>
+          <span id="togglePassword" class="toggle-password">Show</span>
+        </div>
 
-  <script>
-    const loginForm = document.getElementById("login-form");
-    loginForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value;
+        <button type="submit" class="login-btn">Sign In</button>
+        <a href="#" class="forgot-link">Forgot Password?</a>
+      </form>
 
-      const storedUser = localStorage.getItem("user_" + email);
-      if (!storedUser) {
-        alert("User not found! Please sign up first.");
-        return;
-      }
+      <div class="divider">
+        <span>or</span>
+      </div>
 
-      const userData = JSON.parse(storedUser);
-      if (userData.password !== password) {
-        alert("Incorrect password!");
-        return;
-      }
+      <p class="signup-prompt">Don't have an account? <a href="signup.html">Create one</a></p>
 
-      localStorage.setItem("loggedInUser", userData.fullName);
-      alert("Login successful! Redirecting...");
-      window.location.href = "home.html";
-    });
+      <div class="security-badge">
+        <span>🔒</span>
+        <span>Your data is encrypted and secure</span>
+      </div>
+    </div>
+  </div>
 
-    // Password toggle
-    const loginPassword = document.getElementById("password");
-    const togglePassword = document.getElementById("togglePassword"); // Using 'togglePassword' id from version B's HTML
-    
-    if (togglePassword) {
-      togglePassword.addEventListener("click", () => {
-        if (loginPassword.type === "password") {
-          loginPassword.type = "text";
-          togglePassword.textContent = "Hide";
-        } else {
-          loginPassword.type = "password";
-          togglePassword.textContent = "Show";
-        }
-      });
-    }
-  </script>
-  <script>
-    // Navbar loading script
-    fetch("navbar.html")
-      .then(response => response.text())
-      .then(data => {
-        document.getElementById("navbar").innerHTML = data;
-      });
-  </script>
+  <script>
+    const loginForm = document.getElementById("login-form");
+    loginForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+
+      // Store in memory instead of localStorage
+      const users = window.appUsers || {};
+      const userKey = "user_" + email;
+
+      if (!users[userKey]) {
+        alert("User not found! Please sign up first.");
+        return;
+      }
+
+      const userData = users[userKey];
+      if (userData.password !== password) {
+        alert("Incorrect password!");
+        return;
+      }
+
+      window.loggedInUser = userData.fullName;
+      alert("Login successful! Redirecting...");
+      window.location.href = "home.html";
+    });
+
+    // Password toggle
+    const loginPassword = document.getElementById("password");
+    const togglePassword = document.getElementById("togglePassword");
+    
+    if (togglePassword) {
+      togglePassword.addEventListener("click", () => {
+        if (loginPassword.type === "password") {
+          loginPassword.type = "text";
+          togglePassword.textContent = "Hide";
+        } else {
+          loginPassword.type = "password";
+          togglePassword.textContent = "Show";
+        }
+      });
+    }
+  </script>
+  <script>
+    fetch("navbar.html")
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById("navbar").innerHTML = data;
+      })
+      .catch(err => console.log('Navbar not found'));
+  </script>
 </body>
 </html>
