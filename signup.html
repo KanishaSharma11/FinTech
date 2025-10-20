@@ -460,83 +460,77 @@
 
   <script>
     // Initialize in-memory user storage
-    if (!window.appUsers) {
-      window.appUsers = {};
-    }
-
     const signupForm = document.getElementById("signup-form");
-    const passwordInput = document.getElementById("password");
-    const passwordStrength = document.getElementById("passwordStrength");
-    const passwordStrengthBar = document.getElementById("passwordStrengthBar");
+  const passwordInput = document.getElementById("password");
+  const passwordStrength = document.getElementById("passwordStrength");
+  const passwordStrengthBar = document.getElementById("passwordStrengthBar");
 
-    // Password strength indicator
-    passwordInput.addEventListener("input", () => {
-      const password = passwordInput.value;
-      
-      if (password.length === 0) {
-        passwordStrength.classList.remove("visible");
-        return;
-      }
-
-      passwordStrength.classList.add("visible");
-      
-      let strength = 0;
-      if (password.length >= 8) strength++;
-      if (password.match(/[a-z]/) && password.match(/[A-Z]/)) strength++;
-      if (password.match(/[0-9]/)) strength++;
-      if (password.match(/[^a-zA-Z0-9]/)) strength++;
-
-      passwordStrengthBar.className = "password-strength-bar";
-      
-      if (strength <= 2) {
-        passwordStrengthBar.classList.add("strength-weak");
-      } else if (strength === 3) {
-        passwordStrengthBar.classList.add("strength-medium");
-      } else {
-        passwordStrengthBar.classList.add("strength-strong");
-      }
-    });
-
-    signupForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const fullName = document.getElementById("fullName").value.trim();
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value;
-
-      if (!fullName || !email || !password) {
-        alert("Please fill all fields");
-        return;
-      }
-
-      const userKey = "user_" + email;
-      
-      // Check if user already exists
-      if (window.appUsers[userKey]) {
-        alert("An account with this email already exists!");
-        return;
-      }
-
-      const userData = { fullName, password };
-      window.appUsers[userKey] = userData;
-
-      alert("Signup successful! Redirecting to login...");
-      window.location.href = "login.html";
-    });
-
-    // Password toggle
-    const togglePassword = document.getElementById("togglePassword");
-    
-    if (togglePassword) {
-      togglePassword.addEventListener("click", () => {
-        if (passwordInput.type === "password") {
-          passwordInput.type = "text";
-          togglePassword.textContent = "Hide";
-        } else {
-          passwordInput.type = "password";
-          togglePassword.textContent = "Show";
-        }
-      });
+  // Password strength logic
+  passwordInput.addEventListener("input", () => {
+    const password = passwordInput.value;
+    if (password.length === 0) {
+      passwordStrength.classList.remove("visible");
+      return;
     }
+
+    passwordStrength.classList.add("visible");
+    let strength = 0;
+    if (password.length >= 8) strength++;
+    if (password.match(/[a-z]/) && password.match(/[A-Z]/)) strength++;
+    if (password.match(/[0-9]/)) strength++;
+    if (password.match(/[^a-zA-Z0-9]/)) strength++;
+
+    passwordStrengthBar.className = "password-strength-bar";
+    if (strength <= 2) {
+      passwordStrengthBar.classList.add("strength-weak");
+    } else if (strength === 3) {
+      passwordStrengthBar.classList.add("strength-medium");
+    } else {
+      passwordStrengthBar.classList.add("strength-strong");
+    }
+  });
+
+  signupForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const fullName = document.getElementById("fullName").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+
+    if (!fullName || !email || !password) {
+      alert("Please fill all fields");
+      return;
+    }
+
+    const userKey = "user_" + email;
+
+    // Get users from localStorage
+    const users = JSON.parse(localStorage.getItem("appUsers")) || {};
+
+    if (users[userKey]) {
+      alert("An account with this email already exists!");
+      return;
+    }
+
+    users[userKey] = { fullName, password };
+
+    // Save back to localStorage
+    localStorage.setItem("appUsers", JSON.stringify(users));
+
+    alert("Signup successful! Redirecting to login...");
+    window.location.href = "login.html";
+  });
+
+  // Password toggle
+  const togglePassword = document.getElementById("togglePassword");
+  togglePassword.addEventListener("click", () => {
+    if (passwordInput.type === "password") {
+      passwordInput.type = "text";
+      togglePassword.textContent = "Hide";
+    } else {
+      passwordInput.type = "password";
+      togglePassword.textContent = "Show";
+    }
+  });
   </script>
   <script>
     fetch("navbar.html")

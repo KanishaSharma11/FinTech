@@ -399,55 +399,48 @@
   </div>
 
   <script>
-    const loginForm = document.getElementById("login-form");
-    loginForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value;
+  const loginForm = document.getElementById("login-form");
 
-      // Store in memory instead of localStorage
-      const users = window.appUsers || {};
-      const userKey = "user_" + email;
+  loginForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
 
-      if (!users[userKey]) {
-        alert("User not found! Please sign up first.");
-        return;
-      }
+    // Load users from localStorage
+    const users = JSON.parse(localStorage.getItem("appUsers")) || {};
+    const userKey = "user_" + email;
 
-      const userData = users[userKey];
-      if (userData.password !== password) {
-        alert("Incorrect password!");
-        return;
-      }
-
-      window.loggedInUser = userData.fullName;
-      alert("Login successful! Redirecting...");
-      window.location.href = "home.html";
-    });
-
-    // Password toggle
-    const loginPassword = document.getElementById("password");
-    const togglePassword = document.getElementById("togglePassword");
-    
-    if (togglePassword) {
-      togglePassword.addEventListener("click", () => {
-        if (loginPassword.type === "password") {
-          loginPassword.type = "text";
-          togglePassword.textContent = "Hide";
-        } else {
-          loginPassword.type = "password";
-          togglePassword.textContent = "Show";
-        }
-      });
+    if (!users[userKey]) {
+      alert("User not found! Please sign up first.");
+      return;
     }
-  </script>
-  <script>
-    fetch("navbar.html")
-      .then(response => response.text())
-      .then(data => {
-        document.getElementById("navbar").innerHTML = data;
-      })
-      .catch(err => console.log('Navbar not found'));
-  </script>
+
+    const userData = users[userKey];
+    if (userData.password !== password) {
+      alert("Incorrect password!");
+      return;
+    }
+
+    // Store the logged-in user (optional)
+    localStorage.setItem("loggedInUser", userData.fullName);
+
+    alert("Login successful! Redirecting...");
+    window.location.href = "home.html";
+  });
+
+  // Password toggle
+  const loginPassword = document.getElementById("password");
+  const togglePassword = document.getElementById("togglePassword");
+
+  togglePassword.addEventListener("click", () => {
+    if (loginPassword.type === "password") {
+      loginPassword.type = "text";
+      togglePassword.textContent = "Hide";
+    } else {
+      loginPassword.type = "password";
+      togglePassword.textContent = "Show";
+    }
+  });
+</script>
 </body>
 </html>
